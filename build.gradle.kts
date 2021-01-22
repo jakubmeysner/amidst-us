@@ -1,6 +1,9 @@
+import com.github.jengelman.gradle.plugins.shadow.tasks.ShadowJar
+
 plugins {
   id("org.jetbrains.kotlin.jvm") version "1.4.20"
   `java-library`
+  id("com.github.johnrengelman.shadow") version "6.1.0"
 }
 
 repositories {
@@ -16,4 +19,14 @@ dependencies {
   testImplementation("org.jetbrains.kotlin:kotlin-test")
   testImplementation("org.jetbrains.kotlin:kotlin-test-junit")
   implementation("org.spigotmc:spigot-api:1.16.5-R0.1-SNAPSHOT")
+}
+
+tasks {
+  build {
+    dependsOn(shadowJar)
+  }
+}
+
+tasks.withType<ShadowJar> {
+  classifier = ""
 }
