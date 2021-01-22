@@ -20,5 +20,5 @@ jobs:
       - name: Upload artifact
         uses: actions/upload-artifact@v2
         with:
-          path: build/libs/amidstus.jar
+          path: build/libs/*.jar
           if-no-files-found: error
