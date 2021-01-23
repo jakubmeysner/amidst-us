@@ -1,4 +1,7 @@
+import org.gradle.language.jvm.tasks.ProcessResources
 import com.github.jengelman.gradle.plugins.shadow.tasks.ShadowJar
+
+version = "1.0.0-SNAPSHOT"
 
 plugins {
   id("org.jetbrains.kotlin.jvm") version "1.4.20"
@@ -25,6 +28,10 @@ tasks {
   build {
     dependsOn(shadowJar)
   }
+}
+
+tasks.processResources {
+  expand("version" to version)
 }
 
 tasks.withType<ShadowJar> {
