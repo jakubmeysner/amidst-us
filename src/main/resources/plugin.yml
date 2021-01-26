@@ -1,5 +1,38 @@
 name: AmidstUs
 main: me.jakubmeysner.amidstus.AmidstUs
 version: ${version}
-description: Spigot plugin which allows you to play Among Us in Minecraft
+description: Spigot plugin which allows you to play Among Us in Minecraft.
 api-version: 1.16
+website: https://github.com/jakubmeysner/amidstus
+
+commands:
+  createmap:
+    description: Creates a new map.
+    permission: amidstus.maps.create
+    usage: /createmap <name>
+  renamemap:
+    description: Renames a map.
+    permission: amidstus.maps.rename
+    usage: /renamemap <name> <new name>
+  deletemap:
+    description: Deletes a map.
+    permission: amidstus.maps.delete
+    usage: /deletemap <name>
+
+permissions:
+  amidstus.*:
+    description: Gives you complete access.
+    children:
+      amidstus.maps: true
+  amidstus.maps.*:
+    description: Gives you access to map management.
+    children:
+      amidstus.maps.create: true
+      amidstus.maps.rename: true
+      amidstus.maps.delete: true
+  amidstus.maps.create:
+    description: Allows you to create new maps.
+  amidstus.maps.rename:
+    description: Allows you to rename maps.
+  amidstus.maps.delete:
+    description: Allows you to delete maps.
