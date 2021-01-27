@@ -1,4 +1,4 @@
-package me.jakubmeysner.amidstus.commands
+package me.jakubmeysner.amidstus.commands.maps
 
 import me.jakubmeysner.amidstus.AmidstUs
 import net.md_5.bungee.api.ChatColor

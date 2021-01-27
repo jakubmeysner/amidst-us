@@ -1,6 +1,6 @@
 package me.jakubmeysner.amidstus
 
-import me.jakubmeysner.amidstus.commands.*
+import me.jakubmeysner.amidstus.commands.maps.*
 import me.jakubmeysner.amidstus.models.Game
 import me.jakubmeysner.amidstus.models.Map
 import org.bukkit.plugin.java.JavaPlugin
