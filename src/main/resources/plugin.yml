@@ -23,7 +23,7 @@ permissions:
   amidstus.*:
     description: Gives you complete access.
     children:
-      amidstus.maps: true
+      amidstus.maps.*: true
   amidstus.maps.*:
     description: Gives you access to map management.
     children:
