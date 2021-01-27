@@ -18,6 +18,18 @@ commands:
     description: Deletes a map.
     permission: amidstus.maps.delete
     usage: /deletemap <name>
+  setmapdisplayname:
+    description: Sets map's display name.
+    permission: amidstus.maps.setdisplayname
+    usage: /setmapdisplayname <name> <display name>
+  maps:
+    description: Lists maps.
+    permission: amidstus.maps.list
+    usage: /maps
+  map:
+    description: Displays details concerning a map.
+    permission: amidstus.maps.details
+    usage: /map <name>
 
 permissions:
   amidstus.*:
@@ -30,9 +42,18 @@ permissions:
       amidstus.maps.create: true
       amidstus.maps.rename: true
       amidstus.maps.delete: true
+      amidstus.maps.setdisplayname: true
   amidstus.maps.create:
     description: Allows you to create new maps.
   amidstus.maps.rename:
     description: Allows you to rename maps.
   amidstus.maps.delete:
     description: Allows you to delete maps.
+  amidstus.maps.setdisplayname:
+    description: Allows you to set maps' display names.
+  amidstus.maps.list:
+    description: Allows you to list maps.
+    default: true
+  amidstus.maps.details:
+    description: Allows you to display details concerning a map.
+    default: true

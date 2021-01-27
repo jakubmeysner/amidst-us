@@ -15,9 +15,10 @@ class CommandCreateMap(val plugin: AmidstUs) : CommandExecutor {
       sender.spigot().sendMessage(
         *ComponentBuilder("Usage: /createmap <name>").color(ChatColor.RED).create()
       )
-    } else if (!Pattern.compile("^[a-z]+$").matcher(args[0]).matches()) {
+    } else if (!Pattern.compile("^[a-z0-9_]+$").matcher(args[0]).matches()) {
       sender.spigot().sendMessage(
-        *ComponentBuilder("Name may only include lowercase letters!").color(ChatColor.RED).create()
+        *ComponentBuilder("Name may only include lowercase letters, numbers and underscores!")
+          .color(ChatColor.RED).create()
       )
     } else if (this.plugin.maps.find { it.name == args[0] } != null) {
       sender.spigot().sendMessage(

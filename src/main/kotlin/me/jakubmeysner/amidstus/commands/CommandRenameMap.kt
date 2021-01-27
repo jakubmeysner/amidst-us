@@ -14,9 +14,10 @@ class CommandRenameMap(val plugin: AmidstUs) : CommandExecutor {
       sender.spigot().sendMessage(
         *ComponentBuilder("Usage: /renamemap <name> <new name>").color(ChatColor.RED).create()
       )
-    } else if (!Pattern.compile("^[a-z]+$").matcher(args[1]).matches()) {
+    } else if (!Pattern.compile("^[a-z0-9_]+$").matcher(args[1]).matches()) {
       sender.spigot().sendMessage(
-        *ComponentBuilder("New name may only include lowercase letters!").color(ChatColor.RED).create()
+        *ComponentBuilder("New name may only include lowercase letters, numbers and underscores!")
+          .color(ChatColor.RED).create()
       )
     } else if (this.plugin.maps.find { it.name == args[1] } != null) {
       sender.spigot().sendMessage(
