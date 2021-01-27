@@ -5,11 +5,11 @@ import me.jakubmeysner.amidstus.models.Map
 import net.md_5.bungee.api.ChatColor
 import net.md_5.bungee.api.chat.ComponentBuilder
 import org.bukkit.command.Command
-import org.bukkit.command.CommandExecutor
 import org.bukkit.command.CommandSender
+import org.bukkit.command.TabExecutor
 import java.util.regex.Pattern
 
-class CommandCreateMap(val plugin: AmidstUs) : CommandExecutor {
+class CommandCreateMap(val plugin: AmidstUs) : TabExecutor {
   override fun onCommand(sender: CommandSender, command: Command, label: String, args: Array<out String>): Boolean {
     if (args.size != 1) {
       sender.spigot().sendMessage(
@@ -33,5 +33,14 @@ class CommandCreateMap(val plugin: AmidstUs) : CommandExecutor {
     }
 
     return true
+  }
+
+  override fun onTabComplete(
+    sender: CommandSender,
+    command: Command,
+    alias: String,
+    args: Array<out String>
+  ): List<String> {
+    return listOf()
   }
 }

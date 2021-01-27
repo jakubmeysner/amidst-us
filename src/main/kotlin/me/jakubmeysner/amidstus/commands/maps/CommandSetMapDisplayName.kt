@@ -4,10 +4,10 @@ import me.jakubmeysner.amidstus.AmidstUs
 import net.md_5.bungee.api.ChatColor
 import net.md_5.bungee.api.chat.ComponentBuilder
 import org.bukkit.command.Command
-import org.bukkit.command.CommandExecutor
 import org.bukkit.command.CommandSender
+import org.bukkit.command.TabExecutor
 
-class CommandSetMapDisplayName(val plugin: AmidstUs) : CommandExecutor {
+class CommandSetMapDisplayName(val plugin: AmidstUs) : TabExecutor {
   override fun onCommand(sender: CommandSender, command: Command, label: String, args: Array<out String>): Boolean {
     if (args.size < 2) {
       sender.spigot().sendMessage(
@@ -30,5 +30,17 @@ class CommandSetMapDisplayName(val plugin: AmidstUs) : CommandExecutor {
     }
 
     return true
+  }
+
+  override fun onTabComplete(
+    sender: CommandSender,
+    command: Command,
+    alias: String,
+    args: Array<out String>
+  ): List<String> {
+    return when (args.size) {
+      1 -> plugin.maps.map { it.name }.filter { it.startsWith(args[0]) }
+      else -> listOf()
+    }
   }
 }
