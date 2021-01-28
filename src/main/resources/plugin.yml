@@ -30,6 +30,18 @@ commands:
     description: Displays details concerning a map.
     permission: amidstus.maps.details
     usage: /map <name>
+  setmappostgamelocation:
+    description: Sets map's post game location.
+    permission: amidstus.maps.setpostgamelocation
+    usage: /setmappostgamelocation <name>
+  loadmaps:
+    description: Loads maps from file.
+    permission: amidstus.maps.load
+    usage: /loadmaps
+  savemaps:
+    description: Saves maps to file.
+    permission: amidstus.maps.save
+    usage: /savemaps
 
 permissions:
   amidstus.*:
@@ -43,6 +55,9 @@ permissions:
       amidstus.maps.rename: true
       amidstus.maps.delete: true
       amidstus.maps.setdisplayname: true
+      amidstus.maps.setpostgamelocation: true
+      amidstus.maps.load: true
+      amidstus.maps.save: true
   amidstus.maps.create:
     description: Allows you to create new maps.
   amidstus.maps.rename:
@@ -57,3 +72,9 @@ permissions:
   amidstus.maps.details:
     description: Allows you to display details concerning a map.
     default: true
+  amidstus.maps.setpostgamelocation:
+    description: Allows you to set maps' post game locations.
+  amidstus.maps.load:
+    description: Allows you to load maps from file.
+  amidstus.maps.save:
+    description: Allows you to save maps to file.
