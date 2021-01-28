@@ -28,6 +28,7 @@ class AmidstUs : JavaPlugin() {
       "setmappostgamelocation" to CommandSetMapPostGameLocation(this),
       "loadmaps" to CommandLoadMaps(this),
       "savemaps" to CommandSaveMaps(this),
+      "setmappregamelocation" to CommandSetMapPreGameLocation(this),
     )
 
     for (command in commands) {

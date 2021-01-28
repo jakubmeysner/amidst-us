@@ -11,4 +11,5 @@ import org.bukkit.Location
 class Map(var name: String) {
   var displayName: String = name
   var postGameLocation: Location? = null
+  var preGameLocation: Location? = null
 }

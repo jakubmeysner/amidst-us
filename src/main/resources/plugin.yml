@@ -42,6 +42,10 @@ commands:
     description: Saves maps to file.
     permission: amidstus.maps.save
     usage: /savemaps
+  setpregamelocation:
+    description: Sets map's pre game location.
+    permission: amidstus.maps.setpregamelocation
+    usage: /setmappregamelocation <name>
 
 permissions:
   amidstus.*:
@@ -58,6 +62,7 @@ permissions:
       amidstus.maps.setpostgamelocation: true
       amidstus.maps.load: true
       amidstus.maps.save: true
+      amidstus.maps.setpregamelocation: true
   amidstus.maps.create:
     description: Allows you to create new maps.
   amidstus.maps.rename:
@@ -78,3 +83,5 @@ permissions:
     description: Allows you to load maps from file.
   amidstus.maps.save:
     description: Allows you to save maps to file.
+  amidstus.maps.setpregamelocation:
+    description: Allows you to set maps' pre game locations.
