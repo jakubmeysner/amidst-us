@@ -4,7 +4,8 @@ import com.github.jengelman.gradle.plugins.shadow.tasks.ShadowJar
 version = "1.0.0-SNAPSHOT"
 
 plugins {
-  id("org.jetbrains.kotlin.jvm") version "1.4.20"
+  kotlin("jvm") version "1.4.20"
+  kotlin("plugin.serialization") version "1.4.20"
   `java-library`
   id("com.github.johnrengelman.shadow") version "6.1.0"
 }
@@ -22,6 +23,7 @@ dependencies {
   testImplementation("org.jetbrains.kotlin:kotlin-test")
   testImplementation("org.jetbrains.kotlin:kotlin-test-junit")
   implementation("org.spigotmc:spigot-api:1.16.5-R0.1-SNAPSHOT")
+  implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:1.0.1")
 }
 
 tasks {
