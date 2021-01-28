@@ -1,7 +1,5 @@
 package me.jakubmeysner.amidstus.commands.maps
 
-import kotlinx.serialization.json.Json
-import kotlinx.serialization.json.encodeToJsonElement
 import me.jakubmeysner.amidstus.AmidstUs
 import net.md_5.bungee.api.ChatColor
 import net.md_5.bungee.api.chat.ComponentBuilder
@@ -29,7 +27,7 @@ class CommandMap(val plugin: AmidstUs) : TabExecutor {
               """
                 Name: ${map.name}
                 Display name: ${map.displayName}
-                JSON: ${Json.encodeToJsonElement(map)}
+                Playable: ${if (map.playable) "Yes" else "No"}
               """.trimIndent()
             ).color(null).create()
         )
