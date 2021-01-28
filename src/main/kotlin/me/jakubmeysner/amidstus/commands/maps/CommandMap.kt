@@ -1,13 +1,16 @@
 package me.jakubmeysner.amidstus.commands.maps
 
 import me.jakubmeysner.amidstus.AmidstUs
+import me.jakubmeysner.amidstus.interfaces.Named
 import net.md_5.bungee.api.ChatColor
 import net.md_5.bungee.api.chat.ComponentBuilder
 import org.bukkit.command.Command
 import org.bukkit.command.CommandSender
 import org.bukkit.command.TabExecutor
 
-class CommandMap(val plugin: AmidstUs) : TabExecutor {
+class CommandMap(val plugin: AmidstUs) : TabExecutor, Named {
+  override val name = "map"
+
   override fun onCommand(sender: CommandSender, command: Command, label: String, args: Array<out String>): Boolean {
     if (args.size != 1) {
       sender.spigot().sendMessage(

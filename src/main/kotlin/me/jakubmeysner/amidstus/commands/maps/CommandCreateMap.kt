@@ -1,6 +1,7 @@
 package me.jakubmeysner.amidstus.commands.maps
 
 import me.jakubmeysner.amidstus.AmidstUs
+import me.jakubmeysner.amidstus.interfaces.Named
 import me.jakubmeysner.amidstus.models.Map
 import net.md_5.bungee.api.ChatColor
 import net.md_5.bungee.api.chat.ComponentBuilder
@@ -9,7 +10,9 @@ import org.bukkit.command.CommandSender
 import org.bukkit.command.TabExecutor
 import java.util.regex.Pattern
 
-class CommandCreateMap(val plugin: AmidstUs) : TabExecutor {
+class CommandCreateMap(val plugin: AmidstUs) : TabExecutor, Named {
+  override val name = "createmap"
+
   override fun onCommand(sender: CommandSender, command: Command, label: String, args: Array<out String>): Boolean {
     if (args.size != 1) {
       sender.spigot().sendMessage(

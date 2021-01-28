@@ -30,10 +30,10 @@ commands:
     description: Displays details concerning a map.
     permission: amidstus.maps.details
     usage: /map <name>
-  setmappostgamelocation:
+  setmappostloc:
     description: Sets map's post game location.
-    permission: amidstus.maps.setpostgamelocation
-    usage: /setmappostgamelocation <name>
+    permission: amidstus.maps.locations.post
+    usage: /setmappostloc <name>
   loadmaps:
     description: Loads maps from file.
     permission: amidstus.maps.load
@@ -42,10 +42,10 @@ commands:
     description: Saves maps to file.
     permission: amidstus.maps.save
     usage: /savemaps
-  setpregamelocation:
+  setmappreloc:
     description: Sets map's pre game location.
-    permission: amidstus.maps.setpregamelocation
-    usage: /setmappregamelocation <name>
+    permission: amidstus.maps.locations.pre
+    usage: /setmappreloc <name>
 
 permissions:
   amidstus.*:
@@ -59,10 +59,9 @@ permissions:
       amidstus.maps.rename: true
       amidstus.maps.delete: true
       amidstus.maps.setdisplayname: true
-      amidstus.maps.setpostgamelocation: true
       amidstus.maps.load: true
       amidstus.maps.save: true
-      amidstus.maps.setpregamelocation: true
+      amidstus.maps.locations.*: true
   amidstus.maps.create:
     description: Allows you to create new maps.
   amidstus.maps.rename:
@@ -77,11 +76,16 @@ permissions:
   amidstus.maps.details:
     description: Allows you to display details concerning a map.
     default: true
-  amidstus.maps.setpostgamelocation:
+  amidstus.maps.locations.*:
+    description: Gives you access to maps locations management.
+    children:
+      amidstus.maps.locations.post: true
+      amidstus.maps.locations.pre: true
+  amidstus.maps.locations.post:
     description: Allows you to set maps' post game locations.
   amidstus.maps.load:
     description: Allows you to load maps from file.
   amidstus.maps.save:
     description: Allows you to save maps to file.
-  amidstus.maps.setpregamelocation:
+  amidstus.maps.locations.pre:
     description: Allows you to set maps' pre game locations.

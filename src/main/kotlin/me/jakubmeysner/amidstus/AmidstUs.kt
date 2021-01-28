@@ -18,21 +18,21 @@ class AmidstUs : JavaPlugin() {
   private val mapsFile = File(dataFolder, "maps.json")
 
   override fun onEnable() {
-    val commands = mapOf(
-      "createmap" to CommandCreateMap(this),
-      "renamemap" to CommandRenameMap(this),
-      "deletemap" to CommandDeleteMap(this),
-      "setmapdisplayname" to CommandSetMapDisplayName(this),
-      "maps" to CommandMaps(this),
-      "map" to CommandMap(this),
-      "setmappostgamelocation" to CommandSetMapPostGameLocation(this),
-      "loadmaps" to CommandLoadMaps(this),
-      "savemaps" to CommandSaveMaps(this),
-      "setmappregamelocation" to CommandSetMapPreGameLocation(this),
+    val commands = listOf(
+      CommandCreateMap(this),
+      CommandDeleteMap(this),
+      CommandLoadMaps(this),
+      CommandMap(this),
+      CommandMaps(this),
+      CommandRenameMap(this),
+      CommandSaveMaps(this),
+      CommandSetMapDisplayName(this),
+      CommandSetMapPostGameLocation(this),
+      CommandSetMapPreGameLocation(this),
     )
 
     for (command in commands) {
-      this.getCommand(command.key)?.setExecutor(command.value)
+      this.getCommand(command.name)?.setExecutor(command)
     }
 
     if (!dataFolder.exists()) {
