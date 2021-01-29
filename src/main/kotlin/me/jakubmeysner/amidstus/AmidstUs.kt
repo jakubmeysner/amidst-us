@@ -11,6 +11,12 @@ import java.io.File
 import java.nio.file.Files
 import java.nio.file.Paths
 
+/**
+ * Ale
+ * Fajnie się
+ * Robi komentarze
+ */
+
 class AmidstUs : JavaPlugin() {
   val maps = mutableListOf<Map>()
   val games = mutableListOf<Game>()
