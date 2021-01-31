@@ -1,7 +1,6 @@
 package me.jakubmeysner.amidstus.models
 
 import me.jakubmeysner.amidstus.AmidstUs
-import org.bukkit.Location
 import org.bukkit.entity.Player
 
 class Player(val bukkitPlayer: Player) {

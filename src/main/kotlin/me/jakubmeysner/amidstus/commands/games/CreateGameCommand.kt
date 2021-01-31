@@ -7,7 +7,6 @@ import me.jakubmeysner.amidstus.models.GameType
 import me.jakubmeysner.amidstus.models.Player
 import net.md_5.bungee.api.ChatColor
 import net.md_5.bungee.api.chat.ComponentBuilder
-import org.bukkit.Location
 import org.bukkit.command.Command
 import org.bukkit.command.CommandSender
 import org.bukkit.command.TabExecutor
