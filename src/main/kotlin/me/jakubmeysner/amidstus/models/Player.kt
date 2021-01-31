@@ -28,7 +28,7 @@ class Player(val bukkitPlayer: Player) {
     }
 
     for (player in plugin.server.onlinePlayers) {
-      if (plugin.games.any { it.players.any { it.bukkitPlayer == player }}) {
+      if (plugin.games.any { it.players.any { it.bukkitPlayer == player } }) {
         bukkitPlayer.hidePlayer(plugin, player)
         player.hidePlayer(plugin, bukkitPlayer)
       } else {

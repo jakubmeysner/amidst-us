@@ -10,6 +10,7 @@ import net.md_5.bungee.api.chat.ComponentBuilder
 import org.bukkit.command.Command
 import org.bukkit.command.CommandSender
 import org.bukkit.command.TabExecutor
+import org.bukkit.entity.Player as BukkitPlayer
 
 class CreateGameCommand(val plugin: AmidstUs) : TabExecutor, Named {
   override val name = "creategame"
@@ -19,7 +20,7 @@ class CreateGameCommand(val plugin: AmidstUs) : TabExecutor, Named {
       sender.spigot().sendMessage(
         *ComponentBuilder("No maps exist or are playable!").color(ChatColor.RED).create()
       )
-    } else if (sender !is org.bukkit.entity.Player) {
+    } else if (sender !is BukkitPlayer) {
       sender.spigot().sendMessage(
         *ComponentBuilder("This command can only be used by players!").color(ChatColor.RED).create()
       )
