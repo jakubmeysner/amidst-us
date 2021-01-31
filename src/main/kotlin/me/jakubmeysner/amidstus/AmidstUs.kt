@@ -3,6 +3,8 @@ package me.jakubmeysner.amidstus
 import kotlinx.serialization.decodeFromString
 import kotlinx.serialization.encodeToString
 import kotlinx.serialization.json.Json
+import me.jakubmeysner.amidstus.commands.games.CommandCreateGame
+import me.jakubmeysner.amidstus.commands.games.CommandPlay
 import me.jakubmeysner.amidstus.commands.maps.*
 import me.jakubmeysner.amidstus.models.Game
 import me.jakubmeysner.amidstus.models.Map
@@ -29,6 +31,8 @@ class AmidstUs : JavaPlugin() {
       CommandSetMapDisplayName(this),
       CommandSetMapPostGameLocation(this),
       CommandSetMapPreGameLocation(this),
+      CommandPlay(this),
+      CommandCreateGame(this),
     )
 
     for (command in commands) {

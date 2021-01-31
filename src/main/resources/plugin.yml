@@ -46,12 +46,21 @@ commands:
     description: Sets map's pre game location.
     permission: amidstus.maps.locations.pre
     usage: /setmappreloc <name>
+  play:
+    description: Quick play in a public game.
+    permission: amidstus.games.use.join.public
+    usage: /join [map name]
+  creategame:
+    description: Creates a new private game.
+    permission: amidstus.games.use.join.private
+    usage: /creategame <map name>
 
 permissions:
   amidstus.*:
     description: Gives you complete access.
     children:
       amidstus.maps.*: true
+      amidstus.games.*: true
   amidstus.maps.*:
     description: Gives you access to map management.
     children:
@@ -89,3 +98,21 @@ permissions:
     description: Allows you to save maps to file.
   amidstus.maps.locations.pre:
     description: Allows you to set maps' pre game locations.
+  amidstus.games.*:
+    description: Gives you complete access to games.
+    children:
+      amidstus.games.use.*: true
+  amidstus.games.use.*:
+    description: Gives you access to gameplay.
+    default: true
+    children:
+      amidstus.games.use.play.*: true
+  amidstus.games.use.play.*:
+    description: Allows you to join and create games.
+    children:
+      amidstus.games.use.play.public: true
+  amidstus.games.use.play.public:
+    description: Allows you to join and create public games.
+  amidstus.games.use.play.private:
+    description: Allows you to join and create private games.
+
