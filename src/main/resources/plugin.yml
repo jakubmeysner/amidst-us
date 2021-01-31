@@ -48,12 +48,16 @@ commands:
     usage: /setmappreloc <name>
   play:
     description: Quick play in a public game.
-    permission: amidstus.games.use.join.public
+    permission: amidstus.games.use.play.public
     usage: /join [map name]
   creategame:
     description: Creates a new private game.
-    permission: amidstus.games.use.join.private
+    permission: amidstus.games.use.play.private
     usage: /creategame <map name>
+  leavegame:
+    description: Leaves your current game.
+    permission: amidstus.games.use.leave
+    usage: /leavegame
 
 permissions:
   amidstus.*:
@@ -107,6 +111,7 @@ permissions:
     default: true
     children:
       amidstus.games.use.play.*: true
+      amidstus.games.use.leave: true
   amidstus.games.use.play.*:
     description: Allows you to join and create games.
     children:
@@ -115,4 +120,6 @@ permissions:
     description: Allows you to join and create public games.
   amidstus.games.use.play.private:
     description: Allows you to join and create private games.
+  amidstus.games.use.leave:
+    description: Allows you to leave games.
 

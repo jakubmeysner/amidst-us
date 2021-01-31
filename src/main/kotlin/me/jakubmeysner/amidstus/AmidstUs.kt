@@ -6,6 +6,7 @@ import kotlinx.serialization.json.Json
 import me.jakubmeysner.amidstus.commands.games.CreateGameCommand
 import me.jakubmeysner.amidstus.commands.games.PlayCommand
 import me.jakubmeysner.amidstus.commands.maps.*
+import me.jakubmeysner.amidstus.listeners.PlayerQuitListener
 import me.jakubmeysner.amidstus.models.Game
 import me.jakubmeysner.amidstus.models.Map
 import org.bukkit.plugin.java.JavaPlugin
@@ -33,10 +34,20 @@ class AmidstUs : JavaPlugin() {
       SetMapPreGameLocationCommand(this),
       PlayCommand(this),
       CreateGameCommand(this),
+      LeaveGameCommand(this),
     )
 
     for (command in commands) {
       this.getCommand(command.name)?.setExecutor(command)
+        ?: error("Could not register ${command::class.simpleName}!")
+    }
+
+    val listeners = listOf(
+      PlayerQuitListener(this),
+    )
+
+    for (listener in listeners) {
+      this.server.pluginManager.registerEvents(listener, this)
     }
 
     if (!dataFolder.exists()) {

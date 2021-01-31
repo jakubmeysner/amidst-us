@@ -57,7 +57,6 @@ class PlayCommand(val plugin: AmidstUs) : TabExecutor, Named {
         }
 
         val player = Player(sender)
-        game.players.add(player)
         player.joinGame(game, plugin)
 
         sender.spigot().sendMessage(
