@@ -10,7 +10,7 @@ import org.bukkit.command.CommandSender
 import org.bukkit.command.TabExecutor
 import java.util.regex.Pattern
 
-class CommandCreateMap(val plugin: AmidstUs) : TabExecutor, Named {
+class CreateMapCommand(val plugin: AmidstUs) : TabExecutor, Named {
   override val name = "createmap"
 
   override fun onCommand(sender: CommandSender, command: Command, label: String, args: Array<out String>): Boolean {

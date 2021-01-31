@@ -8,13 +8,13 @@ import org.bukkit.command.Command
 import org.bukkit.command.CommandSender
 import org.bukkit.command.TabExecutor
 
-class CommandDeleteMap(val plugin: AmidstUs) : TabExecutor, Named {
-  override val name = "deletemap"
+class MapCommand(val plugin: AmidstUs) : TabExecutor, Named {
+  override val name = "map"
 
   override fun onCommand(sender: CommandSender, command: Command, label: String, args: Array<out String>): Boolean {
     if (args.size != 1) {
       sender.spigot().sendMessage(
-        *ComponentBuilder("Usage: /deletemap <name>").color(ChatColor.RED).create()
+        *ComponentBuilder("Usage: /map <name>").color(ChatColor.RED).create()
       )
     } else {
       val map = plugin.maps.find { it.name == args[0] }
@@ -24,9 +24,15 @@ class CommandDeleteMap(val plugin: AmidstUs) : TabExecutor, Named {
           *ComponentBuilder("Could not find any map with this name!").color(ChatColor.RED).create()
         )
       } else {
-        plugin.maps.remove(map)
         sender.spigot().sendMessage(
-          *ComponentBuilder("Deleted map \"${args[0]}\".").color(ChatColor.GREEN).create()
+          *ComponentBuilder("Map details:\n").color(ChatColor.BLUE)
+            .append(
+              """
+                Name: ${map.name}
+                Display name: ${map.displayName}
+                Playable: ${if (map.playable) "Yes" else "No"}
+              """.trimIndent()
+            ).color(null).create()
         )
       }
     }

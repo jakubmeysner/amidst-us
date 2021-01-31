@@ -7,31 +7,26 @@ import net.md_5.bungee.api.chat.ComponentBuilder
 import org.bukkit.command.Command
 import org.bukkit.command.CommandSender
 import org.bukkit.command.TabExecutor
-import org.bukkit.entity.Entity
 
-class CommandSetMapPostGameLocation(val plugin: AmidstUs) : TabExecutor, Named {
-  override val name = "setmappostloc"
+class SetMapDisplayNameCommand(val plugin: AmidstUs) : TabExecutor, Named {
+  override val name = "setmapdisplayname"
 
   override fun onCommand(sender: CommandSender, command: Command, label: String, args: Array<out String>): Boolean {
-    if (sender !is Entity) {
+    if (args.size < 2) {
       sender.spigot().sendMessage(
-        *ComponentBuilder("This command can only be used by entities!").color(ChatColor.RED).create()
-      )
-    } else if (args.size != 1) {
-      sender.spigot().sendMessage(
-        *ComponentBuilder("Usage: /setmappostloc <name>").color(ChatColor.RED).create()
+        *ComponentBuilder("Usage: /setmapdisplayname <name> <display name>").color(ChatColor.RED).create()
       )
     } else {
-      val map = plugin.maps.find { it.name == args[0] }
+      val map = this.plugin.maps.find { it.name == args[0] }
 
       if (map == null) {
         sender.spigot().sendMessage(
           *ComponentBuilder("Could not find any map with this name!").color(ChatColor.RED).create()
         )
       } else {
-        map.postGameLocation = sender.location
+        map.displayName = args.drop(1).joinToString(separator = " ")
         sender.spigot().sendMessage(
-          *ComponentBuilder("Changed the post game location of map \"${map.name}\" to your location.")
+          *ComponentBuilder("Changed the display name of map \"${map.name}\" to \"${map.displayName}\".")
             .color(ChatColor.GREEN).create()
         )
       }

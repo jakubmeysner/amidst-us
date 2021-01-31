@@ -3,8 +3,8 @@ package me.jakubmeysner.amidstus
 import kotlinx.serialization.decodeFromString
 import kotlinx.serialization.encodeToString
 import kotlinx.serialization.json.Json
-import me.jakubmeysner.amidstus.commands.games.CommandCreateGame
-import me.jakubmeysner.amidstus.commands.games.CommandPlay
+import me.jakubmeysner.amidstus.commands.games.CreateGameCommand
+import me.jakubmeysner.amidstus.commands.games.PlayCommand
 import me.jakubmeysner.amidstus.commands.maps.*
 import me.jakubmeysner.amidstus.models.Game
 import me.jakubmeysner.amidstus.models.Map
@@ -21,18 +21,18 @@ class AmidstUs : JavaPlugin() {
 
   override fun onEnable() {
     val commands = listOf(
-      CommandCreateMap(this),
-      CommandDeleteMap(this),
-      CommandLoadMaps(this),
-      CommandMap(this),
-      CommandMaps(this),
-      CommandRenameMap(this),
-      CommandSaveMaps(this),
-      CommandSetMapDisplayName(this),
-      CommandSetMapPostGameLocation(this),
-      CommandSetMapPreGameLocation(this),
-      CommandPlay(this),
-      CommandCreateGame(this),
+      CreateMapCommand(this),
+      DeleteMapCommand(this),
+      LoadMapsCommand(this),
+      MapCommand(this),
+      MapsCommand(this),
+      RenameMapCommand(this),
+      SaveMapsCommand(this),
+      SetMapDisplayNameCommand(this),
+      SetMapPostGameLocationCommand(this),
+      SetMapPreGameLocationCommand(this),
+      PlayCommand(this),
+      CreateGameCommand(this),
     )
 
     for (command in commands) {

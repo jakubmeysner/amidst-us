@@ -9,7 +9,7 @@ import org.bukkit.command.CommandSender
 import org.bukkit.command.TabExecutor
 import org.bukkit.entity.Entity
 
-class CommandSetMapPreGameLocation(val plugin: AmidstUs) : TabExecutor, Named {
+class SetMapPreGameLocationCommand(val plugin: AmidstUs) : TabExecutor, Named {
   override val name = "setmappreloc"
 
   override fun onCommand(sender: CommandSender, command: Command, label: String, args: Array<out String>): Boolean {

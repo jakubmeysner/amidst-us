@@ -8,7 +8,7 @@ import org.bukkit.command.Command
 import org.bukkit.command.CommandSender
 import org.bukkit.command.TabExecutor
 
-class CommandLoadMaps(val plugin: AmidstUs) : TabExecutor, Named {
+class LoadMapsCommand(val plugin: AmidstUs) : TabExecutor, Named {
   override val name = "loadmaps"
 
   override fun onCommand(sender: CommandSender, command: Command, label: String, args: Array<out String>): Boolean {
