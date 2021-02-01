@@ -3,7 +3,6 @@ package me.jakubmeysner.amidstus.commands.games
 import me.jakubmeysner.amidstus.AmidstUs
 import me.jakubmeysner.amidstus.interfaces.Named
 import me.jakubmeysner.amidstus.models.*
-import me.jakubmeysner.amidstus.models.Map
 import net.md_5.bungee.api.ChatColor
 import net.md_5.bungee.api.chat.ComponentBuilder
 import org.bukkit.command.Command
@@ -47,7 +46,7 @@ class PlayCommand(val plugin: AmidstUs) : TabExecutor, Named {
         val game = if (games.isEmpty()) {
           val game = Game(
             if (args.isNotEmpty())
-              plugin.maps.find { it.name == args[0] } as Map
+              plugin.maps.find { it.name == args[0] }!!
             else plugin.maps.filter { it.playable }.shuffled()[0],
             GameType.PUBLIC
           )

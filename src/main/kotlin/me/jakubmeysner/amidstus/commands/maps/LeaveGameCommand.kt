@@ -2,7 +2,6 @@ package me.jakubmeysner.amidstus.commands.maps
 
 import me.jakubmeysner.amidstus.AmidstUs
 import me.jakubmeysner.amidstus.interfaces.Named
-import me.jakubmeysner.amidstus.models.Player
 import net.md_5.bungee.api.ChatColor
 import net.md_5.bungee.api.chat.ComponentBuilder
 import org.bukkit.command.Command
@@ -26,7 +25,7 @@ class LeaveGameCommand(val plugin: AmidstUs) : TabExecutor, Named {
           *ComponentBuilder("You aren't in game!").color(ChatColor.RED).create()
         )
       } else {
-        val player = game.players.find { it.bukkitPlayer == sender } as Player
+        val player = game.players.find { it.bukkitPlayer == sender }!!
         player.leaveGame(game, plugin)
 
         sender.spigot().sendMessage(
