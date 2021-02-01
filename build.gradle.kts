@@ -1,4 +1,3 @@
-import org.gradle.language.jvm.tasks.ProcessResources
 import com.github.jengelman.gradle.plugins.shadow.tasks.ShadowJar
 
 version = "1.0.0-SNAPSHOT"
