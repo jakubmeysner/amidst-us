@@ -12,7 +12,9 @@ class Map(var name: String) {
   var displayName: String = name
   var postGameLocation: Location? = null
   var preGameLocation: Location? = null
-  val maxNumberOfPlayers: Int = 10
+  var minNumberOfPlayers = 4
+  var maxNumberOfPlayers = 10
+  var maxNumberOfImpostors = 2
 
   val playable: Boolean
     get() = listOf(
