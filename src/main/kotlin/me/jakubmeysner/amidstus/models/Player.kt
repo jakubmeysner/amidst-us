@@ -1,6 +1,8 @@
 package me.jakubmeysner.amidstus.models
 
 import me.jakubmeysner.amidstus.AmidstUs
+import net.md_5.bungee.api.ChatColor
+import net.md_5.bungee.api.chat.ComponentBuilder
 import org.bukkit.entity.Player
 
 class Player(val bukkitPlayer: Player, var pending: Boolean = false) {
@@ -29,6 +31,14 @@ class Player(val bukkitPlayer: Player, var pending: Boolean = false) {
 
     if (game.players.size == 0) {
       plugin.games.remove(game)
+    } else if (game.players.none { it.promoted }) {
+      val randomPlayer = game.players.random()
+      randomPlayer.promoted = true
+
+      randomPlayer.bukkitPlayer.spigot().sendMessage(
+        *ComponentBuilder("Because all promoted players have left the game, you have been randomly promoted.")
+          .color(ChatColor.GREEN).create()
+      )
     }
 
     if (pending) return
