@@ -70,6 +70,18 @@ commands:
     description: Denies invite from the specified player.
     permission: amidstus.games.use.invite.respond
     usage: /denyinvite <player>
+  setmapminplayers:
+    description: Sets map's min number of players.
+    permission: amidstus.maps.setminmaxplayers
+    usage: /setmapminplayers <map name> <number>
+  setmapmaxplayers:
+    description: Sets map's max number of players.
+    permission: amidstus.maps.setminmaxplayers
+    usage: /setmapmaxplayers <map name> <number>
+  setmapmaximpostors:
+    description: Sets map's max number of impostors.
+    permission: amidstus.maps.setminmaxplayers
+    usage: /setmapmaximpostors <map name> <number>
 
 permissions:
   amidstus.*:
@@ -87,6 +99,7 @@ permissions:
       amidstus.maps.load: true
       amidstus.maps.save: true
       amidstus.maps.locations.*: true
+      amidstus.maps.setminmaxplayers: true
   amidstus.maps.create:
     description: Allows you to create new maps.
   amidstus.maps.rename:
@@ -114,6 +127,8 @@ permissions:
     description: Allows you to save maps to file.
   amidstus.maps.locations.pre:
     description: Allows you to set maps' pre game locations.
+  amidstus.maps.setminmaxplayers:
+    description: Allows you to set maps' min and max number of players and impostors.
   amidstus.games.*:
     description: Gives you complete access to games.
     children:

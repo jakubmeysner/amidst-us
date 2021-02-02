@@ -38,6 +38,9 @@ class AmidstUs : JavaPlugin() {
       InviteCommand(this),
       AcceptInviteCommand(this),
       DenyInviteCommand(this),
+      SetMapMinPlayersCommand(this),
+      SetMapMaxPlayersCommand(this),
+      SetMapMaxImpostorsCommand(this),
     )
 
     for (command in commands) {
