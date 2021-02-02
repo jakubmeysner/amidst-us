@@ -31,7 +31,7 @@ class SetMapPreGameLocationCommand(val plugin: AmidstUs) : TabExecutor, Named {
       } else {
         map.preGameLocation = sender.location
         sender.spigot().sendMessage(
-          *ComponentBuilder("Changed the pre game location of map \"${map.name}\" to your location.")
+          *ComponentBuilder("Changed the pre game location of map ${map.displayName} to your location.")
             .color(ChatColor.GREEN).create()
         )
       }

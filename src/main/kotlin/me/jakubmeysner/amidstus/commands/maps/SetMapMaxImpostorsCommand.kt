@@ -35,7 +35,7 @@ class SetMapMaxImpostorsCommand(val plugin: AmidstUs) : TabExecutor, Named {
           map.maxNumberOfImpostors = number
 
           sender.spigot().sendMessage(
-            *ComponentBuilder("Maximum number of impostors for map ${map.displayName} has been set to $number.")
+            *ComponentBuilder("Maximum number of impostors of map ${map.displayName} has been set to $number.")
               .color(ChatColor.GREEN).create()
           )
         }

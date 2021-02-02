@@ -40,7 +40,7 @@ class SetMapMinPlayersCommand(val plugin: AmidstUs) : TabExecutor, Named {
           map.minNumberOfPlayers = number
 
           sender.spigot().sendMessage(
-            *ComponentBuilder("Minimum number of players for map ${map.displayName} has been set to $number.")
+            *ComponentBuilder("Minimum number of players of map ${map.displayName} has been set to $number.")
               .color(ChatColor.GREEN).create()
           )
         }

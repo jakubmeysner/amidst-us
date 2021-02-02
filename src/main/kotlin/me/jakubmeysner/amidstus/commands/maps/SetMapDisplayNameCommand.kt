@@ -14,7 +14,7 @@ class SetMapDisplayNameCommand(val plugin: AmidstUs) : TabExecutor, Named {
   override fun onCommand(sender: CommandSender, command: Command, label: String, args: Array<out String>): Boolean {
     if (args.size < 2) {
       sender.spigot().sendMessage(
-        *ComponentBuilder("Usage: /setmapdisplayname <name> <display name>").color(ChatColor.RED).create()
+        *ComponentBuilder("Usage: /setmapdisplayname <map name> <display name>").color(ChatColor.RED).create()
       )
     } else {
       val map = this.plugin.maps.find { it.name == args[0] }
@@ -26,7 +26,7 @@ class SetMapDisplayNameCommand(val plugin: AmidstUs) : TabExecutor, Named {
       } else {
         map.displayName = args.drop(1).joinToString(separator = " ")
         sender.spigot().sendMessage(
-          *ComponentBuilder("Changed the display name of map \"${map.name}\" to \"${map.displayName}\".")
+          *ComponentBuilder("Changed the display name to ${map.displayName}.")
             .color(ChatColor.GREEN).create()
         )
       }

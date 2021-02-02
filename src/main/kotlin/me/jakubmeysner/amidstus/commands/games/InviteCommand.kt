@@ -17,7 +17,7 @@ class InviteCommand(val plugin: AmidstUs) : TabExecutor, Named {
   override fun onCommand(sender: CommandSender, command: Command, label: String, args: Array<out String>): Boolean {
     if (args.size != 1) {
       sender.spigot().sendMessage(
-        *ComponentBuilder("Usage: /invite <player>").color(ChatColor.RED).create()
+        *ComponentBuilder("Usage: /invite <player name>").color(ChatColor.RED).create()
       )
     } else if (sender !is BukkitPlayer) {
       sender.spigot().sendMessage(

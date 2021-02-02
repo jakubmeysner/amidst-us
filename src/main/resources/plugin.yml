@@ -9,19 +9,19 @@ commands:
   createmap:
     description: Creates a new map.
     permission: amidstus.maps.create
-    usage: /createmap <name>
+    usage: /createmap <map name>
   renamemap:
     description: Renames a map.
     permission: amidstus.maps.rename
-    usage: /renamemap <name> <new name>
+    usage: /renamemap <map name> <new map name>
   deletemap:
     description: Deletes a map.
     permission: amidstus.maps.delete
-    usage: /deletemap <name>
+    usage: /deletemap <map name>
   setmapdisplayname:
     description: Sets map's display name.
     permission: amidstus.maps.setdisplayname
-    usage: /setmapdisplayname <name> <display name>
+    usage: /setmapdisplayname <map name> <map display name>
   maps:
     description: Lists maps.
     permission: amidstus.maps.list
@@ -29,11 +29,11 @@ commands:
   map:
     description: Displays details concerning a map.
     permission: amidstus.maps.details
-    usage: /map <name>
+    usage: /map <map name>
   setmappostloc:
     description: Sets map's post game location.
     permission: amidstus.maps.locations.post
-    usage: /setmappostloc <name>
+    usage: /setmappostloc <map name>
   loadmaps:
     description: Loads maps from file.
     permission: amidstus.maps.load
@@ -45,11 +45,11 @@ commands:
   setmappreloc:
     description: Sets map's pre game location.
     permission: amidstus.maps.locations.pre
-    usage: /setmappreloc <name>
+    usage: /setmappreloc <map name>
   play:
     description: Quick play in a public game.
     permission: amidstus.games.use.play.public
-    usage: /join [map name]
+    usage: /play [map name]
   creategame:
     description: Creates a new private game.
     permission: amidstus.games.use.play.private
@@ -61,15 +61,15 @@ commands:
   invite:
     description: Invites a player to a private game.
     permission: amidstus.games.use.invite.send
-    usage: /invite <player>
+    usage: /invite <player name>
   acceptinvite:
     description: Accepts invite from the specified player.
     permission: amidstus.games.use.invite.respond
-    usage: /acceptinvite <player>
+    usage: /acceptinvite <player name>
   denyinvite:
     description: Denies invite from the specified player.
     permission: amidstus.games.use.invite.respond
-    usage: /denyinvite <player>
+    usage: /denyinvite <player name>
   setmapminplayers:
     description: Sets map's min number of players.
     permission: amidstus.maps.setminmaxplayers

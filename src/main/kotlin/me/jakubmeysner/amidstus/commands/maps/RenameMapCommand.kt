@@ -15,7 +15,7 @@ class RenameMapCommand(val plugin: AmidstUs) : TabExecutor, Named {
   override fun onCommand(sender: CommandSender, command: Command, label: String, args: Array<out String>): Boolean {
     if (args.size != 2) {
       sender.spigot().sendMessage(
-        *ComponentBuilder("Usage: /renamemap <name> <new name>").color(ChatColor.RED).create()
+        *ComponentBuilder("Usage: /renamemap <map name> <new map name>").color(ChatColor.RED).create()
       )
     } else if (!Pattern.compile("^[a-z0-9_]+$").matcher(args[1]).matches()) {
       sender.spigot().sendMessage(
@@ -36,7 +36,7 @@ class RenameMapCommand(val plugin: AmidstUs) : TabExecutor, Named {
       } else {
         map.name = args[1]
         sender.spigot().sendMessage(
-          *ComponentBuilder("Changed name from \"${args[0]}\" to \"${map.name}\".").color(ChatColor.GREEN).create()
+          *ComponentBuilder("Changed name of map ${map.displayName} to ${map.name}.").color(ChatColor.GREEN).create()
         )
       }
     }

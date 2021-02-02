@@ -40,7 +40,7 @@ class SetMapMaxPlayersCommand(val plugin: AmidstUs) : TabExecutor, Named {
           map.maxNumberOfPlayers = number
 
           sender.spigot().sendMessage(
-            *ComponentBuilder("Maximum number of players for map ${map.displayName} has been set to $number.")
+            *ComponentBuilder("Maximum number of players of map ${map.displayName} has been set to $number.")
               .color(ChatColor.GREEN).create()
           )
         }
