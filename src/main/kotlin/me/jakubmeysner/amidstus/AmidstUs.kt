@@ -5,6 +5,7 @@ import kotlinx.serialization.encodeToString
 import kotlinx.serialization.json.Json
 import me.jakubmeysner.amidstus.commands.games.*
 import me.jakubmeysner.amidstus.commands.maps.*
+import me.jakubmeysner.amidstus.listeners.PlayerJoinListener
 import me.jakubmeysner.amidstus.listeners.PlayerQuitListener
 import me.jakubmeysner.amidstus.models.Game
 import me.jakubmeysner.amidstus.models.Map
@@ -45,6 +46,7 @@ class AmidstUs : JavaPlugin() {
     }
 
     val listeners = listOf(
+      PlayerJoinListener(this),
       PlayerQuitListener(this),
     )
 
