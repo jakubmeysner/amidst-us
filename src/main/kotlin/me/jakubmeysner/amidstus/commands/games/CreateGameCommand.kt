@@ -44,6 +44,7 @@ class CreateGameCommand(val plugin: AmidstUs) : TabExecutor, Named {
         val game = Game(map, GameType.PRIVATE)
         plugin.games.add(game)
         val player = Player(sender)
+        player.promoted = true
         player.joinGame(game, plugin)
 
         sender.spigot().sendMessage(
