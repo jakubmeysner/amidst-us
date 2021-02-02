@@ -3,8 +3,7 @@ package me.jakubmeysner.amidstus
 import kotlinx.serialization.decodeFromString
 import kotlinx.serialization.encodeToString
 import kotlinx.serialization.json.Json
-import me.jakubmeysner.amidstus.commands.games.CreateGameCommand
-import me.jakubmeysner.amidstus.commands.games.PlayCommand
+import me.jakubmeysner.amidstus.commands.games.*
 import me.jakubmeysner.amidstus.commands.maps.*
 import me.jakubmeysner.amidstus.listeners.PlayerQuitListener
 import me.jakubmeysner.amidstus.models.Game
@@ -35,6 +34,9 @@ class AmidstUs : JavaPlugin() {
       PlayCommand(this),
       CreateGameCommand(this),
       LeaveGameCommand(this),
+      InviteCommand(this),
+      AcceptInviteCommand(this),
+      DenyInviteCommand(this),
     )
 
     for (command in commands) {

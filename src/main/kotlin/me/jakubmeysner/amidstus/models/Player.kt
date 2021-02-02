@@ -3,9 +3,14 @@ package me.jakubmeysner.amidstus.models
 import me.jakubmeysner.amidstus.AmidstUs
 import org.bukkit.entity.Player
 
-class Player(val bukkitPlayer: Player) {
+class Player(val bukkitPlayer: Player, var pending: Boolean = false) {
+  var promoted = false
+
   fun joinGame(game: Game, plugin: AmidstUs) {
-    game.players.add(this)
+    if (!game.players.contains(this)) {
+      game.players.add(this)
+    }
+
     bukkitPlayer.teleport(game.map.preGameLocation ?: return)
 
     for (player in plugin.server.onlinePlayers) {
@@ -21,11 +26,14 @@ class Player(val bukkitPlayer: Player) {
 
   fun leaveGame(game: Game, plugin: AmidstUs) {
     game.players.remove(this)
-    bukkitPlayer.teleport(game.map.postGameLocation ?: return)
 
     if (game.players.size == 0) {
       plugin.games.remove(game)
     }
+
+    if (pending) return
+
+    bukkitPlayer.teleport(game.map.postGameLocation ?: return)
 
     for (player in plugin.server.onlinePlayers) {
       if (plugin.games.any { it.players.any { it.bukkitPlayer == player } }) {

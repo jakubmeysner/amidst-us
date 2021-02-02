@@ -58,6 +58,18 @@ commands:
     description: Leaves your current game.
     permission: amidstus.games.use.leave
     usage: /leavegame
+  invite:
+    description: Invites a player to a private game.
+    permission: amidstus.games.use.invite.send
+    usage: /invite <player>
+  acceptinvite:
+    description: Accepts invite from the specified player.
+    permission: amidstus.games.use.invite.respond
+    usage: /acceptinvite <player>
+  denyinvite:
+    description: Denies invite from the specified player.
+    permission: amidstus.games.use.invite.respond
+    usage: /denyinvite <player>
 
 permissions:
   amidstus.*:
@@ -112,6 +124,7 @@ permissions:
     children:
       amidstus.games.use.play.*: true
       amidstus.games.use.leave: true
+      amidstus.games.use.invite: true
   amidstus.games.use.play.*:
     description: Allows you to join and create games.
     children:
@@ -122,4 +135,12 @@ permissions:
     description: Allows you to join and create private games.
   amidstus.games.use.leave:
     description: Allows you to leave games.
-
+  amidstus.games.use.invite.*:
+    description: Gives you access to game invites.
+    children:
+      amidstus.games.use.invite.send: true
+      amidstus.games.use.invite.respond: true
+  amidstus.games.use.invite.send:
+    description: Allows you to send invites to games.
+  amidstus.games.use.invite.respond:
+    description: Allows you to respond to game invites.
