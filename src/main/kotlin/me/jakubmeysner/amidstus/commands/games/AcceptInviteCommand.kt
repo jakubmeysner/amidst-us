@@ -50,6 +50,11 @@ class AcceptInviteCommand(val plugin: AmidstUs) : TabExecutor, Named {
             player.pending = false
             player.joinGame(game, plugin)
 
+            sender.spigot().sendMessage(
+              *ComponentBuilder("You have accepted ${inviter.name}'s request to join their game.")
+                .color(ChatColor.DARK_GREEN).create()
+            )
+
             inviter.spigot().sendMessage(
               *ComponentBuilder("Player ${sender.name} has accepted your invite!").color(ChatColor.DARK_GREEN).create()
             )

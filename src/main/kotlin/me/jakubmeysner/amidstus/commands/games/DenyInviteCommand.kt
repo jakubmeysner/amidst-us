@@ -49,6 +49,11 @@ class DenyInviteCommand(val plugin: AmidstUs) : TabExecutor, Named {
           } else {
             player.leaveGame(game, plugin)
 
+            sender.spigot().sendMessage(
+              *ComponentBuilder("You have denied ${inviter.name}'s request to join their game.")
+                .color(ChatColor.DARK_RED).create()
+            )
+
             inviter.spigot().sendMessage(
               *ComponentBuilder("Player ${sender.name} has denied your invite!").color(ChatColor.DARK_RED).create()
             )
