@@ -14,6 +14,8 @@ class Map(var name: String) {
   var preGameLocation: Location? = null
   val maxNumberOfPlayers: Int = 10
 
+  val vents = mutableListOf<Vent>()
+
   val playable: Boolean
     get() = listOf(
       postGameLocation != null,
