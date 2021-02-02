@@ -15,11 +15,13 @@ class Map(var name: String) {
   var minNumberOfPlayers = 4
   var maxNumberOfPlayers = 10
   var maxNumberOfImpostors = 2
+  val seats = mutableListOf<Location>()
 
   val playable: Boolean
     get() = listOf(
       postGameLocation != null,
       preGameLocation != null,
       maxNumberOfPlayers >= 3,
+      seats.size >= maxNumberOfPlayers,
     ).all { it }
 }
