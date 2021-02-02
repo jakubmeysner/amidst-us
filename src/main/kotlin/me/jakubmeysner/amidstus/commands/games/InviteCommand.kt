@@ -46,6 +46,10 @@ class InviteCommand(val plugin: AmidstUs) : TabExecutor, Named {
           sender.spigot().sendMessage(
             *ComponentBuilder("You are not in game at the moment!").color(ChatColor.RED).create()
           )
+        } else if (game.players.any { it.bukkitPlayer == bukkitPlayer }) {
+          sender.spigot().sendMessage(
+            *ComponentBuilder("This player has already been invited to this game!").color(ChatColor.RED).create()
+          )
         } else {
           val senderPlayer = game.players.find { it.bukkitPlayer == sender }!!
 
