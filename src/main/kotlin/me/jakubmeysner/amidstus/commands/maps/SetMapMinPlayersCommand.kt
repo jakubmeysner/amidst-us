@@ -8,13 +8,13 @@ import org.bukkit.command.Command
 import org.bukkit.command.CommandSender
 import org.bukkit.command.TabExecutor
 
-class MapCommand(val plugin: AmidstUs) : TabExecutor, Named {
-  override val name = "map"
+class SetMapMinPlayersCommand(val plugin: AmidstUs) : TabExecutor, Named {
+  override val name = "setmapminplayers"
 
   override fun onCommand(sender: CommandSender, command: Command, label: String, args: Array<out String>): Boolean {
-    if (args.size != 1) {
+    if (args.size != 2) {
       sender.spigot().sendMessage(
-        *ComponentBuilder("Usage: /map <name>").color(ChatColor.RED).create()
+        *ComponentBuilder("Usage: /setmapminplayers <map name> <number>").color(ChatColor.RED).create()
       )
     } else {
       val map = plugin.maps.find { it.name == args[0] }
@@ -24,19 +24,26 @@ class MapCommand(val plugin: AmidstUs) : TabExecutor, Named {
           *ComponentBuilder("Could not find any map with this name!").color(ChatColor.RED).create()
         )
       } else {
-        sender.spigot().sendMessage(
-          *ComponentBuilder("Map details:\n").color(ChatColor.BLUE)
-            .append(
-              """
-                Name: ${map.name}
-                Display name: ${map.displayName}
-                Playable: ${if (map.playable) "Yes" else "No"}
-                Min players: ${map.minNumberOfPlayers}
-                Max players: ${map.maxNumberOfPlayers}
-                Max impostors: ${map.maxNumberOfImpostors}
-              """.trimIndent()
-            ).color(null).create()
-        )
+        val number = args[1].toIntOrNull()
+
+        if (number == null || number < 4 || number > 25) {
+          sender.spigot().sendMessage(
+            *ComponentBuilder("Minimum number of players must be a valid integer between 4 and 25!")
+              .color(ChatColor.RED).create()
+          )
+        } else if (number > map.maxNumberOfPlayers) {
+          sender.spigot().sendMessage(
+            *ComponentBuilder("Minimum number of players must not be greater than the maximum!")
+              .color(ChatColor.RED).create()
+          )
+        } else {
+          map.minNumberOfPlayers = number
+
+          sender.spigot().sendMessage(
+            *ComponentBuilder("Minimum number of players for map ${map.displayName} has been set to $number.")
+              .color(ChatColor.GREEN).create()
+          )
+        }
       }
     }
 
