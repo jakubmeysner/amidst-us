@@ -22,6 +22,6 @@ class Map(var name: String) {
       postGameLocation != null,
       preGameLocation != null,
       maxNumberOfPlayers >= 3,
-      seats.size >= maxNumberOfPlayers,
+      // seats.size >= maxNumberOfPlayers,
     ).all { it }
 }
