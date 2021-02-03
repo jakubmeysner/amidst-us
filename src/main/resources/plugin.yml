@@ -82,6 +82,18 @@ commands:
     description: Sets map's max number of impostors.
     permission: amidstus.maps.setminmaxplayers
     usage: /setmapmaximpostors <map name> <number>
+  addmapseat:
+    description: Adds a new seat to map.
+    permission: amidstus.maps.seats
+    usage: /addmapseat <map name>
+  removemapseat:
+    description: Removes a seat from map.
+    permission: amidstus.maps.seats
+    usage: /removemapseat <map name> <index>
+  mapseats:
+    description: Lists maps' seats.
+    permission: amidstus.maps.seats
+    usage: /mapseats <map name>
 
 permissions:
   amidstus.*:
@@ -100,6 +112,7 @@ permissions:
       amidstus.maps.save: true
       amidstus.maps.locations.*: true
       amidstus.maps.setminmaxplayers: true
+      amidstus.maps.seats: true
   amidstus.maps.create:
     description: Allows you to create new maps.
   amidstus.maps.rename:
@@ -129,6 +142,8 @@ permissions:
     description: Allows you to set maps' pre game locations.
   amidstus.maps.setminmaxplayers:
     description: Allows you to set maps' min and max number of players and impostors.
+  amidstus.maps.seats:
+    description: Allows you to add and remove maps' seats.
   amidstus.games.*:
     description: Gives you complete access to games.
     children:
