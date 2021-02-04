@@ -46,6 +46,7 @@ class AmidstUs : JavaPlugin() {
       RemoveMapSeatCommand(this),
       MapSeatsCommand(this),
       SetMapAutoStartPlayers(this),
+      SwitchMapCommand(this),
     )
 
     for (command in commands) {
