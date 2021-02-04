@@ -8,169 +8,123 @@ website: https://github.com/jakubmeysner/amidstus
 commands:
   createmap:
     description: Creates a new map.
-    permission: amidstus.maps.create
+    permission: amidstus.maps.manage
     usage: /createmap <map name>
   renamemap:
     description: Renames a map.
-    permission: amidstus.maps.rename
+    permission: amidstus.maps.manage
     usage: /renamemap <map name> <new map name>
   deletemap:
     description: Deletes a map.
-    permission: amidstus.maps.delete
+    permission: amidstus.maps.manage
     usage: /deletemap <map name>
   setmapdisplayname:
     description: Sets map's display name.
-    permission: amidstus.maps.setdisplayname
+    permission: amidstus.maps.manage
     usage: /setmapdisplayname <map name> <map display name>
   maps:
     description: Lists maps.
-    permission: amidstus.maps.list
+    permission: amidstus.maps.info
     usage: /maps
   map:
     description: Displays details concerning a map.
-    permission: amidstus.maps.details
+    permission: amidstus.maps.info
     usage: /map <map name>
   setmappostloc:
     description: Sets map's post game location.
-    permission: amidstus.maps.locations.post
+    permission: amidstus.maps.manage
     usage: /setmappostloc <map name>
   loadmaps:
     description: Loads maps from file.
-    permission: amidstus.maps.load
+    permission: amidstus.maps.saving
     usage: /loadmaps
   savemaps:
     description: Saves maps to file.
-    permission: amidstus.maps.save
+    permission: amidstus.maps.saving
     usage: /savemaps
   setmappreloc:
     description: Sets map's pre game location.
-    permission: amidstus.maps.locations.pre
+    permission: amidstus.maps.manage
     usage: /setmappreloc <map name>
   play:
     description: Quick play in a public game.
-    permission: amidstus.games.use.play.public
+    permission: amidstus.games.play.public
     usage: /play [map name]
   creategame:
     description: Creates a new private game.
-    permission: amidstus.games.use.play.private
+    permission: amidstus.games.play.private
     usage: /creategame <map name>
   leavegame:
     description: Leaves your current game.
-    permission: amidstus.games.use.leave
+    permission: amidstus.games.play.common
     usage: /leavegame
   invite:
     description: Invites a player to a private game.
-    permission: amidstus.games.use.invite.send
+    permission: amidstus.games.play.private
     usage: /invite <player name>
   acceptinvite:
     description: Accepts invite from the specified player.
-    permission: amidstus.games.use.invite.respond
+    permission: amidstus.games.play.private
     usage: /acceptinvite <player name>
   denyinvite:
     description: Denies invite from the specified player.
-    permission: amidstus.games.use.invite.respond
+    permission: amidstus.games.play.private
     usage: /denyinvite <player name>
   setmapminplayers:
     description: Sets map's min number of players.
-    permission: amidstus.maps.setminmaxplayers
+    permission: amidstus.maps.manage
     usage: /setmapminplayers <map name> <number>
   setmapmaxplayers:
     description: Sets map's max number of players.
-    permission: amidstus.maps.setminmaxplayers
+    permission: amidstus.maps.manage
     usage: /setmapmaxplayers <map name> <number>
   setmapmaximpostors:
     description: Sets map's max number of impostors.
-    permission: amidstus.maps.setminmaxplayers
+    permission: amidstus.maps.manage
     usage: /setmapmaximpostors <map name> <number>
   addmapseat:
     description: Adds a new seat to map.
-    permission: amidstus.maps.seats
+    permission: amidstus.maps.manage
     usage: /addmapseat <map name>
   removemapseat:
     description: Removes a seat from map.
-    permission: amidstus.maps.seats
+    permission: amidstus.maps.manage
     usage: /removemapseat <map name> <index>
   mapseats:
     description: Lists maps' seats.
-    permission: amidstus.maps.seats
+    permission: amidstus.maps.info
     usage: /mapseats <map name>
 
 permissions:
   amidstus.*:
-    description: Gives you complete access.
-    children:
-      amidstus.maps.*: true
-      amidstus.games.*: true
+    description: Gives you full access.
   amidstus.maps.*:
-    description: Gives you access to map management.
+    description: Gives you access to maps.
     children:
-      amidstus.maps.create: true
-      amidstus.maps.rename: true
-      amidstus.maps.delete: true
-      amidstus.maps.setdisplayname: true
-      amidstus.maps.load: true
-      amidstus.maps.save: true
-      amidstus.maps.locations.*: true
-      amidstus.maps.setminmaxplayers: true
-      amidstus.maps.seats: true
-  amidstus.maps.create:
-    description: Allows you to create new maps.
-  amidstus.maps.rename:
-    description: Allows you to rename maps.
-  amidstus.maps.delete:
-    description: Allows you to delete maps.
-  amidstus.maps.setdisplayname:
-    description: Allows you to set maps' display names.
-  amidstus.maps.list:
-    description: Allows you to list maps.
+      amidstus.maps.info: true
+      amidstus.maps.manage: true
+      amidstus.maps.saving: true
+  amidstus.maps.info:
+    description: Allows you to display information about maps.
     default: true
-  amidstus.maps.details:
-    description: Allows you to display details concerning a map.
-    default: true
-  amidstus.maps.locations.*:
-    description: Gives you access to maps locations management.
-    children:
-      amidstus.maps.locations.post: true
-      amidstus.maps.locations.pre: true
-  amidstus.maps.locations.post:
-    description: Allows you to set maps' post game locations.
-  amidstus.maps.load:
-    description: Allows you to load maps from file.
-  amidstus.maps.save:
-    description: Allows you to save maps to file.
-  amidstus.maps.locations.pre:
-    description: Allows you to set maps' pre game locations.
-  amidstus.maps.setminmaxplayers:
-    description: Allows you to set maps' min and max number of players and impostors.
-  amidstus.maps.seats:
-    description: Allows you to add and remove maps' seats.
+  amidstus.maps.manage:
+    description: Allows you to manage maps.
+  amidstus.maps.saving:
+    description: Allows you to load and save maps.
   amidstus.games.*:
-    description: Gives you complete access to games.
+    description: Gives you access to games.
     children:
-      amidstus.games.use.*: true
-  amidstus.games.use.*:
-    description: Gives you access to gameplay.
+      amidstus.games.play: true
+  amidstus.games.play.*:
+    description: Allows you to play games.
     default: true
     children:
-      amidstus.games.use.play.*: true
-      amidstus.games.use.leave: true
-      amidstus.games.use.invite: true
-  amidstus.games.use.play.*:
-    description: Allows you to join and create games.
-    children:
-      amidstus.games.use.play.public: true
-  amidstus.games.use.play.public:
-    description: Allows you to join and create public games.
-  amidstus.games.use.play.private:
-    description: Allows you to join and create private games.
-  amidstus.games.use.leave:
-    description: Allows you to leave games.
-  amidstus.games.use.invite.*:
-    description: Gives you access to game invites.
-    children:
-      amidstus.games.use.invite.send: true
-      amidstus.games.use.invite.respond: true
-  amidstus.games.use.invite.send:
-    description: Allows you to send invites to games.
-  amidstus.games.use.invite.respond:
-    description: Allows you to respond to game invites.
+      amidstus.games.play.public: true
+      amidstus.games.play.private: true
+      amidstus.games.play.common: true
+  amidstus.games.play.public:
+    description: Allows you to join public games.
+  amidstus.games.play.private:
+    description: Allows you to create and join private games.
+  amidstus.games.play.common:
+    description: Allows you to play games.
