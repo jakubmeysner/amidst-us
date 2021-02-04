@@ -28,8 +28,10 @@ class SetMapAutoStartPlayers(val plugin: AmidstUs) : TabExecutor, Named {
 
         if (number == null || number !in map.minNumberOfPlayers..map.maxNumberOfPlayers) {
           sender.spigot().sendMessage(
-            *ComponentBuilder("Auto start number of players must be a valid integer between " +
-              "${map.minNumberOfPlayers} and ${map.maxNumberOfImpostors}!").color(ChatColor.RED).create()
+            *ComponentBuilder(
+              "Auto start number of players must be a valid integer between " +
+                "${map.minNumberOfPlayers} and ${map.maxNumberOfImpostors}!"
+            ).color(ChatColor.RED).create()
           )
         } else {
           map.autoStartNumberOfPlayers = number
