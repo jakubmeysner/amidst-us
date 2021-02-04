@@ -98,6 +98,10 @@ commands:
     description: Sets map's auto start number of players.
     permission: amidstus.maps.manage
     usage: /setmapautostartplayers <map name> <number>
+  switchmap:
+    description: Switches game map to specified map.
+    permission: amidstus.games.play.private
+    usage: /switchmap <map name>
 
 permissions:
   amidstus.*:
