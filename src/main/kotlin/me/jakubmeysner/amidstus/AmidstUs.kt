@@ -41,6 +41,9 @@ class AmidstUs : JavaPlugin() {
       SetMapMinPlayersCommand(this),
       SetMapMaxPlayersCommand(this),
       SetMapMaxImpostorsCommand(this),
+      AddMapSeatCommand(this),
+      RemoveMapSeatCommand(this),
+      MapSeatsCommand(this),
     )
 
     for (command in commands) {
