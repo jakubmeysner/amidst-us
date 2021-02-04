@@ -33,11 +33,14 @@ class MapSeatsCommand(val plugin: AmidstUs) : TabExecutor, Named {
           sender.spigot().sendMessage(
             *ComponentBuilder("Seats of map ${map.displayName}:\n").color(ChatColor.BLUE)
               .append(map.seats.flatMap {
-                ComponentBuilder("- ${map.seats.indexOf(it)}: ${it.x}, ${it.y}, ${it.z} ").color(null)
+                ComponentBuilder("- ${map.seats.indexOf(it)}: ${it.x}, ${it.y}, ${it.z} ")
+                  .color(ChatColor.WHITE)
                   .append("[X]").color(ChatColor.RED)
-                  .event(ClickEvent(
-                    ClickEvent.Action.RUN_COMMAND, "/removemapseat ${map.name} ${map.seats.indexOf(it)}"
-                  ))
+                  .event(
+                    ClickEvent(
+                      ClickEvent.Action.RUN_COMMAND, "/removemapseat ${map.name} ${map.seats.indexOf(it)}"
+                    )
+                  )
                   .append(if (it != map.seats.last()) "\n" else "").create().toList()
               }.toTypedArray()).create()
           )
