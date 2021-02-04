@@ -21,7 +21,9 @@ class Map(var name: String) {
     get() = listOf(
       postGameLocation != null,
       preGameLocation != null,
-      maxNumberOfPlayers >= 3,
+      minNumberOfPlayers in 4..25,
+      maxNumberOfPlayers in 4..25,
+      maxNumberOfImpostors in 1..6,
       seats.size >= maxNumberOfPlayers,
     ).all { it }
 }
