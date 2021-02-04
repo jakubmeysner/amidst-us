@@ -31,7 +31,7 @@ class RemoveMapSeatCommand(val plugin: AmidstUs) : TabExecutor, Named {
             *ComponentBuilder("Index must be a valid integer!").color(ChatColor.RED).create()
           )
         } else {
-          if (map.seats.size > index + 1) {
+          if (map.seats.size < index + 1) {
             sender.spigot().sendMessage(
               *ComponentBuilder("Could not find any seat with this index!").color(ChatColor.RED).create()
             )
