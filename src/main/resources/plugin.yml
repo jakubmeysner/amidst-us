@@ -94,6 +94,10 @@ commands:
     description: Lists maps' seats.
     permission: amidstus.maps.info
     usage: /mapseats <map name>
+  setmapautostartplayers:
+    description: Sets map's auto start number of players.
+    permission: amidstus.maps.manage
+    usage: /setmapautostartplayers <map name> <number>
 
 permissions:
   amidstus.*:

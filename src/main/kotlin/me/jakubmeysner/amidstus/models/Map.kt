@@ -15,6 +15,7 @@ class Map(var name: String) {
   var minNumberOfPlayers = 4
   var maxNumberOfPlayers = 10
   var maxNumberOfImpostors = 2
+  var autoStartNumberOfPlayers = 6
   val seats = mutableListOf<Location>()
 
   val playable: Boolean
@@ -24,6 +25,7 @@ class Map(var name: String) {
       minNumberOfPlayers in 4..25,
       maxNumberOfPlayers in 4..25,
       maxNumberOfImpostors in 1..6,
+      autoStartNumberOfPlayers in minNumberOfPlayers..maxNumberOfPlayers,
       seats.size >= maxNumberOfPlayers,
     ).all { it }
 }
