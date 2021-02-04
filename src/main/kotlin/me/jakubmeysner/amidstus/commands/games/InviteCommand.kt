@@ -2,6 +2,7 @@ package me.jakubmeysner.amidstus.commands.games
 
 import me.jakubmeysner.amidstus.AmidstUs
 import me.jakubmeysner.amidstus.interfaces.Named
+import me.jakubmeysner.amidstus.models.Game
 import me.jakubmeysner.amidstus.models.Player
 import net.md_5.bungee.api.ChatColor
 import net.md_5.bungee.api.chat.ClickEvent
@@ -45,6 +46,10 @@ class InviteCommand(val plugin: AmidstUs) : TabExecutor, Named {
         if (game == null) {
           sender.spigot().sendMessage(
             *ComponentBuilder("You are not in game at the moment!").color(ChatColor.RED).create()
+          )
+        } else if (game.status == Game.Status.GAME) {
+          sender.spigot().sendMessage(
+            *ComponentBuilder("The game has already started!").color(ChatColor.RED).create()
           )
         } else if (game.players.any { it.bukkitPlayer == bukkitPlayer }) {
           sender.spigot().sendMessage(
