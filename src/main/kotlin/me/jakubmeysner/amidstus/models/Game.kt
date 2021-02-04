@@ -1,14 +1,14 @@
 package me.jakubmeysner.amidstus.models
 
-class Game(var map: Map, val type: GameType) {
-  var status: GameStatus = GameStatus.PRE_GAME
+class Game(var map: Map, val type: Type) {
+  enum class Type {
+    PUBLIC, PRIVATE
+  }
+
+  enum class Status {
+    PRE_GAME, GAME
+  }
+
+  var status = Status.PRE_GAME
   val players = mutableListOf<Player>()
-}
-
-enum class GameType {
-  PUBLIC, PRIVATE
-}
-
-enum class GameStatus {
-  PRE_GAME, GAME
 }

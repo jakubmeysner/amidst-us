@@ -40,7 +40,7 @@ class PlayCommand(val plugin: AmidstUs) : TabExecutor, Named {
         val games = plugin.games.filter {
           (args.isEmpty() || it.map.name == args[0]) &&
             it.players.size < it.map.maxNumberOfPlayers &&
-            it.status == GameStatus.PRE_GAME
+            it.status == Game.Status.PRE_GAME
         }.sortedByDescending { it.players.size }
 
         val game = if (games.isEmpty()) {
@@ -48,7 +48,7 @@ class PlayCommand(val plugin: AmidstUs) : TabExecutor, Named {
             if (args.isNotEmpty())
               plugin.maps.find { it.name == args[0] }!!
             else plugin.maps.filter { it.playable }.shuffled()[0],
-            GameType.PUBLIC
+            Game.Type.PUBLIC
           )
           plugin.games.add(game)
           game
