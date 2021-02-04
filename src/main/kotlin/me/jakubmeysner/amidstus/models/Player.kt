@@ -3,9 +3,21 @@ package me.jakubmeysner.amidstus.models
 import me.jakubmeysner.amidstus.AmidstUs
 import net.md_5.bungee.api.ChatColor
 import net.md_5.bungee.api.chat.ComponentBuilder
+import org.bukkit.Material
 import org.bukkit.entity.Player
+import org.bukkit.inventory.ItemStack
+import org.bukkit.ChatColor as BukkitChatColor
 
 class Player(val bukkitPlayer: Player, var pending: Boolean = false) {
+  companion object {
+    val LeaveGameItemStack = ItemStack(Material.PAPER).let {
+      val meta = it.itemMeta
+      meta?.setDisplayName("${BukkitChatColor.RED}Leave game")
+      it.itemMeta = meta
+      it
+    }
+  }
+
   var promoted = false
 
   fun joinGame(game: Game, plugin: AmidstUs) {
@@ -24,6 +36,9 @@ class Player(val bukkitPlayer: Player, var pending: Boolean = false) {
         player.hidePlayer(plugin, bukkitPlayer)
       }
     }
+
+    bukkitPlayer.inventory.clear()
+    bukkitPlayer.inventory.setItem(8, LeaveGameItemStack)
   }
 
   fun leaveGame(game: Game, plugin: AmidstUs) {
@@ -54,5 +69,7 @@ class Player(val bukkitPlayer: Player, var pending: Boolean = false) {
         player.showPlayer(plugin, bukkitPlayer)
       }
     }
+
+    bukkitPlayer.inventory.clear()
   }
 }
