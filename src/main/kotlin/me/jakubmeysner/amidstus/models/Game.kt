@@ -32,7 +32,7 @@ class Game(var map: Map, val type: Type) {
       player.bukkitPlayer.inventory.clear()
       player.bukkitPlayer.inventory.heldItemSlot = 0
 
-      plugin.server.scoreboardManager?.mainScoreboard?.getTeam("nametagVisibilityNever")
+      plugin.server.scoreboardManager?.mainScoreboard?.getTeam("nametagVisNever")
         ?.addEntry(player.bukkitPlayer.name)
     }
 

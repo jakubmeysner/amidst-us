@@ -66,8 +66,8 @@ class AmidstUs : JavaPlugin() {
       this.server.pluginManager.registerEvents(listener, this)
     }
 
-    if (server.scoreboardManager?.mainScoreboard?.getTeam("nametagVisibilityNever") == null) {
-      server.scoreboardManager?.mainScoreboard?.registerNewTeam("nametagVisibilityNever").let {
+    if (server.scoreboardManager?.mainScoreboard?.getTeam("nametagVisNever") == null) {
+      server.scoreboardManager?.mainScoreboard?.registerNewTeam("nametagVisNever").let {
         it?.setOption(Team.Option.NAME_TAG_VISIBILITY, Team.OptionStatus.NEVER)
       }
     }

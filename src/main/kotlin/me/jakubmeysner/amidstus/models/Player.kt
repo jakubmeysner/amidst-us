@@ -75,7 +75,7 @@ class Player(val bukkitPlayer: Player, var pending: Boolean = false) {
 
     bukkitPlayer.inventory.clear()
 
-    plugin.server.scoreboardManager?.mainScoreboard?.getTeam("nametagVisibilityNever")
+    plugin.server.scoreboardManager?.mainScoreboard?.getTeam("nametagVisNever")
       ?.removeEntry(bukkitPlayer.name)
   }
 }
