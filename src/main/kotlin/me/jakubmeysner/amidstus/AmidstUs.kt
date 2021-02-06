@@ -11,6 +11,7 @@ import me.jakubmeysner.amidstus.listeners.PlayerQuitListener
 import me.jakubmeysner.amidstus.models.Game
 import me.jakubmeysner.amidstus.models.Map
 import org.bukkit.plugin.java.JavaPlugin
+import org.bukkit.scoreboard.Team
 import java.io.File
 import java.nio.file.Files
 import java.nio.file.Paths
@@ -47,6 +48,7 @@ class AmidstUs : JavaPlugin() {
       MapSeatsCommand(this),
       SetMapAutoStartPlayers(this),
       SwitchMapCommand(this),
+      StartGameCommand(this),
     )
 
     for (command in commands) {
@@ -62,6 +64,12 @@ class AmidstUs : JavaPlugin() {
 
     for (listener in listeners) {
       this.server.pluginManager.registerEvents(listener, this)
+    }
+
+    if (server.scoreboardManager?.mainScoreboard?.getTeam("nametagVisibilityNever") == null) {
+      server.scoreboardManager?.mainScoreboard?.registerNewTeam("nametagVisibilityNever").let {
+        it?.setOption(Team.Option.NAME_TAG_VISIBILITY, Team.OptionStatus.NEVER)
+      }
     }
 
     if (!dataFolder.exists()) {

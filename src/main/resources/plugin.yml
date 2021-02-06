@@ -102,6 +102,10 @@ commands:
     description: Switches game map to specified map.
     permission: amidstus.games.play.private
     usage: /switchmap <map name>
+  startgame:
+    description: Starts the game.
+    permission: amidstus.games.play.private
+    usage: /startgame
 
 permissions:
   amidstus.*:

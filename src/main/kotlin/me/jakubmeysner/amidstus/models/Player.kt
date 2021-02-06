@@ -19,6 +19,8 @@ class Player(val bukkitPlayer: Player, var pending: Boolean = false) {
   }
 
   var promoted = false
+  var impostor = false
+  var dead = false
 
   fun joinGame(game: Game, plugin: AmidstUs) {
     if (!game.players.contains(this)) {
@@ -38,6 +40,7 @@ class Player(val bukkitPlayer: Player, var pending: Boolean = false) {
     }
 
     bukkitPlayer.inventory.clear()
+    bukkitPlayer.inventory.heldItemSlot = 0
     bukkitPlayer.inventory.setItem(8, LeaveGameItemStack)
   }
 
@@ -71,5 +74,8 @@ class Player(val bukkitPlayer: Player, var pending: Boolean = false) {
     }
 
     bukkitPlayer.inventory.clear()
+
+    plugin.server.scoreboardManager?.mainScoreboard?.getTeam("nametagVisibilityNever")
+      ?.removeEntry(bukkitPlayer.name)
   }
 }

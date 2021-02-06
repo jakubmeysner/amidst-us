@@ -8,6 +8,7 @@ import net.md_5.bungee.api.chat.ComponentBuilder
 import org.bukkit.command.Command
 import org.bukkit.command.CommandSender
 import org.bukkit.command.TabExecutor
+import org.bukkit.ChatColor as BukkitChatColor
 import org.bukkit.entity.Player as BukkitPlayer
 
 class PlayCommand(val plugin: AmidstUs) : TabExecutor, Named {
@@ -63,6 +64,41 @@ class PlayCommand(val plugin: AmidstUs) : TabExecutor, Named {
           *ComponentBuilder("You are now playing on ${game.map.displayName}!")
             .color(ChatColor.GREEN).create()
         )
+
+        if (game.players.size == game.map.autoStartNumberOfPlayers) {
+          if (game.autoStartTask == null) {
+            game.autoStartTask = plugin.server.scheduler.runTaskTimer(plugin, Runnable {
+              if (game.players.size < game.map.autoStartNumberOfPlayers) {
+                game.autoStartTask?.cancel()
+                game.autoStartTask = null
+                game.autoStartSecondsLeft = null
+              } else {
+                if (game.autoStartSecondsLeft == null || game.autoStartSecondsLeft in 2..5) {
+                  if (game.autoStartSecondsLeft == null) {
+                    game.autoStartSecondsLeft = 5
+                  } else {
+                    game.autoStartSecondsLeft = game.autoStartSecondsLeft!! - 1
+                  }
+                } else {
+                  game.autoStartTask?.cancel()
+                  game.autoStartTask = null
+                  game.autoStartSecondsLeft = null
+                  game.start(plugin)
+                }
+
+                for (player in game.players) {
+                  player.bukkitPlayer.sendTitle(
+                    "${BukkitChatColor.BLUE}${BukkitChatColor.BOLD}${game.autoStartSecondsLeft}",
+                    null,
+                    0,
+                    20,
+                    0
+                  )
+                }
+              }
+            }, 0, 20)
+          }
+        }
       }
     }
 
