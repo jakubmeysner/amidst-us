@@ -10,7 +10,7 @@ import org.bukkit.ChatColor as BukkitChatColor
 
 class Player(val bukkitPlayer: Player, var pending: Boolean = false) {
   companion object {
-    val LeaveGameItemStack = ItemStack(Material.PAPER).let {
+    val LeaveGameItemStack = ItemStack(Material.OAK_DOOR).let {
       val meta = it.itemMeta
       meta?.setDisplayName("${BukkitChatColor.RED}Leave game")
       it.itemMeta = meta
