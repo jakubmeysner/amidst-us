@@ -59,6 +59,8 @@ class Player(val bukkitPlayer: Player, var pending: Boolean = false) {
       )
     }
 
+    bukkitPlayer.inventory.clear()
+
     if (pending) return
 
     bukkitPlayer.teleport(game.map.postGameLocation ?: return)
@@ -72,8 +74,6 @@ class Player(val bukkitPlayer: Player, var pending: Boolean = false) {
         player.showPlayer(plugin, bukkitPlayer)
       }
     }
-
-    bukkitPlayer.inventory.clear()
 
     plugin.server.scoreboardManager?.mainScoreboard?.getTeam("nametagVisNever")
       ?.removeEntry(bukkitPlayer.name)
