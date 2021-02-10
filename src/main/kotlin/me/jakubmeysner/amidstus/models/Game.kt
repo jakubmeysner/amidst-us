@@ -12,7 +12,7 @@ class Game(var map: Map, val type: Type) {
   }
 
   enum class Status {
-    NOT_STARTED, IN_PROGRESS
+    NOT_STARTED, IN_PROGRESS, ENDED
   }
 
   var status = Status.NOT_STARTED
@@ -84,5 +84,45 @@ class Game(var map: Map, val type: Type) {
 
     players.shuffled().zip(map.seats.shuffled())
       .forEach { (player, location) -> player.bukkitPlayer.teleport(location) }
+  }
+
+  fun end(plugin: AmidstUs) {
+    status = Status.ENDED
+    val impostorsWon = players.count { !it.dead && it.impostor } >= players.count { !it.dead && it.impostor }
+
+    for (player in players) {
+      player.bukkitPlayer.sendTitle(
+        if (impostorsWon)
+          "${BukkitChatColor.RED}Impostors win"
+        else
+          "${BukkitChatColor.GREEN}Crewmates win",
+        null,
+        0,
+        5 * 20,
+        0
+      )
+    }
+
+    plugin.server.scheduler.runTaskLater(plugin, Runnable {
+      if (type == Type.PUBLIC) {
+        for (player in players) {
+          plugin.server.scoreboardManager?.mainScoreboard?.getTeam("nametagVisNever")
+            ?.removeEntry(player.bukkitPlayer.name)
+          Player.playPublicGames(plugin, null, player.bukkitPlayer)
+        }
+
+        plugin.games.remove(this)
+      } else {
+        status = Status.NOT_STARTED
+
+        for (player in players) {
+          plugin.server.scoreboardManager?.mainScoreboard?.getTeam("nametagVisNever")
+            ?.removeEntry(player.bukkitPlayer.name)
+          player.impostor = false
+          player.dead = false
+          player.joinGame(this, plugin)
+        }
+      }
+    }, 5 * 20)
   }
 }
