@@ -49,7 +49,7 @@ class Player(val bukkitPlayer: Player, var pending: Boolean = false) {
 
     if (game.players.size == 0) {
       plugin.games.remove(game)
-    } else if (game.players.none { it.promoted }) {
+    } else if (game.type == Game.Type.PRIVATE && game.players.none { it.promoted }) {
       val randomPlayer = game.players.random()
       randomPlayer.promoted = true
 
