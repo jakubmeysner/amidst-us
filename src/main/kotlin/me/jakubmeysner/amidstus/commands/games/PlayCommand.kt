@@ -68,7 +68,10 @@ class PlayCommand(val plugin: AmidstUs) : TabExecutor, Named {
         if (game.players.size == game.map.autoStartNumberOfPlayers) {
           if (game.autoStartTask == null) {
             game.autoStartTask = plugin.server.scheduler.runTaskTimer(plugin, Runnable {
-              if (game.players.size < game.map.autoStartNumberOfPlayers) {
+              if (game.type == Game.Type.PRIVATE) {
+                game.autoStartTask?.cancel()
+                game.autoStartTask = null
+              } else if (game.players.size < game.map.autoStartNumberOfPlayers) {
                 game.autoStartTask?.cancel()
                 game.autoStartTask = null
                 game.autoStartSecondsLeft = null
