@@ -41,7 +41,7 @@ class Game(var map: Map, val type: Type) {
 
       impostor.bukkitPlayer.sendTitle(
         "${BukkitChatColor.DARK_RED}Impostor",
-        null, 10, 70, 20
+        null, 0, 5 * 20, 0
       )
 
       impostor.bukkitPlayer.spigot().sendMessage(
@@ -69,7 +69,7 @@ class Game(var map: Map, val type: Type) {
         "${ChatColor.DARK_GREEN}Crewmate",
         if (impostors.size > 1) "There are ${impostors.size} impostors amidst us!"
         else "There is 1 impostor amidst us!",
-        10, 70, 20
+        0, 5 * 20, 0
       )
 
       crewmate.bukkitPlayer.spigot().sendMessage(
