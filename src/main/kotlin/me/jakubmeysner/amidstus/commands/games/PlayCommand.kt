@@ -76,9 +76,9 @@ class PlayCommand(val plugin: AmidstUs) : TabExecutor, Named {
                 game.autoStartTask = null
                 game.autoStartSecondsLeft = null
               } else {
-                if (game.autoStartSecondsLeft == null || game.autoStartSecondsLeft in 2..5) {
+                if (game.autoStartSecondsLeft == null || game.autoStartSecondsLeft in 2..15) {
                   if (game.autoStartSecondsLeft == null) {
-                    game.autoStartSecondsLeft = 5
+                    game.autoStartSecondsLeft = 15
                   } else {
                     game.autoStartSecondsLeft = game.autoStartSecondsLeft!! - 1
                   }
