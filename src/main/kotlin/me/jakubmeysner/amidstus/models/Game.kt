@@ -12,16 +12,16 @@ class Game(var map: Map, val type: Type) {
   }
 
   enum class Status {
-    PRE_GAME, GAME
+    NOT_STARTED, IN_PROGRESS
   }
 
-  var status = Status.PRE_GAME
+  var status = Status.NOT_STARTED
   val players = mutableListOf<Player>()
   var autoStartTask: BukkitTask? = null
   var autoStartSecondsLeft: Int? = null
 
   fun start(plugin: AmidstUs) {
-    status = Status.GAME
+    status = Status.IN_PROGRESS
 
     val numberOfImpostors = minOf(map.maxNumberOfImpostors, players.size / 4)
     val shuffledPlayersForRoles = players.shuffled()

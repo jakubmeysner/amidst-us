@@ -41,7 +41,7 @@ class PlayCommand(val plugin: AmidstUs) : TabExecutor, Named {
         val games = plugin.games.filter {
           (args.isEmpty() || it.map.name == args[0]) &&
             it.players.size < it.map.maxNumberOfPlayers &&
-            it.status == Game.Status.PRE_GAME
+            it.status == Game.Status.NOT_STARTED
         }.sortedByDescending { it.players.size }
 
         val game = if (games.isEmpty()) {

@@ -40,7 +40,7 @@ class DenyInviteCommand(val plugin: AmidstUs) : TabExecutor, Named {
           sender.spigot().sendMessage(
             *ComponentBuilder("This player is not currently promoted in any game!").color(ChatColor.RED).create()
           )
-        } else if (game.status == Game.Status.GAME) {
+        } else if (game.status == Game.Status.IN_PROGRESS) {
           sender.spigot().sendMessage(
             *ComponentBuilder("The game has already started!").color(ChatColor.RED).create()
           )
