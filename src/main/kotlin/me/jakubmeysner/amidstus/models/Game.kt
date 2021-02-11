@@ -91,7 +91,7 @@ class Game(var map: Map, val type: Type) {
 
   fun end(plugin: AmidstUs) {
     status = Status.ENDED
-    val impostorsWon = players.count { !it.dead && it.impostor } >= players.count { !it.dead && it.impostor }
+    val impostorsWon = players.count { !it.dead && it.impostor } >= players.count { !it.dead && !it.impostor }
 
     for (player in players) {
       player.bukkitPlayer.sendTitle(
