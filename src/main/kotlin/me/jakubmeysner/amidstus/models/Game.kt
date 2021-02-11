@@ -1,7 +1,6 @@
 package me.jakubmeysner.amidstus.models
 
 import me.jakubmeysner.amidstus.AmidstUs
-import me.jakubmeysner.amidstus.models.Player
 import net.md_5.bungee.api.ChatColor
 import net.md_5.bungee.api.chat.ComponentBuilder
 import org.bukkit.scheduler.BukkitTask
@@ -111,7 +110,7 @@ class Game(var map: Map, val type: Type) {
         for (player in players) {
           plugin.server.scoreboardManager?.mainScoreboard?.getTeam("nametagVisNever")
             ?.removeEntry(player.bukkitPlayer.name)
-          Player.playPublicGames(plugin, null, player.bukkitPlayer)
+          Player.playPublicGame(plugin, null, player.bukkitPlayer)
         }
 
         plugin.games.remove(this)

@@ -39,7 +39,7 @@ class PlayCommand(val plugin: AmidstUs) : TabExecutor, Named {
             .color(ChatColor.RED).create()
         )
       } else {
-        Player.playPublicGames(plugin, map, sender)
+        Player.playPublicGame(plugin, map, sender)
       }
     }
 

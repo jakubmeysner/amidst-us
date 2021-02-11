@@ -18,7 +18,7 @@ class Player(val bukkitPlayer: Player, var pending: Boolean = false) {
       itemMeta = itemMeta?.apply { setDisplayName("${BukkitChatColor.DARK_RED}Impostor sword") }
     }
 
-    fun playPublicGames(plugin: AmidstUs, map: Map?, bukkitPlayer: Player) {
+    fun playPublicGame(plugin: AmidstUs, map: Map?, bukkitPlayer: Player) {
       val games = plugin.games.filter {
         (map == null || it.map == map) &&
           it.players.size < it.map.maxNumberOfPlayers &&
