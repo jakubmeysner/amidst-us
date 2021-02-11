@@ -108,8 +108,10 @@ class MapOptionsCommand(val plugin: AmidstUs) : TabExecutor, Named {
               } else {
                 map.maxNumberOfPlayers = newValue
                 sender.spigot().sendMessage(
-                  *ComponentBuilder("Changed max number of players of map ${map.displayName} to " +
-                    "${map.maxNumberOfPlayers}").color(ChatColor.GREEN).create()
+                  *ComponentBuilder(
+                    "Changed max number of players of map ${map.displayName} to " +
+                      "${map.maxNumberOfPlayers}"
+                  ).color(ChatColor.GREEN).create()
                 )
               }
             }
@@ -118,8 +120,10 @@ class MapOptionsCommand(val plugin: AmidstUs) : TabExecutor, Named {
           "maxnoimpostors" -> {
             if (args.size == 2) {
               sender.spigot().sendMessage(
-                *ComponentBuilder("Max number of impostors of map ${map.displayName} is " +
-                  "${map.maxNumberOfImpostors}.").create()
+                *ComponentBuilder(
+                  "Max number of impostors of map ${map.displayName} is " +
+                    "${map.maxNumberOfImpostors}."
+                ).create()
               )
             } else {
               val newValue = args[2].toIntOrNull()
@@ -132,8 +136,10 @@ class MapOptionsCommand(val plugin: AmidstUs) : TabExecutor, Named {
               } else {
                 map.maxNumberOfImpostors = newValue
                 sender.spigot().sendMessage(
-                  *ComponentBuilder("Changed max number of impostors of map ${map.displayName} to " +
-                    "${map.maxNumberOfImpostors}").color(ChatColor.GREEN).create()
+                  *ComponentBuilder(
+                    "Changed max number of impostors of map ${map.displayName} to " +
+                      "${map.maxNumberOfImpostors}"
+                  ).color(ChatColor.GREEN).create()
                 )
               }
             }
