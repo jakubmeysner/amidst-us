@@ -14,6 +14,10 @@ class Player(val bukkitPlayer: Player, var pending: Boolean = false) {
       itemMeta?.setDisplayName("${BukkitChatColor.RED}Leave game")
     }
 
+    val ImpostorSwordItemStack = ItemStack(Material.DIAMOND_SWORD).apply {
+      itemMeta?.setDisplayName("${BukkitChatColor.DARK_RED}Impostor sword")
+    }
+
     fun playPublicGames(plugin: AmidstUs, map: Map?, bukkitPlayer: Player) {
       val games = plugin.games.filter {
         (map == null || it.map == map) &&

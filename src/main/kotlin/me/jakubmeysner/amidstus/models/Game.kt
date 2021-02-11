@@ -1,6 +1,7 @@
 package me.jakubmeysner.amidstus.models
 
 import me.jakubmeysner.amidstus.AmidstUs
+import me.jakubmeysner.amidstus.models.Player
 import net.md_5.bungee.api.ChatColor
 import net.md_5.bungee.api.chat.ComponentBuilder
 import org.bukkit.scheduler.BukkitTask
@@ -62,6 +63,8 @@ class Game(var map: Map, val type: Type) {
             }
           ).create()
       )
+
+      impostor.bukkitPlayer.inventory.setItem(1, Player.ImpostorSwordItemStack)
     }
 
     for (crewmate in crewmates) {
