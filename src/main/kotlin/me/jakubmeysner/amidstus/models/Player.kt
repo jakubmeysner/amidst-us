@@ -27,9 +27,7 @@ class Player(val bukkitPlayer: Player, var pending: Boolean = false) {
 
       val game = if (games.isEmpty()) {
         val game = Game(
-          if (map != null)
-            plugin.maps.find { it == map }!!
-          else plugin.maps.filter { it.playable }.shuffled()[0],
+          map ?: plugin.maps.filter { it.playable }.shuffled()[0],
           Game.Type.PUBLIC
         )
         plugin.games.add(game)

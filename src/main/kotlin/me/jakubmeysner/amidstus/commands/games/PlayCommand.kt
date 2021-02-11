@@ -31,7 +31,7 @@ class PlayCommand(val plugin: AmidstUs) : TabExecutor, Named {
         *ComponentBuilder("Usage: /play [map name]").color(ChatColor.RED).create()
       )
     } else {
-      val map = plugin.maps.find { it.playable && it.name == args[0] }
+      val map = plugin.maps.find { it.playable && it.name == args.getOrNull(0) }
 
       if (args.size == 1 && map == null) {
         sender.spigot().sendMessage(
