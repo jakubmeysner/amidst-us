@@ -10,18 +10,10 @@ commands:
     description: Creates a new map.
     permission: amidstus.maps.manage
     usage: /createmap <map name>
-  renamemap:
-    description: Renames a map.
-    permission: amidstus.maps.manage
-    usage: /renamemap <map name> <new map name>
   deletemap:
     description: Deletes a map.
     permission: amidstus.maps.manage
     usage: /deletemap <map name>
-  setmapdisplayname:
-    description: Sets map's display name.
-    permission: amidstus.maps.manage
-    usage: /setmapdisplayname <map name> <map display name>
   maps:
     description: Lists maps.
     permission: amidstus.maps.info
@@ -70,14 +62,6 @@ commands:
     description: Denies invite from the specified player.
     permission: amidstus.games.play.private
     usage: /denyinvite <player name>
-  setmapminplayers:
-    description: Sets map's min number of players.
-    permission: amidstus.maps.manage
-    usage: /setmapminplayers <map name> <number>
-  setmapmaxplayers:
-    description: Sets map's max number of players.
-    permission: amidstus.maps.manage
-    usage: /setmapmaxplayers <map name> <number>
   setmapmaximpostors:
     description: Sets map's max number of impostors.
     permission: amidstus.maps.manage
@@ -94,10 +78,6 @@ commands:
     description: Lists maps' seats.
     permission: amidstus.maps.info
     usage: /mapseats <map name>
-  setmapautostartplayers:
-    description: Sets map's auto start number of players.
-    permission: amidstus.maps.manage
-    usage: /setmapautostartplayers <map name> <number>
   switchmap:
     description: Switches game map to specified map.
     permission: amidstus.games.play.private
@@ -106,6 +86,10 @@ commands:
     description: Starts the game.
     permission: amidstus.games.play.private
     usage: /startgame
+  mapoptions:
+    description: Changes map's options.
+    permission: amidstus.maps.manage
+    usage: /mapoptions <map name> <option> [new value]
 
 permissions:
   amidstus.*:

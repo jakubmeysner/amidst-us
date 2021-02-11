@@ -6,9 +6,14 @@ import kotlinx.serialization.Serializable
 import kotlinx.serialization.UseSerializers
 import me.jakubmeysner.amidstus.serializers.LocationSerializer
 import org.bukkit.Location
+import java.util.regex.Pattern
 
 @Serializable
 class Map(var name: String) {
+  companion object {
+    val namePattern = Pattern.compile("^[a-z0-9_]+$")!!
+  }
+
   var displayName: String = name
   var postGameLocation: Location? = null
   var preGameLocation: Location? = null

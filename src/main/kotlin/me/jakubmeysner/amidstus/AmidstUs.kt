@@ -29,9 +29,7 @@ class AmidstUs : JavaPlugin() {
       LoadMapsCommand(this),
       MapCommand(this),
       MapsCommand(this),
-      RenameMapCommand(this),
       SaveMapsCommand(this),
-      SetMapDisplayNameCommand(this),
       SetMapPostGameLocationCommand(this),
       SetMapPreGameLocationCommand(this),
       PlayCommand(this),
@@ -40,15 +38,12 @@ class AmidstUs : JavaPlugin() {
       InviteCommand(this),
       AcceptInviteCommand(this),
       DenyInviteCommand(this),
-      SetMapMinPlayersCommand(this),
-      SetMapMaxPlayersCommand(this),
-      SetMapMaxImpostorsCommand(this),
       AddMapSeatCommand(this),
       RemoveMapSeatCommand(this),
       MapSeatsCommand(this),
-      SetMapAutoStartPlayers(this),
       SwitchMapCommand(this),
       StartGameCommand(this),
+      MapOptionsCommand(this),
     )
 
     for (command in commands) {
