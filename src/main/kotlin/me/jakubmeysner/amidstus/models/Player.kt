@@ -11,11 +11,11 @@ import org.bukkit.ChatColor as BukkitChatColor
 class Player(val bukkitPlayer: Player, var pending: Boolean = false) {
   companion object {
     val LeaveGameItemStack = ItemStack(Material.OAK_DOOR).apply {
-      itemMeta?.setDisplayName("${BukkitChatColor.RED}Leave game")
+      itemMeta = itemMeta?.apply { setDisplayName("${BukkitChatColor.RED}Leave game") }
     }
 
     val ImpostorSwordItemStack = ItemStack(Material.DIAMOND_SWORD).apply {
-      itemMeta?.setDisplayName("${BukkitChatColor.DARK_RED}Impostor sword")
+      itemMeta = itemMeta?.apply { setDisplayName("${BukkitChatColor.DARK_RED}Impostor sword") }
     }
 
     fun playPublicGames(plugin: AmidstUs, map: Map?, bukkitPlayer: Player) {
