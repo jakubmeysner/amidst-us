@@ -10,11 +10,10 @@ import org.bukkit.ChatColor as BukkitChatColor
 
 class Player(val bukkitPlayer: Player, var pending: Boolean = false) {
   companion object {
-    val LeaveGameItemStack = ItemStack(Material.OAK_DOOR).let {
-      val meta = it.itemMeta
+    val LeaveGameItemStack = ItemStack(Material.OAK_DOOR).apply {
+      val meta = itemMeta
       meta?.setDisplayName("${BukkitChatColor.RED}Leave game")
-      it.itemMeta = meta
-      it
+      itemMeta = meta
     }
 
     fun playPublicGames(plugin: AmidstUs, map: Map?, bukkitPlayer: Player) {
