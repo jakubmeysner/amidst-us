@@ -55,27 +55,26 @@ class Player(val bukkitPlayer: Player, var pending: Boolean = false) {
               game.autoStartTask = null
               game.autoStartSecondsLeft = null
             } else {
-              if (game.autoStartSecondsLeft == null || game.autoStartSecondsLeft in 2..15) {
-                if (game.autoStartSecondsLeft == null) {
-                  game.autoStartSecondsLeft = 15
-                } else {
-                  game.autoStartSecondsLeft = game.autoStartSecondsLeft!! - 1
-                }
-              } else {
+              when (game.autoStartSecondsLeft) {
+                null -> game.autoStartSecondsLeft = 15
+                in 1..15 -> game.autoStartSecondsLeft = game.autoStartSecondsLeft!! - 1
+              }
+
+              if (game.autoStartSecondsLeft == 0) {
                 game.autoStartTask?.cancel()
                 game.autoStartTask = null
                 game.autoStartSecondsLeft = null
                 game.start(plugin)
-              }
-
-              for (player in game.players) {
-                player.bukkitPlayer.sendTitle(
-                  "${BukkitChatColor.BLUE}${BukkitChatColor.BOLD}${game.autoStartSecondsLeft}",
-                  null,
-                  0,
-                  20,
-                  0
-                )
+              } else {
+                for (player in game.players) {
+                  player.bukkitPlayer.sendTitle(
+                    "${BukkitChatColor.YELLOW}${BukkitChatColor.BOLD}${game.autoStartSecondsLeft}",
+                    null,
+                    0,
+                    20,
+                    0
+                  )
+                }
               }
             }
           }, 0, 20)
