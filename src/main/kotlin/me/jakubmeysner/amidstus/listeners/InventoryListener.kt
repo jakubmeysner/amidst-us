@@ -13,8 +13,6 @@ import org.bukkit.event.player.PlayerSwapHandItemsEvent
 class InventoryListener(val plugin: AmidstUs) : Listener {
   @EventHandler
   fun onPlayerInteract(event: PlayerInteractEvent) {
-    val game = plugin.games.find { it.players.any { it.bukkit == event.player } } ?: return
-    val player = game.players.find { it.bukkit == event.player } ?: return
     event.isCancelled = true
 
     when (event.item) {
