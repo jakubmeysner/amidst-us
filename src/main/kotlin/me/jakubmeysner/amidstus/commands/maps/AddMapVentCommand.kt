@@ -45,7 +45,8 @@ class AddMapVentCommand(val plugin: AmidstUs) : TabExecutor, Named {
           map.vents.add(vent)
 
           sender.spigot().sendMessage(
-            *ComponentBuilder("Succesfully added a new vent ${vent.id} to map ${map.name}.").color(ChatColor.GREEN).create()
+            *ComponentBuilder("Succesfully added a new vent ${vent.id} to map ${map.name}.").color(ChatColor.GREEN)
+              .create()
           )
         }
       }

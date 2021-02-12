@@ -1,4 +1,5 @@
 @file:UseSerializers(LocationSerializer::class)
+
 package me.jakubmeysner.amidstus.models
 
 import kotlinx.serialization.Serializable
