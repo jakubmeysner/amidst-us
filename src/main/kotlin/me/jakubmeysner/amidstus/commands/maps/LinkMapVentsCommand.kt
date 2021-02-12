@@ -12,7 +12,7 @@ class LinkMapVentsCommand(val plugin: AmidstUs) : TabExecutor, Named {
   override val name = "linkmapvents"
 
   override fun onCommand(sender: CommandSender, command: Command, label: String, args: Array<out String>): Boolean {
-    if (args.size != 2) {
+    if (args.size != 3) {
       sender.spigot().sendMessage(
         *ComponentBuilder("Usage: /removemapvent <map name> <vent id>").color(ChatColor.RED).create()
       )
