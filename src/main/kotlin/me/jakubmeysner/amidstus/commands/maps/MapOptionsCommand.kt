@@ -205,8 +205,10 @@ class MapOptionsCommand(val plugin: AmidstUs) : TabExecutor, Named {
           "killcooldownsecs" -> {
             if (args.size == 2) {
               sender.spigot().sendMessage(
-                *ComponentBuilder("Default kill cooldown seconds of map ${map.displayName} is " +
-                  "${map.killCooldownSeconds}.").create()
+                *ComponentBuilder(
+                  "Default kill cooldown seconds of map ${map.displayName} is " +
+                    "${map.killCooldownSeconds}."
+                ).create()
               )
             } else {
               val newValue = args[2].toIntOrNull()
@@ -219,8 +221,10 @@ class MapOptionsCommand(val plugin: AmidstUs) : TabExecutor, Named {
               } else {
                 map.killCooldownSeconds = newValue
                 sender.spigot().sendMessage(
-                  *ComponentBuilder("Changed default kill cooldown seconds of map ${map.displayName} to " +
-                    "${map.killCooldownSeconds}").color(ChatColor.GREEN).create()
+                  *ComponentBuilder(
+                    "Changed default kill cooldown seconds of map ${map.displayName} to " +
+                      "${map.killCooldownSeconds}"
+                  ).color(ChatColor.GREEN).create()
                 )
               }
             }
