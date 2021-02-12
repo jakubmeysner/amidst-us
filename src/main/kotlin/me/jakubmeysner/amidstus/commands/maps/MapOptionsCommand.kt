@@ -174,6 +174,33 @@ class MapOptionsCommand(val plugin: AmidstUs) : TabExecutor, Named {
               }
             }
           }
+
+          "time" -> {
+            if (args.size == 2) {
+              sender.spigot().sendMessage(
+                *ComponentBuilder(
+                  "Time of map ${map.displayName} is ${map.time ?: "unset"}."
+                ).create()
+              )
+            } else {
+              val newValue = args[2].toIntOrNull()
+
+              if (args.size != 3 || newValue == null || newValue !in -1..24000) {
+                sender.spigot().sendMessage(
+                  *ComponentBuilder(
+                    "New value must be a valid integer between -1 and 24000"
+                  ).color(ChatColor.RED).create()
+                )
+              } else {
+                map.time = if (newValue == -1) null else newValue
+                sender.spigot().sendMessage(
+                  *ComponentBuilder(
+                    "Time of map ${map.displayName} has been set to ${map.time ?: "unset"}."
+                  ).color(ChatColor.GREEN).create()
+                )
+              }
+            }
+          }
         }
       }
     }
@@ -195,7 +222,8 @@ class MapOptionsCommand(val plugin: AmidstUs) : TabExecutor, Named {
         "minnoplayers",
         "maxnoplayers",
         "maxnoimpostors",
-        "autostartnoplayers"
+        "autostartnoplayers",
+        "time",
       ).filter { it.startsWith(args[1]) }
       3 -> when (args[1]) {
         "minnoplayers" -> plugin.maps.find { it.name == args[0] }?.let {
@@ -208,6 +236,7 @@ class MapOptionsCommand(val plugin: AmidstUs) : TabExecutor, Named {
         "autostartnoplayers" -> plugin.maps.find { it.name == args[0] }?.let {
           (it.minNumberOfPlayers..it.maxNumberOfPlayers).map { it.toString() }.filter { it.startsWith(args[2]) }
         } ?: listOf()
+        "time" -> (-1..24000).map { it.toString() }.filter { it.startsWith(args[2]) }
         else -> listOf()
       }
       else -> listOf()
