@@ -78,13 +78,13 @@ class GameOptionsCommand(val plugin: AmidstUs) : TabExecutor, Named {
                 game.map = map
                 game.maxNumberOfImpostors = minOf(game.maxNumberOfImpostors, game.map.maxNumberOfImpostors)
 
-                for (player in game.players) {
-                  player.bukkitPlayer.teleport(game.map.preGameLocation!!)
+                for (itPlayer in game.players) {
+                  itPlayer.bukkitPlayer.teleport(game.map.preGameLocation!!)
 
                   if (map.time != null) {
-                    player.bukkitPlayer.setPlayerTime(map.time!!.toLong(), false)
+                    itPlayer.bukkitPlayer.setPlayerTime(map.time!!.toLong(), false)
                   } else {
-                    player.bukkitPlayer.resetPlayerTime()
+                    itPlayer.bukkitPlayer.resetPlayerTime()
                   }
                 }
 
