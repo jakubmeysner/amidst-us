@@ -106,6 +106,10 @@ commands:
     description: Lists vents with their coordinates on given map.
     permission: amidstus.maps.manage
     usage: /mapvents <map name>
+  gameoptions:
+    description: Changes game's options.
+    permission: amidstus.games.play.common
+    usage: /gameoptions [option] [new value]
 
 permissions:
   amidstus.*:

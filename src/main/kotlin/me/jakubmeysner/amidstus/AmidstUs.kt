@@ -45,6 +45,7 @@ class AmidstUs : JavaPlugin() {
       SwitchMapCommand(this),
       StartGameCommand(this),
       MapOptionsCommand(this),
+      GameOptionsCommand(this),
     )
 
     for (command in commands) {
