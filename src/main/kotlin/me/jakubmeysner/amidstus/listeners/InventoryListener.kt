@@ -13,8 +13,8 @@ import org.bukkit.event.player.PlayerSwapHandItemsEvent
 class InventoryListener(val plugin: AmidstUs) : Listener {
   @EventHandler
   fun onPlayerInteract(event: PlayerInteractEvent) {
-    val game = plugin.games.find { it.players.any { it.bukkitPlayer == event.player } } ?: return
-    val player = game.players.find { it.bukkitPlayer == event.player } ?: return
+    val game = plugin.games.find { it.players.any { it.bukkit == event.player } } ?: return
+    val player = game.players.find { it.bukkit == event.player } ?: return
     event.isCancelled = true
 
     when (event.item) {
@@ -27,19 +27,19 @@ class InventoryListener(val plugin: AmidstUs) : Listener {
 
   @EventHandler
   fun onInventoryClick(event: InventoryClickEvent) {
-    if (plugin.games.none { it.players.any { it.bukkitPlayer == event.whoClicked } }) return
+    if (plugin.games.none { it.players.any { it.bukkit == event.whoClicked } }) return
     event.isCancelled = true
   }
 
   @EventHandler
   fun onPlayerDropItem(event: PlayerDropItemEvent) {
-    if (plugin.games.none { it.players.any { it.bukkitPlayer == event.player } }) return
+    if (plugin.games.none { it.players.any { it.bukkit == event.player } }) return
     event.isCancelled = true
   }
 
   @EventHandler
   fun onPlayerSwapHandItems(event: PlayerSwapHandItemsEvent) {
-    if (plugin.games.none { it.players.any { it.bukkitPlayer == event.player } }) return
+    if (plugin.games.none { it.players.any { it.bukkit == event.player } }) return
     event.isCancelled = true
   }
 }

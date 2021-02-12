@@ -23,7 +23,7 @@ class SwitchMapCommand(val plugin: AmidstUs) : TabExecutor, Named {
         *ComponentBuilder("This command may only be used by players!").color(ChatColor.RED).create()
       )
     } else {
-      val game = plugin.games.find { it.players.any { it.bukkitPlayer == sender } }
+      val game = plugin.games.find { it.players.any { it.bukkit == sender } }
 
       if (game == null) {
         sender.spigot().sendMessage(
@@ -34,7 +34,7 @@ class SwitchMapCommand(val plugin: AmidstUs) : TabExecutor, Named {
           *ComponentBuilder("The game has already started!").color(ChatColor.RED).create()
         )
       } else {
-        val player = game.players.find { it.bukkitPlayer == sender }!!
+        val player = game.players.find { it.bukkit == sender }!!
 
         if (!player.promoted) {
           sender.spigot().sendMessage(
@@ -56,9 +56,9 @@ class SwitchMapCommand(val plugin: AmidstUs) : TabExecutor, Named {
             game.map = map
 
             for (itPlayer in game.players) {
-              itPlayer.bukkitPlayer.teleport(map.preGameLocation!!)
+              itPlayer.bukkit.teleport(map.preGameLocation!!)
 
-              itPlayer.bukkitPlayer.spigot().sendMessage(
+              itPlayer.bukkit.spigot().sendMessage(
                 *ComponentBuilder("Switched to map ${map.displayName}.").color(ChatColor.GREEN).create()
               )
             }
@@ -78,7 +78,7 @@ class SwitchMapCommand(val plugin: AmidstUs) : TabExecutor, Named {
   ): List<String> {
     return when (args.size) {
       1 -> plugin.maps.filter {
-        it.playable && it != plugin.games.find { it.players.any { it.bukkitPlayer == sender } }?.map
+        it.playable && it != plugin.games.find { it.players.any { it.bukkit == sender } }?.map
       }.map { it.name }
       else -> listOf()
     }

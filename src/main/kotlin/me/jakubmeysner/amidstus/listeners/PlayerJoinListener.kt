@@ -8,7 +8,7 @@ import org.bukkit.event.player.PlayerJoinEvent
 class PlayerJoinListener(val plugin: AmidstUs) : Listener {
   @EventHandler
   fun onPlayerJoin(event: PlayerJoinEvent) {
-    val players = plugin.games.map { it.players }.flatten().filter { !it.pending }.map { it.bukkitPlayer }
+    val players = plugin.games.map { it.players }.flatten().filter { !it.pending }.map { it.bukkit }
 
     for (player in players) {
       player.hidePlayer(plugin, event.player)

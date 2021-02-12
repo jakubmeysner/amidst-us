@@ -9,7 +9,7 @@ import org.bukkit.inventory.ItemStack
 import org.bukkit.scheduler.BukkitTask
 import org.bukkit.ChatColor as BukkitChatColor
 
-class Player(val bukkitPlayer: Player, var pending: Boolean = false) {
+class Player(val bukkit: Player, var pending: Boolean = false) {
   companion object {
     val LeaveGameItemStack = ItemStack(Material.OAK_DOOR).apply {
       itemMeta = itemMeta?.apply { setDisplayName("${BukkitChatColor.RED}Leave game") }
@@ -99,22 +99,22 @@ class Player(val bukkitPlayer: Player, var pending: Boolean = false) {
       game.players.add(this)
     }
 
-    bukkitPlayer.teleport(game.map.preGameLocation ?: return)
-    if (game.map.time != null) bukkitPlayer.setPlayerTime(game.map.time!!.toLong(), false)
+    bukkit.teleport(game.map.preGameLocation ?: return)
+    if (game.map.time != null) bukkit.setPlayerTime(game.map.time!!.toLong(), false)
 
     for (player in plugin.server.onlinePlayers) {
-      if (game.players.any { it.bukkitPlayer == player }) {
-        bukkitPlayer.showPlayer(plugin, player)
-        player.showPlayer(plugin, bukkitPlayer)
+      if (game.players.any { it.bukkit == player }) {
+        bukkit.showPlayer(plugin, player)
+        player.showPlayer(plugin, bukkit)
       } else {
-        bukkitPlayer.hidePlayer(plugin, player)
-        player.hidePlayer(plugin, bukkitPlayer)
+        bukkit.hidePlayer(plugin, player)
+        player.hidePlayer(plugin, bukkit)
       }
     }
 
-    bukkitPlayer.inventory.clear()
-    bukkitPlayer.inventory.heldItemSlot = 0
-    bukkitPlayer.inventory.setItem(8, LeaveGameItemStack)
+    bukkit.inventory.clear()
+    bukkit.inventory.heldItemSlot = 0
+    bukkit.inventory.setItem(8, LeaveGameItemStack)
   }
 
   fun leaveGame(game: Game, plugin: AmidstUs) {
@@ -126,13 +126,13 @@ class Player(val bukkitPlayer: Player, var pending: Boolean = false) {
       val randomPlayer = game.players.random()
       randomPlayer.promoted = true
 
-      randomPlayer.bukkitPlayer.spigot().sendMessage(
+      randomPlayer.bukkit.spigot().sendMessage(
         *ComponentBuilder("Because all promoted players have left the game, you have been randomly promoted.")
           .color(ChatColor.GREEN).create()
       )
     }
 
-    bukkitPlayer.inventory.clear()
+    bukkit.inventory.clear()
 
     if (pending) return
 
@@ -143,20 +143,20 @@ class Player(val bukkitPlayer: Player, var pending: Boolean = false) {
       game.end(plugin)
     }
 
-    bukkitPlayer.teleport(game.map.postGameLocation ?: return)
-    bukkitPlayer.resetPlayerTime()
+    bukkit.teleport(game.map.postGameLocation ?: return)
+    bukkit.resetPlayerTime()
 
     for (player in plugin.server.onlinePlayers) {
-      if (plugin.games.any { it.players.any { it.bukkitPlayer == player } }) {
-        bukkitPlayer.hidePlayer(plugin, player)
-        player.hidePlayer(plugin, bukkitPlayer)
+      if (plugin.games.any { it.players.any { it.bukkit == player } }) {
+        bukkit.hidePlayer(plugin, player)
+        player.hidePlayer(plugin, bukkit)
       } else {
-        bukkitPlayer.showPlayer(plugin, player)
-        player.showPlayer(plugin, bukkitPlayer)
+        bukkit.showPlayer(plugin, player)
+        player.showPlayer(plugin, bukkit)
       }
     }
 
     plugin.server.scoreboardManager?.mainScoreboard?.getTeam("nametagVisNever")
-      ?.removeEntry(bukkitPlayer.name)
+      ?.removeEntry(bukkit.name)
   }
 }

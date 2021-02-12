@@ -23,7 +23,7 @@ class CreateGameCommand(val plugin: AmidstUs) : TabExecutor, Named {
       sender.spigot().sendMessage(
         *ComponentBuilder("This command can only be used by players!").color(ChatColor.RED).create()
       )
-    } else if (plugin.games.any { it.players.any { it.bukkitPlayer == sender } }) {
+    } else if (plugin.games.any { it.players.any { it.bukkit == sender } }) {
       sender.spigot().sendMessage(
         *ComponentBuilder("You are already in game!").color(ChatColor.RED).create()
       )

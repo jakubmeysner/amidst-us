@@ -15,24 +15,24 @@ class EntityDamageByEntityListener(val plugin: AmidstUs) : Listener {
     if (event.entity !is BukkitPlayer) return
 
     val game = plugin.games.find {
-      it.players.any { it.bukkitPlayer == event.entity } &&
-        it.players.any { it.bukkitPlayer == event.damager }
+      it.players.any { it.bukkit == event.entity } &&
+        it.players.any { it.bukkit == event.damager }
     } ?: return
 
     event.isCancelled = true
 
-    val damagee = game.players.find { it.bukkitPlayer == event.entity }!!
-    val damager = game.players.find { it.bukkitPlayer == event.damager }!!
+    val damagee = game.players.find { it.bukkit == event.entity }!!
+    val damager = game.players.find { it.bukkit == event.damager }!!
 
     if (damagee.dead || damagee.impostor || damager.dead || !damager.impostor || damager.killCooldownActive) return
     if (event.cause != EntityDamageEvent.DamageCause.ENTITY_ATTACK) return
-    if (damager.bukkitPlayer.inventory.itemInMainHand != Player.ImpostorSwordItemStack) return
+    if (damager.bukkit.inventory.itemInMainHand != Player.ImpostorSwordItemStack) return
 
     damagee.dead = true
 
     for (player in game.players) {
       if (!player.dead) {
-        player.bukkitPlayer.hidePlayer(plugin, damagee.bukkitPlayer)
+        player.bukkit.hidePlayer(plugin, damagee.bukkit)
       }
     }
 
@@ -55,9 +55,9 @@ class EntityDamageByEntityListener(val plugin: AmidstUs) : Listener {
         damager.killCooldownTask?.cancel()
         damager.killCooldownTask = null
 
-        damager.bukkitPlayer.inventory.setItem(1, Player.ImpostorSwordItemStack)
+        damager.bukkit.inventory.setItem(1, Player.ImpostorSwordItemStack)
       } else {
-        damager.bukkitPlayer.inventory.setItem(1, Player.ImpostorSwordItemStack.apply {
+        damager.bukkit.inventory.setItem(1, Player.ImpostorSwordItemStack.apply {
           itemMeta = itemMeta?.apply {
             setDisplayName("${ChatColor.DARK_RED}Impostor sword (${damager.killCooldownSecondsLeft}s cooldown)")
           }

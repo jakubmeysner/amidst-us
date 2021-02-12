@@ -36,12 +36,12 @@ class InviteCommand(val plugin: AmidstUs) : TabExecutor, Named {
         sender.spigot().sendMessage(
           *ComponentBuilder("You can not invite yourself to a game!").color(ChatColor.RED).create()
         )
-      } else if (plugin.games.any { it.players.any { it.bukkitPlayer == bukkitPlayer && !it.pending } }) {
+      } else if (plugin.games.any { it.players.any { it.bukkit == bukkitPlayer && !it.pending } }) {
         sender.spigot().sendMessage(
           *ComponentBuilder("This player is currently in game!").color(ChatColor.RED).create()
         )
       } else {
-        val game = plugin.games.find { it.players.any { it.bukkitPlayer == sender } }
+        val game = plugin.games.find { it.players.any { it.bukkit == sender } }
 
         if (game == null) {
           sender.spigot().sendMessage(
@@ -51,12 +51,12 @@ class InviteCommand(val plugin: AmidstUs) : TabExecutor, Named {
           sender.spigot().sendMessage(
             *ComponentBuilder("The game has already started!").color(ChatColor.RED).create()
           )
-        } else if (game.players.any { it.bukkitPlayer == bukkitPlayer }) {
+        } else if (game.players.any { it.bukkit == bukkitPlayer }) {
           sender.spigot().sendMessage(
             *ComponentBuilder("This player has already been invited to this game!").color(ChatColor.RED).create()
           )
         } else {
-          val senderPlayer = game.players.find { it.bukkitPlayer == sender }!!
+          val senderPlayer = game.players.find { it.bukkit == sender }!!
 
           if (!senderPlayer.promoted) {
             sender.spigot().sendMessage(
@@ -104,7 +104,7 @@ class InviteCommand(val plugin: AmidstUs) : TabExecutor, Named {
     return when (args.size) {
       1 -> plugin.server.onlinePlayers.filter {
         it != sender &&
-          plugin.games.none { game -> game.players.any { player -> player.bukkitPlayer == it && !player.pending } }
+          plugin.games.none { game -> game.players.any { player -> player.bukkit == it && !player.pending } }
       }.map { it.name }.filter { it.startsWith(args[0]) }
       else -> listOf()
     }

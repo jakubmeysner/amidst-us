@@ -22,7 +22,7 @@ class DenyInviteCommand(val plugin: AmidstUs) : TabExecutor, Named {
       sender.spigot().sendMessage(
         *ComponentBuilder("This command can only be used by players!").color(ChatColor.RED).create()
       )
-    } else if (plugin.games.any { it.players.any { it.bukkitPlayer == sender && !it.pending } }) {
+    } else if (plugin.games.any { it.players.any { it.bukkit == sender && !it.pending } }) {
       sender.spigot().sendMessage(
         *ComponentBuilder("You are already in game!").color(ChatColor.RED).create()
       )
@@ -34,7 +34,7 @@ class DenyInviteCommand(val plugin: AmidstUs) : TabExecutor, Named {
           *ComponentBuilder("Could not find any player with this name!").color(ChatColor.RED).create()
         )
       } else {
-        val game = plugin.games.find { it.players.any { it.bukkitPlayer == inviter && it.promoted } }
+        val game = plugin.games.find { it.players.any { it.bukkit == inviter && it.promoted } }
 
         if (game == null) {
           sender.spigot().sendMessage(
@@ -45,7 +45,7 @@ class DenyInviteCommand(val plugin: AmidstUs) : TabExecutor, Named {
             *ComponentBuilder("The game has already started!").color(ChatColor.RED).create()
           )
         } else {
-          val player = game.players.find { it.bukkitPlayer == sender && it.pending }
+          val player = game.players.find { it.bukkit == sender && it.pending }
 
           if (player == null) {
             sender.spigot().sendMessage(
@@ -77,8 +77,8 @@ class DenyInviteCommand(val plugin: AmidstUs) : TabExecutor, Named {
     args: Array<out String>
   ): List<String> {
     return when (args.size) {
-      1 -> plugin.games.filter { it.players.any { it.bukkitPlayer == sender && it.pending } }.map { it.players }
-        .flatten().filter { it.promoted }.map { it.bukkitPlayer.name }
+      1 -> plugin.games.filter { it.players.any { it.bukkit == sender && it.pending } }.map { it.players }
+        .flatten().filter { it.promoted }.map { it.bukkit.name }
       else -> listOf()
     }
   }

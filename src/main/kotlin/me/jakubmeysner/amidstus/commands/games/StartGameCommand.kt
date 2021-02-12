@@ -23,7 +23,7 @@ class StartGameCommand(val plugin: AmidstUs) : TabExecutor, Named {
         *ComponentBuilder("This command may only be used by players!").color(ChatColor.RED).create()
       )
     } else {
-      val game = plugin.games.find { it.players.any { it.bukkitPlayer == sender } }
+      val game = plugin.games.find { it.players.any { it.bukkit == sender } }
 
       if (game == null) {
         sender.spigot().sendMessage(
@@ -34,7 +34,7 @@ class StartGameCommand(val plugin: AmidstUs) : TabExecutor, Named {
           *ComponentBuilder("The game has already started!").color(ChatColor.RED).create()
         )
       } else {
-        val player = game.players.find { it.bukkitPlayer == sender }!!
+        val player = game.players.find { it.bukkit == sender }!!
 
         if (!player.promoted) {
           sender.spigot().sendMessage(

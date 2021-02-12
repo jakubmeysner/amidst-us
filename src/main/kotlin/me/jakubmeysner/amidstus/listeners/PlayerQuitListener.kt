@@ -8,8 +8,8 @@ import org.bukkit.event.player.PlayerQuitEvent
 class PlayerQuitListener(val plugin: AmidstUs) : Listener {
   @EventHandler
   fun onPlayerQuit(event: PlayerQuitEvent) {
-    val game = plugin.games.find { it.players.any { it.bukkitPlayer == event.player } } ?: return
-    val player = game.players.find { it.bukkitPlayer == event.player }!!
+    val game = plugin.games.find { it.players.any { it.bukkit == event.player } } ?: return
+    val player = game.players.find { it.bukkit == event.player }!!
     player.leaveGame(game, plugin)
   }
 }

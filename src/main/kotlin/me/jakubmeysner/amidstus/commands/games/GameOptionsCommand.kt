@@ -12,14 +12,14 @@ class GameOptionsCommand(val plugin: AmidstUs) : TabExecutor, Named {
   override val name = "gameoptions"
 
   override fun onCommand(sender: CommandSender, command: Command, label: String, args: Array<out String>): Boolean {
-    val game = plugin.games.find { it.players.any { it.bukkitPlayer == sender } }
+    val game = plugin.games.find { it.players.any { it.bukkit == sender } }
 
     if (game == null) {
       sender.spigot().sendMessage(
         *ComponentBuilder("You are not in game at the moment!").color(ChatColor.RED).create()
       )
     } else {
-      val player = game.players.find { it.bukkitPlayer == sender }!!
+      val player = game.players.find { it.bukkit == sender }!!
 
       if (args.isEmpty()) {
         sender.spigot().sendMessage(
@@ -79,12 +79,12 @@ class GameOptionsCommand(val plugin: AmidstUs) : TabExecutor, Named {
                 game.maxNumberOfImpostors = minOf(game.maxNumberOfImpostors, game.map.maxNumberOfImpostors)
 
                 for (itPlayer in game.players) {
-                  itPlayer.bukkitPlayer.teleport(game.map.preGameLocation!!)
+                  itPlayer.bukkit.teleport(game.map.preGameLocation!!)
 
                   if (map.time != null) {
-                    itPlayer.bukkitPlayer.setPlayerTime(map.time!!.toLong(), false)
+                    itPlayer.bukkit.setPlayerTime(map.time!!.toLong(), false)
                   } else {
-                    itPlayer.bukkitPlayer.resetPlayerTime()
+                    itPlayer.bukkit.resetPlayerTime()
                   }
                 }
 
@@ -152,7 +152,7 @@ class GameOptionsCommand(val plugin: AmidstUs) : TabExecutor, Named {
 
       2 -> when (args[0]) {
         "map" -> plugin.maps.filter { it.playable }.map { it.name }.filter { it.startsWith(args[1]) }
-        "maxnoimpostors" -> plugin.games.find { it.players.any { it.bukkitPlayer == sender } }?.map?.let {
+        "maxnoimpostors" -> plugin.games.find { it.players.any { it.bukkit == sender } }?.map?.let {
           (1..it.maxNumberOfImpostors).map { it.toString() }.filter { it.startsWith(args[1]) }
         } ?: (1..6).map { it.toString() }.filter { it.startsWith(args[1]) }
         "killcooldownsecs" -> (10..60).map { it.toString() }.filter { it.startsWith(args[1]) }

@@ -32,22 +32,22 @@ class Game(var map: Map, val type: Type) {
     val crewmates = shuffledPlayersForRoles.takeLast(shuffledPlayersForRoles.size - numberOfImpostors)
 
     for (player in players) {
-      player.bukkitPlayer.inventory.clear()
-      player.bukkitPlayer.inventory.heldItemSlot = 0
+      player.bukkit.inventory.clear()
+      player.bukkit.inventory.heldItemSlot = 0
 
       plugin.server.scoreboardManager?.mainScoreboard?.getTeam("nametagVisNever")
-        ?.addEntry(player.bukkitPlayer.name)
+        ?.addEntry(player.bukkit.name)
     }
 
     for (impostor in impostors) {
       impostor.impostor = true
 
-      impostor.bukkitPlayer.sendTitle(
+      impostor.bukkit.sendTitle(
         "${BukkitChatColor.DARK_RED}Impostor",
         null, 0, 5 * 20, 0
       )
 
-      impostor.bukkitPlayer.spigot().sendMessage(
+      impostor.bukkit.spigot().sendMessage(
         *ComponentBuilder("You are ${if (impostors.size > 1) "an" else "the"} impostor!\n")
           .color(ChatColor.DARK_RED)
           .append(
@@ -60,24 +60,24 @@ class Game(var map: Map, val type: Type) {
               2 -> "\nThe other impostor is ${impostors.filter { it != impostor }[0]}."
               else -> "\nThe other impostors are ${
                 impostors.filter { it != impostor }
-                  .map { it.bukkitPlayer.name }.joinToString(", ")
+                  .map { it.bukkit.name }.joinToString(", ")
               }."
             }
           ).create()
       )
 
-      impostor.bukkitPlayer.inventory.setItem(1, Player.ImpostorSwordItemStack)
+      impostor.bukkit.inventory.setItem(1, Player.ImpostorSwordItemStack)
     }
 
     for (crewmate in crewmates) {
-      crewmate.bukkitPlayer.sendTitle(
+      crewmate.bukkit.sendTitle(
         "${ChatColor.DARK_GREEN}Crewmate",
         if (impostors.size > 1) "There are ${impostors.size} impostors amidst us!"
         else "There is 1 impostor amidst us!",
         0, 5 * 20, 0
       )
 
-      crewmate.bukkitPlayer.spigot().sendMessage(
+      crewmate.bukkit.spigot().sendMessage(
         *ComponentBuilder("You are a crewmate!").color(ChatColor.DARK_GREEN)
           .append(
             "Your objective is to complete tasks and uncover the " +
@@ -88,7 +88,7 @@ class Game(var map: Map, val type: Type) {
     }
 
     players.shuffled().zip(map.seats.shuffled())
-      .forEach { (player, location) -> player.bukkitPlayer.teleport(location) }
+      .forEach { (player, location) -> player.bukkit.teleport(location) }
   }
 
   fun end(plugin: AmidstUs) {
@@ -96,7 +96,7 @@ class Game(var map: Map, val type: Type) {
     val impostorsWon = players.count { !it.dead && it.impostor } >= players.count { !it.dead && !it.impostor }
 
     for (player in players) {
-      player.bukkitPlayer.sendTitle(
+      player.bukkit.sendTitle(
         if (impostorsWon)
           "${BukkitChatColor.RED}Impostors win"
         else
@@ -112,8 +112,8 @@ class Game(var map: Map, val type: Type) {
       if (type == Type.PUBLIC) {
         for (player in players) {
           plugin.server.scoreboardManager?.mainScoreboard?.getTeam("nametagVisNever")
-            ?.removeEntry(player.bukkitPlayer.name)
-          Player.playPublicGame(plugin, null, player.bukkitPlayer)
+            ?.removeEntry(player.bukkit.name)
+          Player.playPublicGame(plugin, null, player.bukkit)
         }
 
         plugin.games.remove(this)
@@ -122,7 +122,7 @@ class Game(var map: Map, val type: Type) {
 
         for (player in players) {
           plugin.server.scoreboardManager?.mainScoreboard?.getTeam("nametagVisNever")
-            ?.removeEntry(player.bukkitPlayer.name)
+            ?.removeEntry(player.bukkit.name)
           player.impostor = false
           player.dead = false
           player.joinGame(this, plugin)
