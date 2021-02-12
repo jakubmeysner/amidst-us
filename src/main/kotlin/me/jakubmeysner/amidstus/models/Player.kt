@@ -93,6 +93,7 @@ class Player(val bukkitPlayer: Player, var pending: Boolean = false) {
     }
 
     bukkitPlayer.teleport(game.map.preGameLocation ?: return)
+    if (game.map.time != null) bukkitPlayer.setPlayerTime(game.map.time!!.toLong(), false)
 
     for (player in plugin.server.onlinePlayers) {
       if (game.players.any { it.bukkitPlayer == player }) {
@@ -136,6 +137,7 @@ class Player(val bukkitPlayer: Player, var pending: Boolean = false) {
     }
 
     bukkitPlayer.teleport(game.map.postGameLocation ?: return)
+    bukkitPlayer.resetPlayerTime()
 
     for (player in plugin.server.onlinePlayers) {
       if (plugin.games.any { it.players.any { it.bukkitPlayer == player } }) {

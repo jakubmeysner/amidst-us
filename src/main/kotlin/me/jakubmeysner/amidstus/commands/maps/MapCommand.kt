@@ -35,6 +35,7 @@ class MapCommand(val plugin: AmidstUs) : TabExecutor, Named {
                 Max players: ${map.maxNumberOfPlayers}
                 Max impostors: ${map.maxNumberOfImpostors}
                 Auto start players: ${map.autoStartNumberOfPlayers}
+                Time: ${map.time ?: "unset"}
               """.trimIndent()
             ).color(null).create()
         )

@@ -21,6 +21,7 @@ class Map(var name: String) {
   var maxNumberOfPlayers = 10
   var maxNumberOfImpostors = 2
   var autoStartNumberOfPlayers = 6
+  var time: Int? = null
   val seats = mutableListOf<Location>()
 
   val playable: Boolean
