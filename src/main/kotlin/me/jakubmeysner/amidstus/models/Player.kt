@@ -70,8 +70,8 @@ class Player(val bukkitPlayer: Player, var pending: Boolean = false) {
                 game.autoStartSecondsLeft = null
                 game.start(plugin)
               } else {
-                for (player in game.players) {
-                  player.bukkitPlayer.sendTitle(
+                for (itPlayer in game.players) {
+                  itPlayer.bukkit.sendTitle(
                     "${BukkitChatColor.YELLOW}${BukkitChatColor.BOLD}${game.autoStartSecondsLeft}",
                     null,
                     0,
