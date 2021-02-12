@@ -38,18 +38,27 @@ class LinkMapVentsCommand(val plugin: AmidstUs) : TabExecutor, Named {
               *ComponentBuilder("Could not find any vent with this id (second)!").color(ChatColor.RED).create()
             )
           } else {
-            vent1.linkedVents.add(vent2)
-            vent2.linkedVents.add(vent1)
+            if (vent1.linkedVents.contains(vent2.id)) {
+              vent1.linkedVents.remove(vent2.id)
+              vent2.linkedVents.remove(vent1.id)
 
-            sender.spigot().sendMessage(
-              *ComponentBuilder("Succesfully linked vents ${vent1.id} and ${vent2.id} in map ${map.name}.")
-                .color(ChatColor.GREEN).create()
-            )
+              sender.spigot().sendMessage(
+                *ComponentBuilder("Succesfully unlinked vents ${vent1.id} and ${vent2.id} in map ${map.name}.")
+                  .color(ChatColor.GREEN).create()
+              )
+            } else {
+              vent1.linkedVents.add(vent2.id)
+              vent2.linkedVents.add(vent1.id)
+
+              sender.spigot().sendMessage(
+                *ComponentBuilder("Succesfully linked vents ${vent1.id} and ${vent2.id} in map ${map.name}.")
+                  .color(ChatColor.GREEN).create()
+              )
+            }
           }
         }
       }
     }
-
     return true
   }
 
@@ -61,10 +70,11 @@ class LinkMapVentsCommand(val plugin: AmidstUs) : TabExecutor, Named {
   ): List<String> {
     return when (args.size) {
       1 -> plugin.maps.map { it.name }.filter { it.startsWith(args[0]) }
-      2 -> plugin.maps.find { it.name == args[0] }?.vents?.map { it.id }?.filter { it.startsWith(args[1]) } ?: listOf()
-      3 -> plugin.maps.find { it.name == args[0] }?.vents?.map { it.id }?.filter { it.startsWith(args[2]) } ?: listOf()
+      2 -> plugin.maps.find { it.name == args[0] }?.vents?.map { it.id }?.filter { it.startsWith(args[1]) }
+        ?: listOf()
+      3 -> plugin.maps.find { it.name == args[0] }?.vents?.map { it.id }?.filter { it.startsWith(args[2]) }
+        ?: listOf()
       else -> listOf()
     }
   }
-
 }

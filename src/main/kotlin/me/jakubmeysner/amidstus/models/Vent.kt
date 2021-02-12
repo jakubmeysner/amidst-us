@@ -10,5 +10,5 @@ import java.util.*
 @Serializable
 class Vent(val location: Location) {
   val id = UUID.randomUUID().toString()
-  var linkedVents = mutableListOf<Vent>()
+  var linkedVents = mutableListOf<String>()
 }

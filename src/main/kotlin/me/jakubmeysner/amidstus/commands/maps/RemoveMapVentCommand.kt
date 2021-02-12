@@ -31,7 +31,9 @@ class RemoveMapVentCommand(val plugin: AmidstUs) : TabExecutor, Named {
           )
         } else {
           map.vents.remove(vent)
-
+          for (itVent in map.vents){
+            itVent.linkedVents.remove(vent.id)
+          }
           sender.spigot().sendMessage(
             *ComponentBuilder("Succesfully removed vent ${vent.id} from map ${map.name}.").color(ChatColor.GREEN).create()
           )
