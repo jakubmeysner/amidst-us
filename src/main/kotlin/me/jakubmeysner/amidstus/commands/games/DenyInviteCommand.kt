@@ -2,6 +2,7 @@ package me.jakubmeysner.amidstus.commands.games
 
 import me.jakubmeysner.amidstus.AmidstUs
 import me.jakubmeysner.amidstus.interfaces.Named
+import me.jakubmeysner.amidstus.models.Game
 import net.md_5.bungee.api.ChatColor
 import net.md_5.bungee.api.chat.ComponentBuilder
 import org.bukkit.command.Command
@@ -15,7 +16,7 @@ class DenyInviteCommand(val plugin: AmidstUs) : TabExecutor, Named {
   override fun onCommand(sender: CommandSender, command: Command, label: String, args: Array<out String>): Boolean {
     if (args.size != 1) {
       sender.spigot().sendMessage(
-        *ComponentBuilder("Usage: /acceptinvite <player>").color(ChatColor.RED).create()
+        *ComponentBuilder("Usage: /acceptinvite <player name>").color(ChatColor.RED).create()
       )
     } else if (sender !is Player) {
       sender.spigot().sendMessage(
@@ -39,6 +40,10 @@ class DenyInviteCommand(val plugin: AmidstUs) : TabExecutor, Named {
           sender.spigot().sendMessage(
             *ComponentBuilder("This player is not currently promoted in any game!").color(ChatColor.RED).create()
           )
+        } else if (game.status == Game.Status.IN_PROGRESS) {
+          sender.spigot().sendMessage(
+            *ComponentBuilder("The game has already started!").color(ChatColor.RED).create()
+          )
         } else {
           val player = game.players.find { it.bukkitPlayer == sender && it.pending }
 
@@ -48,6 +53,11 @@ class DenyInviteCommand(val plugin: AmidstUs) : TabExecutor, Named {
             )
           } else {
             player.leaveGame(game, plugin)
+
+            sender.spigot().sendMessage(
+              *ComponentBuilder("You have denied ${inviter.name}'s request to join their game.")
+                .color(ChatColor.DARK_RED).create()
+            )
 
             inviter.spigot().sendMessage(
               *ComponentBuilder("Player ${sender.name} has denied your invite!").color(ChatColor.DARK_RED).create()

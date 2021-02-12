@@ -1,4 +1,4 @@
-package me.jakubmeysner.amidstus.commands.maps
+package me.jakubmeysner.amidstus.commands.games
 
 import me.jakubmeysner.amidstus.AmidstUs
 import me.jakubmeysner.amidstus.interfaces.Named

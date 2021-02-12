@@ -31,7 +31,7 @@ class SetMapPostGameLocationCommand(val plugin: AmidstUs) : TabExecutor, Named {
       } else {
         map.postGameLocation = sender.location
         sender.spigot().sendMessage(
-          *ComponentBuilder("Changed the post game location of map \"${map.name}\" to your location.")
+          *ComponentBuilder("Changed the post game location of map ${map.displayName} to your location.")
             .color(ChatColor.GREEN).create()
         )
       }

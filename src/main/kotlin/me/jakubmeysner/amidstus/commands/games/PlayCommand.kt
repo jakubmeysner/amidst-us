@@ -2,7 +2,7 @@ package me.jakubmeysner.amidstus.commands.games
 
 import me.jakubmeysner.amidstus.AmidstUs
 import me.jakubmeysner.amidstus.interfaces.Named
-import me.jakubmeysner.amidstus.models.*
+import me.jakubmeysner.amidstus.models.Player
 import net.md_5.bungee.api.ChatColor
 import net.md_5.bungee.api.chat.ComponentBuilder
 import org.bukkit.command.Command
@@ -31,38 +31,15 @@ class PlayCommand(val plugin: AmidstUs) : TabExecutor, Named {
         *ComponentBuilder("Usage: /play [map name]").color(ChatColor.RED).create()
       )
     } else {
-      if (args.size == 1 && plugin.maps.none { it.playable && it.name == args[0] }) {
+      val map = plugin.maps.find { it.playable && it.name == args.getOrNull(0) }
+
+      if (args.size == 1 && map == null) {
         sender.spigot().sendMessage(
           *ComponentBuilder("Could not find any map with this name or it is not playable!")
             .color(ChatColor.RED).create()
         )
       } else {
-        val games = plugin.games.filter {
-          (args.isEmpty() || it.map.name == args[0]) &&
-            it.players.size < it.map.maxNumberOfPlayers &&
-            it.status == GameStatus.PRE_GAME
-        }.sortedByDescending { it.players.size }
-
-        val game = if (games.isEmpty()) {
-          val game = Game(
-            if (args.isNotEmpty())
-              plugin.maps.find { it.name == args[0] }!!
-            else plugin.maps.filter { it.playable }.shuffled()[0],
-            GameType.PUBLIC
-          )
-          plugin.games.add(game)
-          game
-        } else {
-          games[0]
-        }
-
-        val player = Player(sender)
-        player.joinGame(game, plugin)
-
-        sender.spigot().sendMessage(
-          *ComponentBuilder("You are now playing on ${game.map.displayName}!")
-            .color(ChatColor.GREEN).create()
-        )
+        Player.playPublicGame(plugin, map, sender)
       }
     }
 

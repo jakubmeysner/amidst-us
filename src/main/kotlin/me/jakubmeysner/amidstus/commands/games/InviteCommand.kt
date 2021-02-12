@@ -2,6 +2,7 @@ package me.jakubmeysner.amidstus.commands.games
 
 import me.jakubmeysner.amidstus.AmidstUs
 import me.jakubmeysner.amidstus.interfaces.Named
+import me.jakubmeysner.amidstus.models.Game
 import me.jakubmeysner.amidstus.models.Player
 import net.md_5.bungee.api.ChatColor
 import net.md_5.bungee.api.chat.ClickEvent
@@ -17,7 +18,7 @@ class InviteCommand(val plugin: AmidstUs) : TabExecutor, Named {
   override fun onCommand(sender: CommandSender, command: Command, label: String, args: Array<out String>): Boolean {
     if (args.size != 1) {
       sender.spigot().sendMessage(
-        *ComponentBuilder("Usage: /invite <player>").color(ChatColor.RED).create()
+        *ComponentBuilder("Usage: /invite <player name>").color(ChatColor.RED).create()
       )
     } else if (sender !is BukkitPlayer) {
       sender.spigot().sendMessage(
@@ -45,6 +46,14 @@ class InviteCommand(val plugin: AmidstUs) : TabExecutor, Named {
         if (game == null) {
           sender.spigot().sendMessage(
             *ComponentBuilder("You are not in game at the moment!").color(ChatColor.RED).create()
+          )
+        } else if (game.status == Game.Status.IN_PROGRESS) {
+          sender.spigot().sendMessage(
+            *ComponentBuilder("The game has already started!").color(ChatColor.RED).create()
+          )
+        } else if (game.players.any { it.bukkitPlayer == bukkitPlayer }) {
+          sender.spigot().sendMessage(
+            *ComponentBuilder("This player has already been invited to this game!").color(ChatColor.RED).create()
           )
         } else {
           val senderPlayer = game.players.find { it.bukkitPlayer == sender }!!

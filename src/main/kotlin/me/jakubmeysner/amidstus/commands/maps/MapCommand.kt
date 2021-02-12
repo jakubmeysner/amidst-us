@@ -14,7 +14,7 @@ class MapCommand(val plugin: AmidstUs) : TabExecutor, Named {
   override fun onCommand(sender: CommandSender, command: Command, label: String, args: Array<out String>): Boolean {
     if (args.size != 1) {
       sender.spigot().sendMessage(
-        *ComponentBuilder("Usage: /map <name>").color(ChatColor.RED).create()
+        *ComponentBuilder("Usage: /map <map name>").color(ChatColor.RED).create()
       )
     } else {
       val map = plugin.maps.find { it.name == args[0] }
@@ -31,6 +31,11 @@ class MapCommand(val plugin: AmidstUs) : TabExecutor, Named {
                 Name: ${map.name}
                 Display name: ${map.displayName}
                 Playable: ${if (map.playable) "Yes" else "No"}
+                Min players: ${map.minNumberOfPlayers}
+                Max players: ${map.maxNumberOfPlayers}
+                Max impostors: ${map.maxNumberOfImpostors}
+                Auto start players: ${map.autoStartNumberOfPlayers}
+                Time: ${map.time ?: "unset"}
               """.trimIndent()
             ).color(null).create()
         )

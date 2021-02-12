@@ -14,7 +14,7 @@ class DeleteMapCommand(val plugin: AmidstUs) : TabExecutor, Named {
   override fun onCommand(sender: CommandSender, command: Command, label: String, args: Array<out String>): Boolean {
     if (args.size != 1) {
       sender.spigot().sendMessage(
-        *ComponentBuilder("Usage: /deletemap <name>").color(ChatColor.RED).create()
+        *ComponentBuilder("Usage: /deletemap <map name>").color(ChatColor.RED).create()
       )
     } else {
       val map = plugin.maps.find { it.name == args[0] }
@@ -26,7 +26,7 @@ class DeleteMapCommand(val plugin: AmidstUs) : TabExecutor, Named {
       } else {
         plugin.maps.remove(map)
         sender.spigot().sendMessage(
-          *ComponentBuilder("Deleted map \"${args[0]}\".").color(ChatColor.GREEN).create()
+          *ComponentBuilder("Deleted map ${map.displayName}.").color(ChatColor.GREEN).create()
         )
       }
     }

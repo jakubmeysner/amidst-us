@@ -3,7 +3,6 @@ package me.jakubmeysner.amidstus.commands.games
 import me.jakubmeysner.amidstus.AmidstUs
 import me.jakubmeysner.amidstus.interfaces.Named
 import me.jakubmeysner.amidstus.models.Game
-import me.jakubmeysner.amidstus.models.GameType
 import me.jakubmeysner.amidstus.models.Player
 import net.md_5.bungee.api.ChatColor
 import net.md_5.bungee.api.chat.ComponentBuilder
@@ -41,9 +40,10 @@ class CreateGameCommand(val plugin: AmidstUs) : TabExecutor, Named {
             .color(ChatColor.RED).create()
         )
       } else {
-        val game = Game(map, GameType.PRIVATE)
+        val game = Game(map, Game.Type.PRIVATE)
         plugin.games.add(game)
         val player = Player(sender)
+        player.promoted = true
         player.joinGame(game, plugin)
 
         sender.spigot().sendMessage(

@@ -16,7 +16,7 @@ class CreateMapCommand(val plugin: AmidstUs) : TabExecutor, Named {
   override fun onCommand(sender: CommandSender, command: Command, label: String, args: Array<out String>): Boolean {
     if (args.size != 1) {
       sender.spigot().sendMessage(
-        *ComponentBuilder("Usage: /createmap <name>").color(ChatColor.RED).create()
+        *ComponentBuilder("Usage: /createmap <map name>").color(ChatColor.RED).create()
       )
     } else if (!Pattern.compile("^[a-z0-9_]+$").matcher(args[0]).matches()) {
       sender.spigot().sendMessage(
@@ -31,7 +31,7 @@ class CreateMapCommand(val plugin: AmidstUs) : TabExecutor, Named {
       val map = Map(args[0])
       plugin.maps.add(map)
       sender.spigot().sendMessage(
-        *ComponentBuilder("Created new map \"${map.name}\".").color(ChatColor.GREEN).create()
+        *ComponentBuilder("Created new map \"${map.displayName}\".").color(ChatColor.GREEN).create()
       )
     }
 

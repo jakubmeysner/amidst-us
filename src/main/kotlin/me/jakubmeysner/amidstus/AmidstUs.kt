@@ -5,10 +5,14 @@ import kotlinx.serialization.encodeToString
 import kotlinx.serialization.json.Json
 import me.jakubmeysner.amidstus.commands.games.*
 import me.jakubmeysner.amidstus.commands.maps.*
+import me.jakubmeysner.amidstus.listeners.EntityDamageByEntityListener
+import me.jakubmeysner.amidstus.listeners.InventoryListener
+import me.jakubmeysner.amidstus.listeners.PlayerJoinListener
 import me.jakubmeysner.amidstus.listeners.PlayerQuitListener
 import me.jakubmeysner.amidstus.models.Game
 import me.jakubmeysner.amidstus.models.Map
 import org.bukkit.plugin.java.JavaPlugin
+import org.bukkit.scoreboard.Team
 import java.io.File
 import java.nio.file.Files
 import java.nio.file.Paths
@@ -26,9 +30,7 @@ class AmidstUs : JavaPlugin() {
       LoadMapsCommand(this),
       MapCommand(this),
       MapsCommand(this),
-      RenameMapCommand(this),
       SaveMapsCommand(this),
-      SetMapDisplayNameCommand(this),
       SetMapPostGameLocationCommand(this),
       SetMapPreGameLocationCommand(this),
       PlayCommand(this),
@@ -37,6 +39,12 @@ class AmidstUs : JavaPlugin() {
       InviteCommand(this),
       AcceptInviteCommand(this),
       DenyInviteCommand(this),
+      AddMapSeatCommand(this),
+      RemoveMapSeatCommand(this),
+      MapSeatsCommand(this),
+      SwitchMapCommand(this),
+      StartGameCommand(this),
+      MapOptionsCommand(this),
     )
 
     for (command in commands) {
@@ -45,11 +53,20 @@ class AmidstUs : JavaPlugin() {
     }
 
     val listeners = listOf(
+      PlayerJoinListener(this),
       PlayerQuitListener(this),
+      InventoryListener(this),
+      EntityDamageByEntityListener(this),
     )
 
     for (listener in listeners) {
       this.server.pluginManager.registerEvents(listener, this)
+    }
+
+    if (server.scoreboardManager?.mainScoreboard?.getTeam("nametagVisNever") == null) {
+      server.scoreboardManager?.mainScoreboard?.registerNewTeam("nametagVisNever").let {
+        it?.setOption(Team.Option.NAME_TAG_VISIBILITY, Team.OptionStatus.NEVER)
+      }
     }
 
     if (!dataFolder.exists()) {
