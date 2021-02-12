@@ -19,11 +19,12 @@ class Game(var map: Map, val type: Type) {
   val players = mutableListOf<Player>()
   var autoStartTask: BukkitTask? = null
   var autoStartSecondsLeft: Int? = null
+  var maxNumberOfImpostors = map.maxNumberOfImpostors
 
   fun start(plugin: AmidstUs) {
     status = Status.IN_PROGRESS
 
-    val numberOfImpostors = minOf(map.maxNumberOfImpostors, players.size / 4)
+    val numberOfImpostors = minOf(map.maxNumberOfImpostors, players.size / 4, maxNumberOfImpostors)
     val shuffledPlayersForRoles = players.shuffled()
     val impostors = shuffledPlayersForRoles.take(numberOfImpostors)
     val crewmates = shuffledPlayersForRoles.takeLast(shuffledPlayersForRoles.size - numberOfImpostors)
