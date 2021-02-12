@@ -201,6 +201,30 @@ class MapOptionsCommand(val plugin: AmidstUs) : TabExecutor, Named {
               }
             }
           }
+
+          "killcooldownsecs" -> {
+            if (args.size == 2) {
+              sender.spigot().sendMessage(
+                *ComponentBuilder("Default kill cooldown seconds of map ${map.displayName} is " +
+                  "${map.killCooldownSeconds}.").create()
+              )
+            } else {
+              val newValue = args[2].toIntOrNull()
+
+              if (args.size != 3 || newValue == null || newValue !in 10..45) {
+                sender.spigot().sendMessage(
+                  *ComponentBuilder("New value must be a valid integer between 10 and 60.")
+                    .color(ChatColor.RED).create()
+                )
+              } else {
+                map.killCooldownSeconds = newValue
+                sender.spigot().sendMessage(
+                  *ComponentBuilder("Changed default kill cooldown seconds of map ${map.displayName} to " +
+                    "${map.killCooldownSeconds}").color(ChatColor.GREEN).create()
+                )
+              }
+            }
+          }
         }
       }
     }
@@ -223,6 +247,7 @@ class MapOptionsCommand(val plugin: AmidstUs) : TabExecutor, Named {
         "maxnoplayers",
         "maxnoimpostors",
         "autostartnoplayers",
+        "killcooldownsecs",
         "time",
       ).filter { it.startsWith(args[1]) }
       3 -> when (args[1]) {
@@ -236,6 +261,7 @@ class MapOptionsCommand(val plugin: AmidstUs) : TabExecutor, Named {
         "autostartnoplayers" -> plugin.maps.find { it.name == args[0] }?.let {
           (it.minNumberOfPlayers..it.maxNumberOfPlayers).map { it.toString() }.filter { it.startsWith(args[2]) }
         } ?: listOf()
+        "killcooldownsecs" -> (10..60).map { it.toString() }.filter { it.startsWith(args[2]) }
         "time" -> (-1..24000).map { it.toString() }.filter { it.startsWith(args[2]) }
         else -> listOf()
       }

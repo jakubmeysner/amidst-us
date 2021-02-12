@@ -6,6 +6,7 @@ import net.md_5.bungee.api.chat.ComponentBuilder
 import org.bukkit.Material
 import org.bukkit.entity.Player
 import org.bukkit.inventory.ItemStack
+import org.bukkit.scheduler.BukkitTask
 import org.bukkit.ChatColor as BukkitChatColor
 
 class Player(val bukkitPlayer: Player, var pending: Boolean = false) {
@@ -15,7 +16,10 @@ class Player(val bukkitPlayer: Player, var pending: Boolean = false) {
     }
 
     val ImpostorSwordItemStack = ItemStack(Material.DIAMOND_SWORD).apply {
-      itemMeta = itemMeta?.apply { setDisplayName("${BukkitChatColor.DARK_RED}Impostor sword") }
+      itemMeta = itemMeta?.apply {
+        setDisplayName("${BukkitChatColor.DARK_RED}Impostor sword")
+        isUnbreakable = true
+      }
     }
 
     fun playPublicGame(plugin: AmidstUs, map: Map?, bukkitPlayer: Player) {
@@ -86,6 +90,9 @@ class Player(val bukkitPlayer: Player, var pending: Boolean = false) {
   var promoted = false
   var impostor = false
   var dead = false
+  var killCooldownActive = false
+  var killCooldownSecondsLeft: Int? = null
+  var killCooldownTask: BukkitTask? = null
 
   fun joinGame(game: Game, plugin: AmidstUs) {
     if (!game.players.contains(this)) {

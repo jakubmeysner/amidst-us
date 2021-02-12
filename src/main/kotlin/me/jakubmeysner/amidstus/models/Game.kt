@@ -21,6 +21,8 @@ class Game(var map: Map, val type: Type) {
   var autoStartSecondsLeft: Int? = null
   var maxNumberOfImpostors = map.maxNumberOfImpostors
 
+  var killCooldownSeconds = map.killCooldownSeconds
+
   fun start(plugin: AmidstUs) {
     status = Status.IN_PROGRESS
 

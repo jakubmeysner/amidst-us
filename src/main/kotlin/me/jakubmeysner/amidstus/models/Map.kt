@@ -24,6 +24,8 @@ class Map(var name: String) {
   var time: Int? = null
   val seats = mutableListOf<Location>()
 
+  var killCooldownSeconds = 45
+
   val playable: Boolean
     get() = listOf(
       postGameLocation != null,
