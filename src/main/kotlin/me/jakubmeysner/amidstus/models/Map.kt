@@ -26,6 +26,8 @@ class Map(var name: String) {
 
   var killCooldownSeconds = 45
 
+  val vents = mutableListOf<Vent>()
+
   val playable: Boolean
     get() = listOf(
       postGameLocation != null,

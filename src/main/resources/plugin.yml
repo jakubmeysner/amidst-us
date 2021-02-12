@@ -90,6 +90,22 @@ commands:
     description: Changes map's options.
     permission: amidstus.maps.manage
     usage: /mapoptions <map name> <option> [new value]
+  addmapvent:
+    description: Adds a new vent to map.
+    permission: amidstus.maps.manage
+    usage: /addmapvent <map name>
+  removemapvent:
+    description: Removes existing vent from map.
+    permission: amidstus.maps.manage
+    usage: /removemapvent <map name> <vent id>
+  linkmapvents:
+    description: Links existing vents on map.
+    permission: amidstus.maps.manage
+    usage: /linkmapvents <map name> <vent one id> <vent two id>
+  mapvents:
+    description: Lists vents with their coordinates on given map.
+    permission: amidstus.maps.manage
+    usage: /mapvents <map name>
 
 permissions:
   amidstus.*:
