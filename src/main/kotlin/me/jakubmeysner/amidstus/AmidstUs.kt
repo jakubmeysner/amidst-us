@@ -81,6 +81,15 @@ class AmidstUs : JavaPlugin() {
   }
 
   override fun onDisable() {
+    for (game in games) {
+      for (player in game.players) {
+        player.bukkit.inventory.clear()
+        player.bukkit.resetPlayerTime()
+        server.scoreboardManager?.mainScoreboard?.getTeam("nametagVisNever")?.removeEntry(player.bukkit.name)
+        player.bukkit.teleport(game.map.postGameLocation ?: return)
+      }
+    }
+
     saveMaps()
   }
 
