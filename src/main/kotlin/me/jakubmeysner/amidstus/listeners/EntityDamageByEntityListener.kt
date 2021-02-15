@@ -45,16 +45,11 @@ class EntityDamageByEntityListener(val plugin: AmidstUs) : Listener {
     damager.killCooldownSecondsLeft = game.killCooldownSeconds
 
     damager.killCooldownTask = plugin.server.scheduler.runTaskTimer(plugin, Runnable {
-      if (damager.killCooldownActive == false) {
-        damager.killCooldownSecondsLeft = null
-        damager.killCooldownTask?.cancel()
-        damager.killCooldownTask = null
-      } else if (damager.killCooldownSecondsLeft == 0) {
+      if (damager.killCooldownSecondsLeft == 0) {
         damager.killCooldownActive = false
         damager.killCooldownSecondsLeft = null
         damager.killCooldownTask?.cancel()
         damager.killCooldownTask = null
-
         damager.bukkit.inventory.setItem(1, Player.ImpostorSwordItemStack)
       } else {
         damager.bukkit.inventory.setItem(1, Player.ImpostorSwordItemStack.apply {
@@ -62,6 +57,8 @@ class EntityDamageByEntityListener(val plugin: AmidstUs) : Listener {
             setDisplayName("${ChatColor.DARK_RED}Impostor sword (${damager.killCooldownSecondsLeft}s cooldown)")
           }
         })
+
+        damager.killCooldownSecondsLeft = damager.killCooldownSecondsLeft!! - 1
       }
     }, 0, 20)
   }
