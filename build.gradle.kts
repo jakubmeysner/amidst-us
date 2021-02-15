@@ -26,6 +26,10 @@ dependencies {
 }
 
 tasks {
+  jar {
+    enabled = false
+  }
+
   build {
     dependsOn(shadowJar)
   }
