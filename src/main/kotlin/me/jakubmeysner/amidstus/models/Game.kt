@@ -78,7 +78,7 @@ class Game(var map: Map, val type: Type) {
       )
 
       crewmate.bukkit.spigot().sendMessage(
-        *ComponentBuilder("You are a crewmate!").color(ChatColor.DARK_GREEN)
+        *ComponentBuilder("You are a crewmate!\n").color(ChatColor.DARK_GREEN)
           .append(
             "Your objective is to complete tasks and uncover the " +
               "${if (impostors.size > 1) "identities of the impostors" else "identity of the impostor"}.",
