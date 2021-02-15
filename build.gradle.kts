@@ -1,5 +1,3 @@
-import com.github.jengelman.gradle.plugins.shadow.tasks.ShadowJar
-
 version = "1.0.0-SNAPSHOT"
 
 plugins {
@@ -30,6 +28,10 @@ tasks {
     enabled = false
   }
 
+  shadowJar {
+    archiveClassifier.set("")
+  }
+
   build {
     dependsOn(shadowJar)
   }
@@ -37,8 +39,4 @@ tasks {
 
 tasks.processResources {
   expand("version" to version)
-}
-
-tasks.withType<ShadowJar> {
-  classifier = ""
 }
