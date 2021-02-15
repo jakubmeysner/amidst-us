@@ -53,9 +53,12 @@ class AmidstUs : JavaPlugin() {
     val listeners = listOf(
       PlayerJoinListener(this),
       PlayerQuitListener(this),
-      InventoryListener(this),
       EntityDamageByEntityListener(this),
       AsyncPlayerChatListener(this),
+      InventoryClickListener(this),
+      PlayerDropItemListener(this),
+      PlayerInteractListener(this),
+      PlayerSwapHandItemsListener(this),
     )
 
     for (listener in listeners) {
