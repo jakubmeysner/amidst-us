@@ -9,7 +9,9 @@ plugins {
 
 dependencies {
   implementation("org.spigotmc:spigot-api:1.16.5-R0.1-SNAPSHOT")
+  implementation("com.comphenix.protocol:ProtocolLib:4.6.0")
   implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:1.0.1")
+
   implementation(platform("org.jetbrains.kotlin:kotlin-bom"))
   implementation("org.jetbrains.kotlin:kotlin-stdlib-jdk8")
   testImplementation("org.jetbrains.kotlin:kotlin-test")
@@ -18,8 +20,13 @@ dependencies {
 
 repositories {
   jcenter()
+
   maven {
     url = uri("https://hub.spigotmc.org/nexus/content/repositories/public")
+  }
+
+  maven {
+    url = uri("https://repo.dmulloy2.net/repository/public")
   }
 }
 
@@ -34,6 +41,11 @@ tasks {
 
   shadowJar {
     archiveClassifier.set("")
+
+    dependencies {
+      exclude(dependency("org.spigotmc:spigot-api"))
+      exclude(dependency("com.comphenix.protocol:ProtocolLib"))
+    }
   }
 
   processResources {
