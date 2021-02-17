@@ -1,6 +1,7 @@
 package me.jakubmeysner.amidstus.listeners
 
 import me.jakubmeysner.amidstus.AmidstUs
+import me.jakubmeysner.amidstus.models.Game
 import me.jakubmeysner.amidstus.models.Player
 import org.bukkit.ChatColor
 import org.bukkit.event.EventHandler
@@ -20,6 +21,8 @@ class EntityDamageByEntityListener(val plugin: AmidstUs) : Listener {
     } ?: return
 
     event.isCancelled = true
+
+    if (game.status != Game.Status.IN_PROGRESS) return
 
     val damagee = game.players.find { it.bukkit == event.entity }!!
     val damager = game.players.find { it.bukkit == event.damager }!!
