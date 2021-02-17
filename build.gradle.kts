@@ -9,7 +9,7 @@ plugins {
 
 dependencies {
   implementation("org.spigotmc:spigot-api:1.16.5-R0.1-SNAPSHOT")
-  implementation("net.jitse:npclib-api:2.11.1-SNAPSHOT")
+  implementation("net.citizensnpcs:citizens:2.0.27-SNAPSHOT")
   implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:1.0.1")
 
   implementation(platform("org.jetbrains.kotlin:kotlin-bom"))
@@ -26,7 +26,7 @@ repositories {
   }
 
   maven {
-    url = uri("https://oss.sonatype.org/content/groups/public")
+    url = uri("https://repo.citizensnpcs.co")
   }
 }
 
