@@ -19,10 +19,7 @@ dependencies {
 
 repositories {
   jcenter()
-
-  maven {
-    url = uri("https://hub.spigotmc.org/nexus/content/repositories/public")
-  }
+  maven("https://hub.spigotmc.org/nexus/content/repositories/public")
 }
 
 tasks {
