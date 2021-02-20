@@ -8,6 +8,7 @@ import net.md_5.bungee.api.chat.ComponentBuilder
 import org.bukkit.command.Command
 import org.bukkit.command.CommandSender
 import org.bukkit.command.TabExecutor
+import org.bukkit.entity.Entity
 
 class MapOptionsCommand(val plugin: AmidstUs) : TabExecutor, Named {
   override val name = "mapoptions"
@@ -229,6 +230,62 @@ class MapOptionsCommand(val plugin: AmidstUs) : TabExecutor, Named {
               }
             }
           }
+
+          "pregameloc" -> {
+            if (args.size == 2) {
+              sender.spigot().sendMessage(
+                *ComponentBuilder("Pre game location of map ${map.displayName} is ${
+                  if (map.preGameLocation != null) map.preGameLocation?.let {
+                    "${it.x}, ${it.y}, ${it.z}, ${it.world?.name}"
+                  } else "unset"
+                }.").create()
+              )
+            } else if (args.size == 3 && args[2] == "set") {
+              if (sender !is Entity) {
+                sender.spigot().sendMessage(
+                  *ComponentBuilder("This command can only be used by entities!").color(ChatColor.RED).create()
+                )
+              } else {
+                map.preGameLocation = sender.location
+                sender.spigot().sendMessage(
+                  *ComponentBuilder("Changed pre game location of map ${map.displayName} to your location.")
+                    .color(ChatColor.GREEN).create()
+                )
+              }
+            } else {
+              sender.spigot().sendMessage(
+                *ComponentBuilder("Usage: /mapoptions <map name> pregameloc [set]").color(ChatColor.RED).create()
+              )
+            }
+          }
+
+          "postgameloc" -> {
+            if (args.size == 2) {
+              sender.spigot().sendMessage(
+                *ComponentBuilder("Post game location of map ${map.displayName} is ${
+                  if (map.postGameLocation != null) map.postGameLocation?.let {
+                    "${it.x}, ${it.y}, ${it.z}, ${it.world?.name}"
+                  } else "unset"
+                }.").create()
+              )
+            } else if (args.size == 3 && args[2] == "set") {
+              if (sender !is Entity) {
+                sender.spigot().sendMessage(
+                  *ComponentBuilder("This command can only be used by entities!").color(ChatColor.RED).create()
+                )
+              } else {
+                map.postGameLocation = sender.location
+                sender.spigot().sendMessage(
+                  *ComponentBuilder("Changed post game location of map ${map.displayName} to your location.")
+                    .color(ChatColor.GREEN).create()
+                )
+              }
+            } else {
+              sender.spigot().sendMessage(
+                *ComponentBuilder("Usage: /mapoptions <map name> postgameloc [set]").color(ChatColor.RED).create()
+              )
+            }
+          }
         }
       }
     }
@@ -253,6 +310,8 @@ class MapOptionsCommand(val plugin: AmidstUs) : TabExecutor, Named {
         "autostartnoplayers",
         "killcooldownsecs",
         "time",
+        "pregameloc",
+        "postgameloc",
       ).filter { it.startsWith(args[1]) }
       3 -> when (args[1]) {
         "minnoplayers" -> plugin.maps.find { it.name == args[0] }?.let {
@@ -267,6 +326,7 @@ class MapOptionsCommand(val plugin: AmidstUs) : TabExecutor, Named {
         } ?: listOf()
         "killcooldownsecs" -> (10..60).map { it.toString() }.filter { it.startsWith(args[2]) }
         "time" -> (-1..24000).map { it.toString() }.filter { it.startsWith(args[2]) }
+        "pregameloc", "postgameloc" -> listOf("set")
         else -> listOf()
       }
       else -> listOf()

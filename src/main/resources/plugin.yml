@@ -22,10 +22,6 @@ commands:
     description: Displays details concerning a map.
     permission: amidstus.maps.info
     usage: /map <map name>
-  setmappostloc:
-    description: Sets map's post game location.
-    permission: amidstus.maps.manage
-    usage: /setmappostloc <map name>
   loadmaps:
     description: Loads maps from file.
     permission: amidstus.maps.saving
@@ -34,10 +30,6 @@ commands:
     description: Saves maps to file.
     permission: amidstus.maps.saving
     usage: /savemaps
-  setmappreloc:
-    description: Sets map's pre game location.
-    permission: amidstus.maps.manage
-    usage: /setmappreloc <map name>
   play:
     description: Quick play in a public game.
     permission: amidstus.games.play.public

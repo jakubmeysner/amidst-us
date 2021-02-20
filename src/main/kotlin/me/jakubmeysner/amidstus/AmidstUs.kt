@@ -28,8 +28,6 @@ class AmidstUs : JavaPlugin() {
       MapCommand(this),
       MapsCommand(this),
       SaveMapsCommand(this),
-      SetMapPostGameLocationCommand(this),
-      SetMapPreGameLocationCommand(this),
       PlayCommand(this),
       CreateGameCommand(this),
       LeaveGameCommand(this),
