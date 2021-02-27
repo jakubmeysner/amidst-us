@@ -2,7 +2,6 @@ name: AmidstUs
 main: me.jakubmeysner.amidstus.AmidstUs
 version: ${version}
 description: Spigot plugin which allows you to play Among Us in Minecraft.
-api-version: 1.16
 website: https://github.com/jakubmeysner/AmidstUs
 
 commands:
