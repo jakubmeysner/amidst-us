@@ -4,11 +4,39 @@ import me.jakubmeysner.amidstus.AmidstUs
 import me.jakubmeysner.amidstus.interfaces.Named
 import net.md_5.bungee.api.ChatColor
 import net.md_5.bungee.api.chat.ComponentBuilder
+import org.bukkit.Bukkit
+import org.bukkit.Material
 import org.bukkit.command.Command
 import org.bukkit.command.CommandSender
 import org.bukkit.command.TabExecutor
+import org.bukkit.inventory.ItemStack
+import org.bukkit.ChatColor as BukkitChatColor
 
 class GameOptionsCommand(val plugin: AmidstUs) : TabExecutor, Named {
+  companion object {
+    val MapItemStack = ItemStack(Material.FILLED_MAP)
+    val MaxNumberOfImpostorsItemStack = ItemStack(Material.PLAYER_HEAD)
+    val KillCooldownSecondsItemStack = ItemStack(Material.DIAMOND_SWORD)
+    val PreviousMapItemStack = ItemStack(Material.RED_WOOL).apply {
+      itemMeta = itemMeta?.apply { setDisplayName("${BukkitChatColor.RED}Previous map") }
+    }
+    val NextMapItemStack = ItemStack(Material.GREEN_WOOL).apply {
+      itemMeta = itemMeta?.apply { setDisplayName("${BukkitChatColor.GREEN}Next map") }
+    }
+    val DecreaseMaxNumberOfImpostorsItemStack = ItemStack(Material.RED_WOOL).apply {
+      itemMeta = itemMeta?.apply { setDisplayName("${BukkitChatColor.RED}Decrease max number of impostors") }
+    }
+    val IncreaseMaxNumberOfImporsItemStack = ItemStack(Material.GREEN_WOOL).apply {
+      itemMeta = itemMeta?.apply { setDisplayName("${BukkitChatColor.GREEN}Increase max number of impostors") }
+    }
+    val DecreaseKillCooldownSecondsItemStack = ItemStack(Material.RED_WOOL).apply {
+      itemMeta = itemMeta?.apply { setDisplayName("${BukkitChatColor.RED}Decrease kill cooldown") }
+    }
+    val IncreaseKillCooldownSecondsItemStack = ItemStack(Material.GREEN_WOOL).apply {
+      itemMeta = itemMeta?.apply { setDisplayName("${BukkitChatColor.GREEN}Increase kill cooldown") }
+    }
+  }
+
   override val name = "gameoptions"
 
   override fun onCommand(sender: CommandSender, command: Command, label: String, args: Array<out String>): Boolean {
@@ -22,17 +50,38 @@ class GameOptionsCommand(val plugin: AmidstUs) : TabExecutor, Named {
       val player = game.players.find { it.bukkit == sender }!!
 
       if (args.isEmpty()) {
-        sender.spigot().sendMessage(
-          *ComponentBuilder("Game options:").color(ChatColor.BLUE)
-            .append(
-              """
-                Map: ${game.map.displayName}
-                Max number of impostors: ${game.maxNumberOfImpostors}
-                Kill cooldown seconds: ${game.killCooldownSeconds}
-              """.trimIndent(),
-              ComponentBuilder.FormatRetention.NONE
-            ).create()
-        )
+        player.bukkit.openInventory(
+          Bukkit.createInventory(null, 27, "${BukkitChatColor.BLUE}Change map options").apply {
+            setItem(9, MapItemStack.apply {
+              itemMeta =
+                itemMeta?.apply { setDisplayName("${BukkitChatColor.BLUE}Map:${BukkitChatColor.RESET} ${game.map.displayName}") }
+            })
+
+            if (plugin.maps.size > 1) {
+              setItem(0, PreviousMapItemStack)
+              setItem(18, NextMapItemStack)
+            }
+
+            setItem(10, MaxNumberOfImpostorsItemStack.apply {
+              itemMeta = itemMeta?.apply {
+                setDisplayName("${BukkitChatColor.BLUE}Max number of impostors:${BukkitChatColor.RESET} ${game.maxNumberOfImpostors}")
+              }
+            })
+
+            if (game.maxNumberOfImpostors > 1) setItem(1, DecreaseMaxNumberOfImpostorsItemStack)
+            if (game.maxNumberOfImpostors < game.map.maxNumberOfImpostors) setItem(
+              19,
+              IncreaseMaxNumberOfImporsItemStack
+            )
+
+            setItem(11, KillCooldownSecondsItemStack.apply {
+              itemMeta = itemMeta?.apply {
+                setDisplayName("${BukkitChatColor.BLUE}Kill cooldown:${BukkitChatColor.RESET} ${game.killCooldownSeconds}s")
+              }
+            })
+            if (game.killCooldownSeconds > 10) setItem(2, DecreaseKillCooldownSecondsItemStack)
+            if (game.killCooldownSeconds < 60) setItem(20, IncreaseKillCooldownSecondsItemStack)
+          })
       } else if (args.size == 1) {
         when (args[0]) {
           "map" -> {
@@ -147,7 +196,7 @@ class GameOptionsCommand(val plugin: AmidstUs) : TabExecutor, Named {
       1 -> listOf(
         "map",
         "maxnoimpostors",
-        "killcooldownsecs",
+        "killcooldownseconds",
       )
 
       2 -> when (args[0]) {
@@ -155,7 +204,7 @@ class GameOptionsCommand(val plugin: AmidstUs) : TabExecutor, Named {
         "maxnoimpostors" -> plugin.games.find { it.players.any { it.bukkit == sender } }?.map?.let {
           (1..it.maxNumberOfImpostors).map { it.toString() }.filter { it.startsWith(args[1]) }
         } ?: (1..6).map { it.toString() }.filter { it.startsWith(args[1]) }
-        "killcooldownsecs" -> (10..60).map { it.toString() }.filter { it.startsWith(args[1]) }
+        "killcooldownseconds" -> (10..60).map { it.toString() }.filter { it.startsWith(args[1]) }
         else -> listOf()
       }
 

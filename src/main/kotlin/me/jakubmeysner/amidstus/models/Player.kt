@@ -22,6 +22,12 @@ class Player(val bukkit: Player, var pending: Boolean = false) {
       }
     }
 
+    val ChangeMapOptionsItemStack = ItemStack(Material.REDSTONE).apply {
+      itemMeta = itemMeta?.apply {
+        setDisplayName("${BukkitChatColor.BLUE}Change Game Options")
+      }
+    }
+
     fun playPublicGame(plugin: AmidstUs, map: Map?, bukkitPlayer: Player) {
       val games = plugin.games.filter {
         (map == null || it.map == map) &&

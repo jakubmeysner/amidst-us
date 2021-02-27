@@ -45,6 +45,7 @@ class CreateGameCommand(val plugin: AmidstUs) : TabExecutor, Named {
         val player = Player(sender)
         player.promoted = true
         player.joinGame(game, plugin)
+        player.bukkit.inventory.setItem(0, Player.ChangeMapOptionsItemStack)
 
         sender.spigot().sendMessage(
           *ComponentBuilder("Created a new game on ${game.map.displayName}!")
