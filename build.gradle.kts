@@ -9,6 +9,7 @@ plugins {
 
 dependencies {
   implementation("org.spigotmc:spigot-api:1.16.5-R0.1-SNAPSHOT")
+  implementation("com.comphenix.protocol:ProtocolLib:4.6.0")
   implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:1.0.1")
 
   implementation(platform("org.jetbrains.kotlin:kotlin-bom"))
@@ -20,6 +21,7 @@ dependencies {
 repositories {
   jcenter()
   maven("https://hub.spigotmc.org/nexus/content/repositories/public")
+  maven("https://repo.dmulloy2.net/repository/public")
 }
 
 tasks {
@@ -33,6 +35,11 @@ tasks {
 
   shadowJar {
     archiveClassifier.set("")
+
+    dependencies {
+      exclude(dependency("org.spigotmc:spigot-api"))
+      exclude(dependency("com.comphenix.protocol:ProtocolLib"))
+    }
   }
 
   processResources {

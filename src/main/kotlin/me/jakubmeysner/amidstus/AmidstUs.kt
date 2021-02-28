@@ -1,5 +1,7 @@
 package me.jakubmeysner.amidstus
 
+import com.comphenix.protocol.ProtocolLibrary
+import com.comphenix.protocol.ProtocolManager
 import kotlinx.serialization.decodeFromString
 import kotlinx.serialization.encodeToString
 import kotlinx.serialization.json.Json
@@ -15,12 +17,16 @@ import java.nio.file.Files
 import java.nio.file.Paths
 
 class AmidstUs : JavaPlugin() {
+  lateinit var protocolManager: ProtocolManager
+
   val maps = mutableListOf<Map>()
   val games = mutableListOf<Game>()
 
   private val mapsFile = File(dataFolder, "maps.json")
 
   override fun onEnable() {
+    protocolManager = ProtocolLibrary.getProtocolManager()
+
     val commands = listOf(
       CreateMapCommand(this),
       DeleteMapCommand(this),
