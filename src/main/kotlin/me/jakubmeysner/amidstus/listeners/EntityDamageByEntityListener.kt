@@ -96,8 +96,8 @@ class EntityDamageByEntityListener(val plugin: AmidstUs) : Listener {
         damager.killCooldownTask = null
         damager.bukkit.inventory.setItem(1, Player.ImpostorSwordItemStack)
       } else {
-        damager.bukkit.inventory.setItem(1, Player.ImpostorSwordItemStack.apply {
-          itemMeta = itemMeta?.apply {
+        damager.bukkit.inventory.setItem(1, Player.ImpostorSwordItemStack.clone().apply {
+          itemMeta = itemMeta?.clone()?.apply {
             setDisplayName("${ChatColor.DARK_RED}Impostor sword (${damager.killCooldownSecondsLeft}s cooldown)")
           }
         })

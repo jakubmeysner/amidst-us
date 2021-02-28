@@ -52,9 +52,10 @@ class GameOptionsCommand(val plugin: AmidstUs) : TabExecutor, Named {
       if (args.isEmpty()) {
         player.bukkit.openInventory(
           Bukkit.createInventory(null, 27, "${BukkitChatColor.BLUE}Change map options").apply {
-            setItem(9, MapItemStack.apply {
-              itemMeta =
-                itemMeta?.apply { setDisplayName("${BukkitChatColor.BLUE}Map:${BukkitChatColor.RESET} ${game.map.displayName}") }
+            setItem(9, MapItemStack.clone().apply {
+              itemMeta = itemMeta?.clone()?.apply {
+                setDisplayName("${BukkitChatColor.BLUE}Map:${BukkitChatColor.RESET} ${game.map.displayName}")
+              }
             })
 
             if (plugin.maps.size > 1) {
@@ -62,8 +63,8 @@ class GameOptionsCommand(val plugin: AmidstUs) : TabExecutor, Named {
               setItem(18, NextMapItemStack)
             }
 
-            setItem(10, MaxNumberOfImpostorsItemStack.apply {
-              itemMeta = itemMeta?.apply {
+            setItem(10, MaxNumberOfImpostorsItemStack.clone().apply {
+              itemMeta = itemMeta?.clone()?.apply {
                 setDisplayName("${BukkitChatColor.BLUE}Max number of impostors:${BukkitChatColor.RESET} ${game.maxNumberOfImpostors}")
               }
             })
@@ -74,11 +75,12 @@ class GameOptionsCommand(val plugin: AmidstUs) : TabExecutor, Named {
               IncreaseMaxNumberOfImporsItemStack
             )
 
-            setItem(11, KillCooldownSecondsItemStack.apply {
-              itemMeta = itemMeta?.apply {
+            setItem(11, KillCooldownSecondsItemStack.clone().apply {
+              itemMeta = itemMeta?.clone()?.apply {
                 setDisplayName("${BukkitChatColor.BLUE}Kill cooldown:${BukkitChatColor.RESET} ${game.killCooldownSeconds}s")
               }
             })
+
             if (game.killCooldownSeconds > 10) setItem(2, DecreaseKillCooldownSecondsItemStack)
             if (game.killCooldownSeconds < 60) setItem(20, IncreaseKillCooldownSecondsItemStack)
           })
