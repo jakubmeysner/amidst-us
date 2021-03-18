@@ -1,6 +1,7 @@
 package me.jakubmeysner.amidstus.listeners
 
 import me.jakubmeysner.amidstus.AmidstUs
+import me.jakubmeysner.amidstus.models.EmergencyMeeting
 import me.jakubmeysner.amidstus.models.Game
 import net.md_5.bungee.api.ChatColor
 import net.md_5.bungee.api.chat.ComponentBuilder
@@ -22,7 +23,10 @@ class AsyncPlayerChatListener(val plugin: AmidstUs) : Listener {
       if (game.status == Game.Status.IN_PROGRESS) {
         if (player.dead) {
           event.recipients.removeAll(game.players.filter { !it.dead }.map { it.bukkit })
-        } else {
+        } else if (
+          game.emergencyMeetings.isEmpty() ||
+          game.emergencyMeetings.last().phase == EmergencyMeeting.Phase.ENDED
+        ) {
           event.isCancelled = true
           player.bukkit.spigot().sendMessage(
             *ComponentBuilder(

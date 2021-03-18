@@ -103,6 +103,10 @@ commands:
     description: Changes game's options.
     permission: amidstus.games.play.common
     usage: /gameoptions [option] [new value]
+  vote:
+    description: Votes to eject a player or skip.
+    permission: amidstus.games.play.common
+    usage: /vote [player name]
 
 permissions:
   amidstus.*:

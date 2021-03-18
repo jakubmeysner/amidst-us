@@ -9,6 +9,7 @@ import org.bukkit.command.Command
 import org.bukkit.command.CommandSender
 import org.bukkit.command.TabExecutor
 import org.bukkit.entity.Entity
+import org.bukkit.entity.Player
 
 class MapOptionsCommand(val plugin: AmidstUs) : TabExecutor, Named {
   override val name = "mapoptions"
@@ -286,6 +287,36 @@ class MapOptionsCommand(val plugin: AmidstUs) : TabExecutor, Named {
               )
             }
           }
+
+          "emergencymeetingbtn" -> {
+            if (args.size == 2) {
+              sender.spigot().sendMessage(
+                *ComponentBuilder("Emergency meeting button of map ${map.displayName} is ${
+                  map.emergencyMeetingButton?.let {
+                    "${it.x}, ${it.y}, ${it.z}, ${it.world?.name}"
+                  } ?: "unset"
+                }.").create()
+              )
+            } else if (args.size == 3 && args[2] == "set") {
+              if (sender !is Player) {
+                sender.spigot().sendMessage(
+                  *ComponentBuilder("This command can only be used by entities!").color(ChatColor.RED).create()
+                )
+              } else {
+                sender.getTargetBlockExact(8)?.let {
+                  map.emergencyMeetingButton = it.location
+
+                  sender.spigot().sendMessage(
+                    *ComponentBuilder("Changed emergency meeting button of map ${map.displayName} to targeted block.")
+                      .color(ChatColor.GREEN).create()
+                  )
+                } ?: sender.spigot().sendMessage(
+                  *ComponentBuilder("You need to be targeting a block to use this command!")
+                    .color(ChatColor.RED).create()
+                )
+              }
+            }
+          }
         }
       }
     }
@@ -312,6 +343,7 @@ class MapOptionsCommand(val plugin: AmidstUs) : TabExecutor, Named {
         "time",
         "pregameloc",
         "postgameloc",
+        "emergencymeetingbtn",
       ).filter { it.startsWith(args[1]) }
       3 -> when (args[1]) {
         "minnoplayers" -> plugin.maps.find { it.name == args[0] }?.let {
@@ -326,7 +358,7 @@ class MapOptionsCommand(val plugin: AmidstUs) : TabExecutor, Named {
         } ?: listOf()
         "killcooldownsecs" -> (10..60).map { it.toString() }.filter { it.startsWith(args[2]) }
         "time" -> (-1..24000).map { it.toString() }.filter { it.startsWith(args[2]) }
-        "pregameloc", "postgameloc" -> listOf("set")
+        "pregameloc", "postgameloc", "emergencymeetingbtn" -> listOf("set")
         else -> listOf()
       }
       else -> listOf()

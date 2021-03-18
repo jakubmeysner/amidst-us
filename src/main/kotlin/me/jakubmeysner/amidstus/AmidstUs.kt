@@ -47,6 +47,7 @@ class AmidstUs : JavaPlugin() {
       StartGameCommand(this),
       MapOptionsCommand(this),
       GameOptionsCommand(this),
+      VoteCommand(this),
     )
 
     for (command in commands) {
@@ -63,6 +64,7 @@ class AmidstUs : JavaPlugin() {
       PlayerDropItemListener(this),
       PlayerInteractListener(this),
       PlayerSwapHandItemsListener(this),
+      PlayerMoveListener(this),
     )
 
     for (listener in listeners) {

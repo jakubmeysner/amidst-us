@@ -37,7 +37,7 @@ class EntityDamageByEntityListener(val plugin: AmidstUs) : Listener {
 
     damagee.dead = true
 
-    val entityId = Random.nextInt()
+    damager.fakeEntityId = Random.nextInt()
 
     val playerInfoData = PlayerInfoData(
       WrappedGameProfile.fromPlayer(damagee.bukkit),
@@ -52,7 +52,7 @@ class EntityDamageByEntityListener(val plugin: AmidstUs) : Listener {
     }
 
     val namedEntitySpawnPacket = PacketContainer(PacketType.Play.Server.NAMED_ENTITY_SPAWN).apply {
-      integers.write(0, entityId)
+      integers.write(0, damager.fakeEntityId)
       uuiDs.write(0, playerInfoData.profile.uuid)
       doubles.write(0, damagee.bukkit.location.x)
       doubles.write(1, damagee.bukkit.location.y)
@@ -60,7 +60,7 @@ class EntityDamageByEntityListener(val plugin: AmidstUs) : Listener {
     }
 
     val entityMetadataPacket = PacketContainer(PacketType.Play.Server.ENTITY_METADATA).apply {
-      integers.write(0, entityId)
+      integers.write(0, damager.fakeEntityId)
       watchableCollectionModifier.write(0, WrappedDataWatcher.getEntityWatcher(damagee.bukkit).apply {
         setObject(
           6,

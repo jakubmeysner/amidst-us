@@ -27,6 +27,7 @@ class Map(var name: String) {
   var maxNumberOfImpostors = 2
 
   val vents = mutableListOf<Vent>()
+  var emergencyMeetingButton: Location? = null
 
   val playable: Boolean
     get() = listOf(
@@ -37,5 +38,6 @@ class Map(var name: String) {
       maxNumberOfImpostors in 1..6,
       autoStartNumberOfPlayers in minNumberOfPlayers..maxNumberOfPlayers,
       seats.size >= maxNumberOfPlayers,
+      emergencyMeetingButton != null,
     ).all { it }
 }
