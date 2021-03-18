@@ -1,5 +1,7 @@
 package me.jakubmeysner.amidstus.models
 
+import com.comphenix.protocol.PacketType
+import com.comphenix.protocol.events.PacketContainer
 import me.jakubmeysner.amidstus.AmidstUs
 import net.md_5.bungee.api.ChatColor
 import net.md_5.bungee.api.chat.ComponentBuilder
@@ -102,6 +104,7 @@ class Player(val bukkit: Player, var pending: Boolean = false) {
   var promoted = false
   var impostor = false
   var dead = false
+  var fakeEntityId: Int? = null
   var killCooldownActive = false
   var killCooldownSecondsLeft: Int? = null
   var killCooldownTask: BukkitTask? = null
@@ -130,6 +133,16 @@ class Player(val bukkit: Player, var pending: Boolean = false) {
   }
 
   fun leaveGame(game: Game, plugin: AmidstUs) {
+    for (player in game.players) {
+      if (player.fakeEntityId != null) {
+        plugin.protocolManager.sendServerPacket(bukkit,
+          PacketContainer(PacketType.Play.Server.ENTITY_DESTROY).apply {
+            integers.write(0, player.fakeEntityId)
+          }
+        )
+      }
+    }
+
     game.players.remove(this)
 
     if (game.players.size == 0) {

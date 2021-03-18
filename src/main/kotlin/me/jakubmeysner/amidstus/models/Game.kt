@@ -1,5 +1,7 @@
 package me.jakubmeysner.amidstus.models
 
+import com.comphenix.protocol.PacketType
+import com.comphenix.protocol.events.PacketContainer
 import me.jakubmeysner.amidstus.AmidstUs
 import net.md_5.bungee.api.ChatColor
 import net.md_5.bungee.api.chat.ComponentBuilder
@@ -19,9 +21,15 @@ class Game(var map: Map, val type: Type) {
   val players = mutableListOf<Player>()
   var autoStartTask: BukkitTask? = null
   var autoStartSecondsLeft: Int? = null
+  var emergencyMeetings = mutableListOf<EmergencyMeeting>()
 
   var killCooldownSeconds = map.killCooldownSeconds
   var maxNumberOfImpostors = map.maxNumberOfImpostors
+  var confirmEjects = true
+  var emergencyMeetingsLimit = 1
+  var emergencyMeetingsCooldownSeconds = 15
+  var discussionTimeSeconds = 15
+  var votingTimeSeconds = 120
 
   fun start(plugin: AmidstUs) {
     status = Status.IN_PROGRESS
@@ -92,6 +100,22 @@ class Game(var map: Map, val type: Type) {
   }
 
   fun end(plugin: AmidstUs) {
+    for (player in players) {
+      for (itPlayer in players) {
+        if (itPlayer.fakeEntityId != null) {
+          plugin.protocolManager.sendServerPacket(player.bukkit,
+            PacketContainer(PacketType.Play.Server.ENTITY_DESTROY).apply {
+              integers.write(0, itPlayer.fakeEntityId)
+            }
+          )
+        }
+      }
+    }
+
+    for (player in players) {
+      player.fakeEntityId = null
+    }
+
     status = Status.ENDED
     val impostorsWon = players.count { !it.dead && it.impostor } >= players.count { !it.dead && !it.impostor }
 
