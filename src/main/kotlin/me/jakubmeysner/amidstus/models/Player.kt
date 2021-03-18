@@ -28,6 +28,12 @@ class Player(val bukkit: Player, var pending: Boolean = false) {
       }
     }
 
+    val StartGameItemStack = ItemStack(Material.MINECART).apply {
+      itemMeta = itemMeta?.apply {
+        setDisplayName("${BukkitChatColor.GREEN}Start Game")
+      }
+    }
+
     fun playPublicGame(plugin: AmidstUs, map: Map?, bukkitPlayer: Player) {
       val games = plugin.games.filter {
         (map == null || it.map == map) &&
@@ -131,6 +137,8 @@ class Player(val bukkit: Player, var pending: Boolean = false) {
     } else if (game.type == Game.Type.PRIVATE && game.players.none { it.promoted }) {
       val randomPlayer = game.players.random()
       randomPlayer.promoted = true
+      randomPlayer.bukkit.inventory.setItem(1, ChangeMapOptionsItemStack)
+      randomPlayer.bukkit.inventory.setItem(0, StartGameItemStack)
 
       randomPlayer.bukkit.spigot().sendMessage(
         *ComponentBuilder("Because all promoted players have left the game, you have been randomly promoted.")

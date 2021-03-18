@@ -23,6 +23,11 @@ class PlayerInteractListener(val plugin: AmidstUs) : Listener {
         if (event.action != Action.RIGHT_CLICK_AIR && event.action != Action.RIGHT_CLICK_BLOCK) return
         event.player.performCommand("gameoptions")
       }
+
+      Player.StartGameItemStack -> {
+        if (event.action != Action.RIGHT_CLICK_AIR && event.action != Action.RIGHT_CLICK_BLOCK) return
+        event.player.performCommand("startgame")
+      }
     }
   }
 }
