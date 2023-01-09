@@ -17,97 +17,97 @@ import java.nio.file.Files
 import java.nio.file.Paths
 
 class AmidstUs : JavaPlugin() {
-  lateinit var protocolManager: ProtocolManager
+    lateinit var protocolManager: ProtocolManager
 
-  val maps = mutableListOf<Map>()
-  val games = mutableListOf<Game>()
+    val maps = mutableListOf<Map>()
+    val games = mutableListOf<Game>()
 
-  private val mapsFile = File(dataFolder, "maps.json")
+    private val mapsFile = File(dataFolder, "maps.json")
 
-  override fun onEnable() {
-    protocolManager = ProtocolLibrary.getProtocolManager()
+    override fun onEnable() {
+        protocolManager = ProtocolLibrary.getProtocolManager()
 
-    val commands = listOf(
-      CreateMapCommand(this),
-      DeleteMapCommand(this),
-      LoadMapsCommand(this),
-      MapCommand(this),
-      MapsCommand(this),
-      SaveMapsCommand(this),
-      PlayCommand(this),
-      CreateGameCommand(this),
-      LeaveGameCommand(this),
-      InviteCommand(this),
-      AcceptInviteCommand(this),
-      DenyInviteCommand(this),
-      AddMapSeatCommand(this),
-      RemoveMapSeatCommand(this),
-      MapSeatsCommand(this),
-      SwitchMapCommand(this),
-      StartGameCommand(this),
-      MapOptionsCommand(this),
-      GameOptionsCommand(this),
-      VoteCommand(this),
-    )
+        val commands = listOf(
+            CreateMapCommand(this),
+            DeleteMapCommand(this),
+            LoadMapsCommand(this),
+            MapCommand(this),
+            MapsCommand(this),
+            SaveMapsCommand(this),
+            PlayCommand(this),
+            CreateGameCommand(this),
+            LeaveGameCommand(this),
+            InviteCommand(this),
+            AcceptInviteCommand(this),
+            DenyInviteCommand(this),
+            AddMapSeatCommand(this),
+            RemoveMapSeatCommand(this),
+            MapSeatsCommand(this),
+            SwitchMapCommand(this),
+            StartGameCommand(this),
+            MapOptionsCommand(this),
+            GameOptionsCommand(this),
+            VoteCommand(this),
+        )
 
-    for (command in commands) {
-      this.getCommand(command.name)?.setExecutor(command)
-        ?: error("Could not register ${command::class.simpleName}!")
+        for (command in commands) {
+            this.getCommand(command.name)?.setExecutor(command)
+                ?: error("Could not register ${command::class.simpleName}!")
+        }
+
+        val listeners = listOf(
+            PlayerJoinListener(this),
+            PlayerQuitListener(this),
+            EntityDamageByEntityListener(this),
+            AsyncPlayerChatListener(this),
+            InventoryClickListener(this),
+            PlayerDropItemListener(this),
+            PlayerInteractListener(this),
+            PlayerSwapHandItemsListener(this),
+            PlayerMoveListener(this),
+        )
+
+        for (listener in listeners) {
+            this.server.pluginManager.registerEvents(listener, this)
+        }
+
+        if (server.scoreboardManager?.mainScoreboard?.getTeam("nametagVisNever") == null) {
+            server.scoreboardManager?.mainScoreboard?.registerNewTeam("nametagVisNever").let {
+                it?.setOption(Team.Option.NAME_TAG_VISIBILITY, Team.OptionStatus.NEVER)
+            }
+        }
+
+        if (!dataFolder.exists()) {
+            Files.createDirectory(Paths.get(dataFolder.path))
+        }
+
+        if (!mapsFile.exists()) {
+            mapsFile.createNewFile()
+            mapsFile.writeText("[]")
+        }
+
+        loadMaps()
     }
 
-    val listeners = listOf(
-      PlayerJoinListener(this),
-      PlayerQuitListener(this),
-      EntityDamageByEntityListener(this),
-      AsyncPlayerChatListener(this),
-      InventoryClickListener(this),
-      PlayerDropItemListener(this),
-      PlayerInteractListener(this),
-      PlayerSwapHandItemsListener(this),
-      PlayerMoveListener(this),
-    )
+    override fun onDisable() {
+        for (game in games) {
+            for (player in game.players) {
+                player.bukkit.inventory.clear()
+                player.bukkit.resetPlayerTime()
+                server.scoreboardManager?.mainScoreboard?.getTeam("nametagVisNever")?.removeEntry(player.bukkit.name)
+                player.bukkit.teleport(game.map.postGameLocation ?: return)
+            }
+        }
 
-    for (listener in listeners) {
-      this.server.pluginManager.registerEvents(listener, this)
+        saveMaps()
     }
 
-    if (server.scoreboardManager?.mainScoreboard?.getTeam("nametagVisNever") == null) {
-      server.scoreboardManager?.mainScoreboard?.registerNewTeam("nametagVisNever").let {
-        it?.setOption(Team.Option.NAME_TAG_VISIBILITY, Team.OptionStatus.NEVER)
-      }
+    fun loadMaps() {
+        maps.clear()
+        maps.addAll(Json.decodeFromString<List<Map>>(mapsFile.readText()))
     }
 
-    if (!dataFolder.exists()) {
-      Files.createDirectory(Paths.get(dataFolder.path))
+    fun saveMaps() {
+        mapsFile.writeText(Json.encodeToString(maps))
     }
-
-    if (!mapsFile.exists()) {
-      mapsFile.createNewFile()
-      mapsFile.writeText("[]")
-    }
-
-    loadMaps()
-  }
-
-  override fun onDisable() {
-    for (game in games) {
-      for (player in game.players) {
-        player.bukkit.inventory.clear()
-        player.bukkit.resetPlayerTime()
-        server.scoreboardManager?.mainScoreboard?.getTeam("nametagVisNever")?.removeEntry(player.bukkit.name)
-        player.bukkit.teleport(game.map.postGameLocation ?: return)
-      }
-    }
-
-    saveMaps()
-  }
-
-  fun loadMaps() {
-    maps.clear()
-    maps.addAll(Json.decodeFromString<List<Map>>(mapsFile.readText()))
-  }
-
-  fun saveMaps() {
-    mapsFile.writeText(Json.encodeToString(maps))
-  }
 }

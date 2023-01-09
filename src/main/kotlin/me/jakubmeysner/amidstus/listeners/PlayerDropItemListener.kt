@@ -6,9 +6,9 @@ import org.bukkit.event.Listener
 import org.bukkit.event.player.PlayerDropItemEvent
 
 class PlayerDropItemListener(val plugin: AmidstUs) : Listener {
-  @EventHandler
-  fun onPlayerDropItem(event: PlayerDropItemEvent) {
-    if (plugin.games.none { it.players.any { it.bukkit == event.player } }) return
-    event.isCancelled = true
-  }
+    @EventHandler
+    fun onPlayerDropItem(event: PlayerDropItemEvent) {
+        if (plugin.games.none { it.players.any { it.bukkit == event.player } }) return
+        event.isCancelled = true
+    }
 }

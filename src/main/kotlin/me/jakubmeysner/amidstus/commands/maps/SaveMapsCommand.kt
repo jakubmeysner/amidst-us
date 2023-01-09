@@ -9,29 +9,29 @@ import org.bukkit.command.CommandSender
 import org.bukkit.command.TabExecutor
 
 class SaveMapsCommand(val plugin: AmidstUs) : TabExecutor, Named {
-  override val name = "savemaps"
+    override val name = "savemaps"
 
-  override fun onCommand(sender: CommandSender, command: Command, label: String, args: Array<out String>): Boolean {
-    if (args.isNotEmpty()) {
-      sender.spigot().sendMessage(
-        *ComponentBuilder("Usage: /savemaps").color(ChatColor.RED).create()
-      )
-    } else {
-      plugin.saveMaps()
-      sender.spigot().sendMessage(
-        *ComponentBuilder("Saved maps to file.").color(ChatColor.GREEN).create()
-      )
+    override fun onCommand(sender: CommandSender, command: Command, label: String, args: Array<out String>): Boolean {
+        if (args.isNotEmpty()) {
+            sender.spigot().sendMessage(
+                *ComponentBuilder("Usage: /savemaps").color(ChatColor.RED).create()
+            )
+        } else {
+            plugin.saveMaps()
+            sender.spigot().sendMessage(
+                *ComponentBuilder("Saved maps to file.").color(ChatColor.GREEN).create()
+            )
+        }
+
+        return true
     }
 
-    return true
-  }
-
-  override fun onTabComplete(
-    sender: CommandSender,
-    command: Command,
-    alias: String,
-    args: Array<out String>
-  ): List<String> {
-    return listOf()
-  }
+    override fun onTabComplete(
+        sender: CommandSender,
+        command: Command,
+        alias: String,
+        args: Array<out String>
+    ): List<String> {
+        return listOf()
+    }
 }

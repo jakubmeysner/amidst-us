@@ -8,22 +8,23 @@ import org.bukkit.Location
 import java.util.*
 
 object LocationSerializer : KSerializer<Location> {
-  override val descriptor = LocationSurrogate.serializer().descriptor
+    override val descriptor = LocationSurrogate.serializer().descriptor
 
-  override fun serialize(encoder: Encoder, value: Location) {
-    val surrogate = LocationSurrogate(value.world?.uid.toString(), value.x, value.y, value.z, value.yaw, value.pitch)
-    encoder.encodeSerializableValue(LocationSurrogate.serializer(), surrogate)
-  }
+    override fun serialize(encoder: Encoder, value: Location) {
+        val surrogate =
+            LocationSurrogate(value.world?.uid.toString(), value.x, value.y, value.z, value.yaw, value.pitch)
+        encoder.encodeSerializableValue(LocationSurrogate.serializer(), surrogate)
+    }
 
-  override fun deserialize(decoder: Decoder): Location {
-    val surrogate = decoder.decodeSerializableValue(LocationSurrogate.serializer())
-    return Location(
-      Bukkit.getWorld(UUID.fromString(surrogate.worldId)),
-      surrogate.x,
-      surrogate.y,
-      surrogate.z,
-      surrogate.yaw,
-      surrogate.pitch
-    )
-  }
+    override fun deserialize(decoder: Decoder): Location {
+        val surrogate = decoder.decodeSerializableValue(LocationSurrogate.serializer())
+        return Location(
+            Bukkit.getWorld(UUID.fromString(surrogate.worldId)),
+            surrogate.x,
+            surrogate.y,
+            surrogate.z,
+            surrogate.yaw,
+            surrogate.pitch
+        )
+    }
 }

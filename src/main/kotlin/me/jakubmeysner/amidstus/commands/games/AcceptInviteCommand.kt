@@ -11,76 +11,79 @@ import org.bukkit.command.TabExecutor
 import org.bukkit.entity.Player
 
 class AcceptInviteCommand(val plugin: AmidstUs) : TabExecutor, Named {
-  override val name = "acceptinvite"
+    override val name = "acceptinvite"
 
-  override fun onCommand(sender: CommandSender, command: Command, label: String, args: Array<out String>): Boolean {
-    if (args.size != 1) {
-      sender.spigot().sendMessage(
-        *ComponentBuilder("Usage: /acceptinvite <player name>").color(ChatColor.RED).create()
-      )
-    } else if (sender !is Player) {
-      sender.spigot().sendMessage(
-        *ComponentBuilder("This command can only be used by players!").color(ChatColor.RED).create()
-      )
-    } else if (plugin.games.any { it.players.any { it.bukkit == sender && !it.pending } }) {
-      sender.spigot().sendMessage(
-        *ComponentBuilder("You are already in game!").color(ChatColor.RED).create()
-      )
-    } else {
-      val inviter = plugin.server.onlinePlayers.find { it.name == args[0] }
-
-      if (inviter == null) {
-        sender.spigot().sendMessage(
-          *ComponentBuilder("Could not find any player with this name!").color(ChatColor.RED).create()
-        )
-      } else {
-        val game = plugin.games.find { it.players.any { it.bukkit == inviter && it.promoted } }
-
-        if (game == null) {
-          sender.spigot().sendMessage(
-            *ComponentBuilder("This player is not currently promoted in any game!").color(ChatColor.RED).create()
-          )
-        } else if (game.status == Game.Status.IN_PROGRESS) {
-          sender.spigot().sendMessage(
-            *ComponentBuilder("The game has already started!").color(ChatColor.RED).create()
-          )
+    override fun onCommand(sender: CommandSender, command: Command, label: String, args: Array<out String>): Boolean {
+        if (args.size != 1) {
+            sender.spigot().sendMessage(
+                *ComponentBuilder("Usage: /acceptinvite <player name>").color(ChatColor.RED).create()
+            )
+        } else if (sender !is Player) {
+            sender.spigot().sendMessage(
+                *ComponentBuilder("This command can only be used by players!").color(ChatColor.RED).create()
+            )
+        } else if (plugin.games.any { it.players.any { it.bukkit == sender && !it.pending } }) {
+            sender.spigot().sendMessage(
+                *ComponentBuilder("You are already in game!").color(ChatColor.RED).create()
+            )
         } else {
-          val player = game.players.find { it.bukkit == sender && it.pending }
+            val inviter = plugin.server.onlinePlayers.find { it.name == args[0] }
 
-          if (player == null) {
-            sender.spigot().sendMessage(
-              *ComponentBuilder("You have not been invited by this player!").color(ChatColor.RED).create()
-            )
-          } else {
-            player.pending = false
-            player.joinGame(game, plugin)
+            if (inviter == null) {
+                sender.spigot().sendMessage(
+                    *ComponentBuilder("Could not find any player with this name!").color(ChatColor.RED).create()
+                )
+            } else {
+                val game = plugin.games.find { it.players.any { it.bukkit == inviter && it.promoted } }
 
-            sender.spigot().sendMessage(
-              *ComponentBuilder("You have accepted ${inviter.name}'s request to join their game.")
-                .color(ChatColor.DARK_GREEN).create()
-            )
+                if (game == null) {
+                    sender.spigot().sendMessage(
+                        *ComponentBuilder("This player is not currently promoted in any game!").color(ChatColor.RED)
+                            .create()
+                    )
+                } else if (game.status == Game.Status.IN_PROGRESS) {
+                    sender.spigot().sendMessage(
+                        *ComponentBuilder("The game has already started!").color(ChatColor.RED).create()
+                    )
+                } else {
+                    val player = game.players.find { it.bukkit == sender && it.pending }
 
-            inviter.spigot().sendMessage(
-              *ComponentBuilder("Player ${sender.name} has accepted your invite!").color(ChatColor.DARK_GREEN).create()
-            )
-          }
+                    if (player == null) {
+                        sender.spigot().sendMessage(
+                            *ComponentBuilder("You have not been invited by this player!").color(ChatColor.RED).create()
+                        )
+                    } else {
+                        player.pending = false
+                        player.joinGame(game, plugin)
+
+                        sender.spigot().sendMessage(
+                            *ComponentBuilder("You have accepted ${inviter.name}'s request to join their game.")
+                                .color(ChatColor.DARK_GREEN).create()
+                        )
+
+                        inviter.spigot().sendMessage(
+                            *ComponentBuilder("Player ${sender.name} has accepted your invite!").color(ChatColor.DARK_GREEN)
+                                .create()
+                        )
+                    }
+                }
+            }
         }
-      }
+
+        return true
     }
 
-    return true
-  }
+    override fun onTabComplete(
+        sender: CommandSender,
+        command: Command,
+        alias: String,
+        args: Array<out String>
+    ): List<String> {
+        return when (args.size) {
+            1 -> plugin.games.filter { it.players.any { it.bukkit == sender && it.pending } }.map { it.players }
+                .flatten().filter { it.promoted }.map { it.bukkit.name }
 
-  override fun onTabComplete(
-    sender: CommandSender,
-    command: Command,
-    alias: String,
-    args: Array<out String>
-  ): List<String> {
-    return when (args.size) {
-      1 -> plugin.games.filter { it.players.any { it.bukkit == sender && it.pending } }.map { it.players }
-        .flatten().filter { it.promoted }.map { it.bukkit.name }
-      else -> listOf()
+            else -> listOf()
+        }
     }
-  }
 }

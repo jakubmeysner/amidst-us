@@ -6,9 +6,9 @@ import org.bukkit.event.Listener
 import org.bukkit.event.player.PlayerSwapHandItemsEvent
 
 class PlayerSwapHandItemsListener(val plugin: AmidstUs) : Listener {
-  @EventHandler
-  fun onPlayerSwapHandItems(event: PlayerSwapHandItemsEvent) {
-    if (plugin.games.none { it.players.any { it.bukkit == event.player } }) return
-    event.isCancelled = true
-  }
+    @EventHandler
+    fun onPlayerSwapHandItems(event: PlayerSwapHandItemsEvent) {
+        if (plugin.games.none { it.players.any { it.bukkit == event.player } }) return
+        event.isCancelled = true
+    }
 }
